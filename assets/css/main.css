@@ -8601,3 +8601,14 @@ input, select, textarea {
 			#wrapper.divided > .invert:first-child {
 				box-shadow: none !important;
 			}
+
+/* bootstrap */
+a.nav-link {
+    text-decoration: none;
+}
+a.navbar-brand {
+    text-decoration: none;
+}
+a.dropdown-item {
+    text-decoration: none;
+}
