@@ -8617,3 +8617,7 @@ a.dropdown-item {
 .resume-section-header{
 	color:#A51C30;
 }
+
+.dropdown-menu  a:hover { 
+	background-color: #47D3E5;
+}
