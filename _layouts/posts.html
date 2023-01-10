@@ -1,0 +1,29 @@
+---
+layout: default
+---
+
+<body class="is-preload">
+  <section class="spotlight style1 align-center onload-content-fade-down">
+    <div class="content">
+      <div align="right" valign="top">{%include navigation.html%}</div>
+      <div class="post_details">
+        <h2>{{ page.title }}</h2>
+        <p>
+          <i> {{page.excerpt}} </i>
+        </p>
+
+        <p>
+          <b>Author</b>: {{ page.author }}<br />
+          <b>Date</b>: {{ page.date | date: "%B %d, %Y" }} <br />
+          <b>Tags</b>: {% if post %} {% assign categories = post.categories %}
+          {% else %} {% assign categories = page.categories %} {% endif %} {%
+          for category in categories %} {{category}} {% unless forloop.last
+          %}&nbsp;{% endunless %} {% endfor %}
+        </p>
+        <hr />
+      </div>
+
+      {{ content }}
+    </div>
+  </section>
+</body>
