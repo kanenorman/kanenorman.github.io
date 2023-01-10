@@ -1,0 +1,44 @@
+---
+layout: default
+---
+
+<body class="is-preload">
+  <section
+    class="spotlight style1 content-align-left fullscreen"
+  >
+  <div class="content">
+    <div align="right" valign="top">{%include navigation.html%}</div>
+    <h2 align="center">Discussion</h2>
+      <div class="inner">
+        <ul class="actions  fit small">
+          <li>
+            <a href={{"/pages/data_science"| relative_path}} class="button fit small disabled"
+              >Data Science - (Coming Soon)</a
+            >
+          </li>
+          <li>
+            <a href={{"/pages/mathematics"| relative_path}} class="button fit small disabled"
+              >Mathematics - (Coming Soon)</a
+            >
+          </li>
+           <li>
+            <a href={{"/pages/programming"| relative_path}} class="button fit small disabled"
+              >Programming - (Coming Soon)</a
+            >
+          </li>
+
+          <li>
+            <a href={{"/pages/other"| relative_path}} class="button fit small"
+              >Other</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div>{{content}}</div>
+
+
+
+
+  </section>
+</body>

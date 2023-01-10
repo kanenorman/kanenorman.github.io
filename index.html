@@ -35,22 +35,22 @@ layout: default
             </ul>
             <ul class="actions fit">
               <li>
-                <a href="./pages/about" class="button primary fit small"
+                <a href={{"/pages/about"| relative_url}} class="button primary fit small"
                   >About Me</a
                 >
               </li>
               <li>
-                <a href="./pages/resume" class="button primary fit small"
+                <a href={{"/pages/resume" | relative_url}} class="button primary fit small"
                   >Resume</a
                 >
               </li>
               <li>
-                <a href="./pages/discussion" class="button primary fit small"
+                <a href={{"/pages/other"| relative_url}} class="button primary fit small"
                   >Discussion</a
                 >
               </li>
               <li>
-                <a href="./pages/contact" class="button primary fit small"
+                <a href={{"pages/contact"| relative_url}} class="button primary fit small"
                   >Contact Me</a
                 >
               </li>
@@ -58,7 +58,7 @@ layout: default
           </div>
       </div>
       <div class="image">
-        <img src="images/portrait.jpg" alt="Portrait of Kane Norman" />
+        <img src={{"/images/portrait.jpg"| relative_url}} alt="Portrait of Kane Norman" />
       </div>
     </section>
 
