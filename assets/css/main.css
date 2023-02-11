@@ -4958,7 +4958,7 @@ input, select, textarea {
 			-webkit-flex-direction: column-reverse;
 			-ms-flex-direction: column-reverse;
 			flex-direction: column-reverse;
-			text-align: center !important;
+			/* text-align: center !important; */
 		}
 
 			.spotlight.style1 .content {
@@ -5133,7 +5133,7 @@ input, select, textarea {
 				-webkit-flex-direction: column-reverse;
 				-ms-flex-direction: column-reverse;
 				flex-direction: column-reverse;
-				text-align: center !important;
+				/* text-align: center !important; */
 			}
 
 				.spotlight.style2 .content {
@@ -5387,7 +5387,7 @@ input, select, textarea {
 				-webkit-flex-direction: column-reverse;
 				-ms-flex-direction: column-reverse;
 				flex-direction: column-reverse;
-				text-align: center !important;
+				/* text-align: center !important; */
 			}
 
 				.spotlight.style3 .content {
