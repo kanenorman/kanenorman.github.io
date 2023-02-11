@@ -3,13 +3,19 @@ layout: posts
 title: "Data Structures and Algorithms : Arrays"
 author: Kane Norman
 categories: [programming]
-excerpt: An overview of arrays
+excerpt: An overview of and explanation of one of the most commonly used data structures
 ---
 
 <div class="discussion-content">
   <h4>Introduction</h4>
   <p>
-    Arrays are one of the most commonly used data structures in programming.
+    Arrays are a staple in the world of computer programming. They provide a
+    simple yet powerful way to store and access data in an efficient manner.
+    This post will provide a comprehensive overview of arrays, including their
+    strengths and limitations, as well as analyzing their time complexities for
+    essential operations such as access, search, insertion, and deletion. By the
+    end of this post, you will have a strong understanding of arrays and the
+    factors that contribute to their performance.
   </p>
   <hr />
   <h4>Overview</h4>
@@ -53,7 +59,7 @@ my_array = array('i', [1,2,3,4])
     address of each element, which would slow down the access time.
   </p>
   <hr />
-  <h4>Pros and Cons</h4>
+  <h4>Strengths and Weaknesses</h4>
   <p>
     Arrays offer speedy access to elements due to the contiguous memory
     allocation, as explained earlier. This allows the computer to quickly locate
@@ -64,10 +70,10 @@ my_array = array('i', [1,2,3,4])
     However, arrays have some limitations when it comes to searching and sorting
     operations. Unlike other data structures arrays are not designed
     specifically for these tasks and can result in slow and inefficient
-    algorithms for searching and sorting.
+    performance for searching and sorting data.
   </p>
   <hr />
-  <h4>Ordered Arrays And Binary Search</h4>
+  <h4>Ordered Arrays & Binary Search</h4>
   <p>
     An ordered array is a type of array that maintains elements in a specific
     order, either ascending or descending. The advantage of an ordered array
@@ -157,5 +163,88 @@ def binary_search(array, value):
     occur. This makes inserting new elements into an ordered array a more
     time-consuming process, but the benefit of faster searches still makes it a
     useful data structure in certain situations.
+  </p>
+  <hr />
+  <h4>Big-O Analysis</h4>
+
+  <div class="table-wrapper">
+    <table class="alt">
+      <thead>
+        <tr>
+          <th>Operation</th>
+          <th>Array</th>
+          <th>Ordered Array</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Access</td>
+          <td>O(1)</td>
+          <td>O(1)</td>
+        </tr>
+        <tr>
+          <td>Insert</td>
+          <td>O(1)</td>
+          <td>O(n)</td>
+        </tr>
+        <tr>
+          <td>Search</td>
+          <td>O(n)</td>
+          <td>O(log(n))</td>
+        </tr>
+        <tr>
+          <td>Delete</td>
+          <td>O(n)</td>
+          <td>O(n)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Accessing elements in an array can be achieved in a constant amount of time,
+    regardless of the size of the array. This is due to the fact that the
+    elements are stored in a contiguous fashion, making it possible to access
+    any element quickly. To access a specific element, we simply take the base
+    address and add the required number of bytes. This results in a time
+    complexity of O(1), meaning constant time.
+  </p>
+  <p>
+    Inserting elements into an array can be achieved in constant time, with a
+    time complexity of O(1). This is because we can calculate the insertion
+    location by adding the required offset and insert the new value at the end
+    of the array. Insertion into an ordered array is slower and has a time
+    complexity of O(n). Although binary search is used to determine the location
+    where the new value should be inserted, insertion still requires moving most
+    of the elements in the array to make room for the new element. With n
+    elements in the ordered array, this means that we may have to move n
+    elements to make room, resulting in a time complexity of O(n).
+  </p>
+  <p>
+    Searching for an element in an array can be achieved with a linear search
+    that requires you to iterate over every element in the array until you find
+    the value you are looking for. This can be described as linear time
+    complexity or O(n). As discussed in the previous section, ordered arrays
+    allow for binary search, which divides the search interval in half at each
+    step until the desired element is found. The repeated halving can be
+    described with a logarithmic function with base 2, resulting in a time
+    complexity of O(log<sub>2</sub>(n)) or simply O(log(n)).
+  </p>
+  <p>
+    Deleting elements from arrays is fairly slow, as the remaining elements must
+    be shifted to close the gap left by the deleted element. Although an ordered
+    array facilitates quicker location of the desired element through binary
+    search, the growth in the number of elements that must be shifted with an
+    increasing array size can diminish the speed advantage gained through binary
+    search. As a result, the time complexity for deletion in arrays and ordered
+    arrays is generally O(n), as a significant number of elements, if not all,
+    must be moved.
+  </p>
+  <hr />
+  <h4>Conclusion</h4>
+  <p>
+    Arrays are simple and highly effective data structures. They are especially
+    fast for accessing data, but rather slow for searching and sorting. In the
+    upcoming post, we will explore other data structures more suited for these
+    task, and discuss how to sort elements in arrays.
   </p>
 </div>
