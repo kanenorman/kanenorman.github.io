@@ -1,0 +1,250 @@
+---
+layout: posts
+title: "Data Structures and Algorithms : Arrays"
+author: Kane Norman
+categories: [programming]
+excerpt: An overview of and explanation of one of the most commonly used data structures
+---
+
+<div class="discussion-content">
+  <h4>Introduction</h4>
+  <p>
+    Arrays are a staple in the world of computer programming. They provide a
+    simple yet powerful way to store and access data in an efficient manner.
+    This post will provide a comprehensive overview of arrays, including their
+    strengths and limitations, as well as analyzing their time complexities for
+    essential operations such as access, search, insertion, and deletion. By the
+    end of this post, you will have a strong understanding of arrays and the
+    factors that contribute to their performance.
+  </p>
+  <hr />
+  <h4>Overview</h4>
+  <p>
+    Arrays are a collection of sequential memory addresses that store data in a
+    specific format. When we create an array, as shown in the following code
+    snippet, we specify the data type and the values to be stored. In this
+    example, we create an 'array' of 32-bit integers with values 1, 2, 3, and 4.
+    Our computer allocates enough contiguous memory to store these values in a
+    sequence.
+  </p>
+  <pre>
+{% highlight python %}
+from array import array
+
+my_array = array('i', [1,2,3,4])
+{% endhighlight%}
+</pre
+  >
+  <p>
+    The significance of storing values in contiguous memory lies in the fact
+    that it enables fast access to the values in an array. With the knowledge of
+    the address of the first element and the uniformity of each element's size
+    in terms of bits, finding the address of any element can be achieved through
+    simple arithmetic operations, specifically, addition.
+  </p>
+
+  <p>
+    Here is an example to make this clear. Consider array of integers, where
+    each integer takes 4 bytes of memory. If the first integer is stored at
+    address 1000, the second integer would be stored at address 1004 (since 1000
+    + 4 = 1004), the third integer would be stored at address 1008, and so on.
+    As you can see, the memory addresses of each integer are contiguous, meaning
+    they are in a sequential order. This makes it easy for the computer to
+    locate any element in the array by simply adding the size of one element (4
+    bytes in this case) to the starting address.
+  </p>
+  <p>
+    On the other hand, if the elements in the array were stored in
+    non-contiguous memory, the computer would have to do more work to find the
+    address of each element, which would slow down the access time.
+  </p>
+  <hr />
+  <h4>Strengths and Weaknesses</h4>
+  <p>
+    Arrays offer speedy access to elements due to the contiguous memory
+    allocation, as explained earlier. This allows the computer to quickly locate
+    any element in the array by simply adding the size of one element to the
+    starting address.
+  </p>
+  <p>
+    However, arrays have some limitations when it comes to searching and sorting
+    operations. Unlike other data structures arrays are not designed
+    specifically for these tasks and can result in slow and inefficient
+    performance for searching and sorting data.
+  </p>
+  <hr />
+  <h4>Ordered Arrays & Binary Search</h4>
+  <p>
+    An ordered array is a type of array that maintains elements in a specific
+    order, either ascending or descending. The advantage of an ordered array
+    lies in its ability to make searching for elements more efficient and
+    faster. Imagine searching for a specific card in a deck of cards. It would
+    be easier and quicker to find the desired card in a sorted deck, compared to
+    an unsorted one.
+  </p>
+  <p>
+    In arrays, this concept can be leveraged by using algorithms that take
+    advantage of the order of the elements to speed up the search process. One
+    such algorithm is the binary search algorithm, which is widely used for
+    searching in ordered arrays. The binary search algorithm works by dividing
+    the array into smaller subintervals until the desired element is found. With
+    each iteration, the number of elements is halved, making it possible to
+    quickly find the target element.
+  </p>
+  <p>
+    Heres a quick example to illustrate binary search. Consider searching for
+    the value 6 in the ordered array
+  </p>
+
+  <p style="text-align: center; font-size: x-large">[ 1, 2, 3, 4, 5, 6, 7 ]</p>
+  <p>
+    To search for the number 6 in our ordered array, we could estimate its
+    position by assuming it to be the midpoint of the array. In our example, the
+    actual midpoint turns out to be 4. However, since the array is ordered, we
+    know that the number 6 must be located to the right of the midpoint. This
+    allows us to eliminate all elements to the left of the midpoint, and we can
+    narrow down our search to the right half of the array, excluding the
+    midpoint.
+  </p>
+  <p style="text-align: center; font-size: x-large">
+    [ 1, 2, 3, <span style="color: red"><u>4</u></span
+    >, 5, 6, 7 ]
+  </p>
+
+  <p>
+    After eliminating the midpoint and left half of the array, we are left with
+    three values. Once again we can estimate using the midpoint and we will see
+    that in this iteration we have found the value we are looking for.
+  </p>
+  <p style="text-align: center; font-size: x-large">
+    [ <span style="color: gray"><s>1, 2, 3, 4,</s></span> 5,
+    <span style="color: red"><u>6</u></span
+    >, 7 ]
+  </p>
+  <p>In Python, the algorithm can be implemented as such</p>
+  <pre>
+    {% highlight python %}
+def binary_search(array, value):
+
+    low = 0
+    high = len(array) - 1
+
+    while low <= high:
+        middle = (low + high) // 2
+
+        if array[middle] == value:
+            return middle
+
+        # if midpoint is smaller, ignore the left half
+        if array[middle] < value:
+            low = middle + 1
+
+        # if midpoint is larger, ignore the right half
+        if array[middle] > value:
+            high = middle - 1
+
+    # return -1 if match not found
+    return -1
+    {% endhighlight %}
+  </pre>
+  <p>
+    In general, when searching for an element in an ordered array, we can
+    continuously divide the array into smaller sections by selecting a midpoint
+    and separating the elements into a right and left half. The process is
+    repeated on the half that contains the target value until the midpoint
+    becomes the value being sought.
+  </p>
+
+  <p>
+    As expected, it is faster and more systematic to search for values in arrays
+    that are ordered, but it comes with a trade-off. The process of inserting a
+    new value into an ordered array is slower than in an unordered array, as it
+    requires finding the correct position in the order before insertion can
+    occur. This makes inserting new elements into an ordered array a more
+    time-consuming process, but the benefit of faster searches still makes it a
+    useful data structure in certain situations.
+  </p>
+  <hr />
+  <h4>Big-O Analysis</h4>
+
+  <div class="table-wrapper">
+    <table class="alt">
+      <thead>
+        <tr>
+          <th>Operation</th>
+          <th>Array</th>
+          <th>Ordered Array</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Access</td>
+          <td>O(1)</td>
+          <td>O(1)</td>
+        </tr>
+        <tr>
+          <td>Insert</td>
+          <td>O(1)</td>
+          <td>O(n)</td>
+        </tr>
+        <tr>
+          <td>Search</td>
+          <td>O(n)</td>
+          <td>O(log(n))</td>
+        </tr>
+        <tr>
+          <td>Delete</td>
+          <td>O(n)</td>
+          <td>O(n)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Accessing elements in an array can be achieved in a constant amount of time,
+    regardless of the size of the array. This is due to the fact that the
+    elements are stored in a contiguous fashion, making it possible to access
+    any element quickly. To access a specific element, we simply take the base
+    address and add the required number of bytes. This results in a time
+    complexity of O(1), meaning constant time.
+  </p>
+  <p>
+    Inserting elements into an array can be achieved in constant time, with a
+    time complexity of O(1). This is because we can calculate the insertion
+    location by adding the required offset and insert the new value at the end
+    of the array. Insertion into an ordered array is slower and has a time
+    complexity of O(n). Although binary search is used to determine the location
+    where the new value should be inserted, insertion still requires moving most
+    of the elements in the array to make room for the new element. With n
+    elements in the ordered array, this means that we may have to move n
+    elements to make room, resulting in a time complexity of O(n).
+  </p>
+  <p>
+    Searching for an element in an array can be achieved with a linear search
+    that requires you to iterate over every element in the array until you find
+    the value you are looking for. This can be described as linear time
+    complexity or O(n). As discussed in the previous section, ordered arrays
+    allow for binary search, which divides the search interval in half at each
+    step until the desired element is found. The repeated halving can be
+    described with a logarithmic function with base 2, resulting in a time
+    complexity of O(log<sub>2</sub>(n)) or simply O(log(n)).
+  </p>
+  <p>
+    Deleting elements from arrays is fairly slow, as the remaining elements must
+    be shifted to close the gap left by the deleted element. Although an ordered
+    array facilitates quicker location of the desired element through binary
+    search, the growth in the number of elements that must be shifted with an
+    increasing array size can diminish the speed advantage gained through binary
+    search. As a result, the time complexity for deletion in arrays and ordered
+    arrays is generally O(n), as a significant number of elements, if not all,
+    must be moved.
+  </p>
+  <hr />
+  <h4>Conclusion</h4>
+  <p>
+    Arrays are simple and highly effective data structures. They are especially
+    fast for accessing data, but rather slow for searching and sorting. In the
+    upcoming post, we will explore other data structures more suited for these
+    task, and discuss how to sort elements in arrays.
+  </p>
+</div>
