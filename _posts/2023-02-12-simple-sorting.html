@@ -1,0 +1,195 @@
+---
+layout: posts
+title: "Data Structures and Algorithms : Simple Sorting"
+author: Kane Norman
+categories: [programming]
+excerpt: A beginner friendly introduction to simple sorting algorithms
+---
+
+<div class="discussion-content">
+  <h4>Introduction</h4>
+  <p>
+    Sorting is a common task that allows us to rearrange and arrange data in a
+    specific order. Sorting algorithms can range from simple to complex, and in
+    this post, we will present three of the simplest algorithms. These
+    algorithms, although not the most efficient, are easy to understand and
+    serve as a great starting point for anyone new to the topic of sorting.
+    Understanding these algorithms will provide a strong foundation for
+    exploring more complex sorting methods in the future.
+  </p>
+
+  <hr />
+  <h4>Bubble Sort</h4>
+  <p>
+    Bubble sort is easy to implement, but it is a very inefficient sorting
+    algorithm. The idea behind bubble sort is easy to understand. The algorithm
+    compares each pair of adjacent elements in the list starting from the left.
+    If an element is larger than the one to its right, the values are swapped.
+    This process repeats until the largest elements have "bubbled up" to the end
+    of the list. In the first iteration, the largest value will reach its final
+    position, and in the next iteration, the second largest will reach its final
+    position, and so on, until all elements are sorted.
+  </p>
+  <div style="text-align: center">
+    <a
+      title="Swfung8, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons"
+      href="https://commons.wikimedia.org/wiki/File:Bubble-sort-example-300px.gif"
+      ><img
+        width="256"
+        alt="Bubble-sort-example-300px"
+        src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif"
+    /></a>
+  </div>
+  <p>
+    In the example above, we have an array with 8 elements. In the first
+    iteration, 7 comparisons are made and the biggest value ends up in the last
+    position (8th). In the next iteration, we only have to make 6 comparisons
+    since the largest value is already at the end of the list. This process
+    continues until all elements are sorted in order.
+  </p>
+
+  <p>
+    In general, for an array containing n values, bubble sort performs n-1
+    comparisons in the first iteration, n-2 comparisons in the second iteration,
+    and so on, until n-k comparisons are made in the k<sup>th</sup> iteration. The total
+    number of comparisons in the entire sorting process can be expressed as the
+    sum of the series: (n-1) + (n-2) + (n-3) + ... + 1 which is equivalent to
+    (n<sup>2</sup>-n)/2. As the size of the input grows, the term n<sup>2</sup>
+    becomes dominant over the term n, leading to a time complexity of
+    O(n<sup>2</sup>).
+  </p>
+  <p>An implementation of the algorithm in Python can be found below</p>
+  <pre>
+{% highlight python %}
+def bubble_sort(array):
+    n = len(array)
+
+    # with each iteration, we should place the correct value at the end
+    for end in range(n - 1, 0, -1):
+        for inner in range(0, end):
+            # if current value is bigger than next value then swap positions until we reach the end
+            if array[inner] > array[inner + 1]:
+                array[inner], array[inner + 1] = array[inner + 1], array[inner]
+{% endhighlight %}
+  </pre>
+  <hr />
+  <h4>Selection Sort</h4>
+  <p>
+    One of the major limitations of bubble sort is its slow performance due to
+    the numerous intermediate swaps required to sort the values in the array. A
+    slightly more efficient alternative is selection sort. This algorithm
+    starts by locating the smallest value in the list and moving it to the first
+    position. In the second iteration, it finds the second smallest value and
+    places it in the second position, and in the k<sup>th</sup> iteration it
+    finds the k<sup>th</sup> smallest value and places it in the k<sup>th</sup>
+    position. This results in a more efficient sorting process compared to
+    bubble sort because it reduces the number of required swaps to sort a single
+    element.
+  </p>
+  <div style="text-align: center">
+    <a
+      title="Joestape89, CC BY-SA 3.0 &lt;http://creativecommons.org/licenses/by-sa/3.0/&gt;, via Wikimedia Commons"
+      href="https://commons.wikimedia.org/wiki/File:Selection-Sort-Animation.gif"
+      ><img
+        width="64"
+        alt="Selection-Sort-Animation"
+        src="https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif"
+    /></a>
+  </div>
+  <p>
+    Like bubble sort, selection sort also preforms (n-k) comparisons in each
+    k<sup>th</sup> iteration. Hence, the total number of comparisons in the
+    entire sorting process is also expressed as the sum of the series : (n-1) + (n-2) + (n-3)
+    + ... + 1, and a time complexity of O(n<sup>2</sup>). Despite having a
+    similar number of comparisons, selection sort is usually faster than bubble
+    sort because it requires fewer swaps to be made.
+  </p>
+
+  <p>An implementation of the algorithm in Python can be found below</p>
+  <pre>
+{% highlight python %}
+def selection_sort(array):
+    n = len(array)
+
+    for outer in range(n - 1):
+        min_index = outer
+        for inner in range(outer + 1, n):
+            if array[inner] < array[min_index]:
+                min_index = inner
+
+        array[outer], array[min_index] = array[min_index], array[outer]
+{% endhighlight %}
+  </pre>
+
+  <hr />
+  <h4>Insertion Sort</h4>
+  <p>
+    Insertion sort is one of the most efficient simple sorting algorithms and is
+    relatively straightforward to understand. It works by dividing an array into
+    two parts: an ordered left side and an unordered right side. The algorithm
+    takes elements from the unordered right side and "inserts" them into the
+    correct order on the left side. Through this process, all elements from the
+    right side are eventually placed into their correct positions on the left
+    side, resulting in a sorted array.
+  </p>
+  <div style="text-align: center">
+    <a
+      title="Swfung8, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons"
+      href="https://commons.wikimedia.org/wiki/File:Insertion-sort-example-300px.gif"
+      ><img
+        width="256"
+        alt="Insertion-sort-example-300px"
+        src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif"
+    /></a>
+  </div>
+  <p>
+    Insertion sort is more efficient compared to bubble sort and selection sort,
+    as it provides a way to reduce the number of comparisons needed. Unlike
+    bubble sort and selection sort, where n-k comparisons are
+    <span style="color: darkorange; font-weight: bold">guaranteed</span> for
+    each kth iteration, insertion sort requires a
+    <span style="color: darkorange; font-weight: bold">maximum</span> of k
+    comparisons for each k<sup>th</sup> iteration. The number of comparisons
+    depends on the position of the element being inserted in the ordered left
+    side of the array. If the element is larger than all the other k elements,
+    no comparisons are needed. However, if the element is smaller than all the k
+    elements, k comparisons will be made. This means that with insertion sort,
+    the number of comparisons needed can range from 0 to k, while with bubble
+    sort and selection sort, n-k comparisons are required in each iteration. In
+    general we can say that the maximum number of comparisons can be expressed
+    as the sum of the series : 1 + 2 + 3 + ... n-1 = (n<sup>2</sup>-n)/2. This
+    gives us a worse case time complexity of O(n<sup>2</sup>).
+  </p>
+
+  <p>An implementation of the algorithm in Python can be found below</p>
+  <pre>
+{% highlight python %}
+def insertion_sort(array):
+    n = len(array)
+
+    # take the unordered items on the right
+    for outer in range(1, n):
+        current_value = array[outer]
+        inner = outer
+
+        # compare to the ordered items on the left
+        while inner > 0 and current_value < array[inner - 1]:
+            # slide ordered items to the right to make room for insertion
+            array[inner] = array[inner - 1]
+            inner -= 1
+
+        array[inner] = current_value
+{% endhighlight %}
+  </pre>
+
+  <hr />
+  <h4>Insertion Sort</h4>
+  <p>
+    The algorithms discussed in this post are three of the most basic sorting
+    methods. Although they are relatively uncomplicated and easy to understand,
+    it's important to note that they have a worst-case time complexity of
+    O(n<sup>2</sup>), making them less suitable for sorting large datasets. In
+    future post, we will cover more advanced sorting algorithms like quicksort,
+    which offer improved performance when dealing with large amounts of data.
+  </p>
+</div>
