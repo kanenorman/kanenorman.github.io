@@ -168,7 +168,7 @@ input, select, textarea {
 		-webkit-transition: color 0.2s ease-in-out;
 		-ms-transition: color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out;
-		text-decoration: underline;
+		/* text-decoration: underline; */
 	}
 
 		a:hover {
@@ -320,7 +320,7 @@ input, select, textarea {
 	}
 
 	a {
-		color: #000000;
+		color:black;
 	}
 
 		a:hover {
@@ -8650,4 +8650,12 @@ a.dropdown-item {
 .discussion-content h4{
 	color: royalblue;
 	font-size: larger;
+}
+
+.discussion-content a{
+	color:dodgerblue;
+}
+
+img .discussion-content{
+	max-width: -webkit-fill-available;
 }
