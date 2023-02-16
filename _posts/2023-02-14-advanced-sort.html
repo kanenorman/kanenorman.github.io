@@ -1,0 +1,124 @@
+---
+layout: posts
+title: "Data Structures and Algorithms : Advanced Sorting"
+author: Kane Norman
+categories: [programming]
+excerpt: More sophisticated sorting algorithms
+---
+
+<div class="discussion-content">
+  <h4>Introduction</h4>
+  <p>
+    In a previous post,we discussed three simple sorting algorithms: bubble
+    sort, selection sort, and insertion sort. Although all of these algorithms
+    have a worst-case time complexity of O(n<sup>2</sup>), we acknowledged that
+    insertion sort is the most efficient among them. This is because the
+    algorithm is designed in a way that allows for fewer comparisons to be made
+    with each iteration. As a result, insertion sort performs relatively better
+    than the other simple sorting algorithms, particularly when the array is
+    already almost sorted.
+  </p>
+
+  <p>
+    Insertion sort is inefficient when many shifts are required to insert an
+    element. Consider the following example where the smallest element is on the
+    far right of the array. In this scenario, we would have to copy and shift
+    elements 2, 3, 4, 5, and 6 just to insert a single value.
+  </p>
+  <p style="text-align: center; font-size: x-large">
+    [ 2, 3, 4, 5, 6, <span style="color: red"><u>1</u></span> ]
+  </p>
+  <p>
+    Now, consider this example where the element is only slightly out of place.
+    We would only have to copy and shift a single element to sort the entire
+    array.
+  </p>
+  <p style="text-align: center; font-size: x-large">
+    [ 2, <span style="color: red"><u>1</u></span
+    >, 3, 4, 5, 6 ]
+  </p>
+  <p>
+    As we've seen, the efficiency of insertion sort depends on how close the
+    array is to being sorted. If the array is far from sorted, the worst-case
+    time complexity is O(n<sup>2</sup>). However, if the array is almost sorted,
+    the time complexity is closer to O(n). In other words, insertion sort only
+    becomes inefficient when elements far from their final position require
+    shifting a lot of intermediate elements.
+  </p>
+  <p>
+    To address this issue, we can use shellsort, which is an algorithm that
+    sorts elements that are spaced far apart before sorting elements that are
+    close together. This approach allows the algorithm to quickly move elements
+    that are far from their correct position closer to their sorted position
+    without requiring the shifting of a large number of intermediate elements,
+    making the sorting process faster and more efficient.
+  </p>
+  <hr />
+  <h4>How Shellsort Works</h4>
+  <p>
+    The shellsort algorithm starts by sorting elements that are spaced far apart
+    using a certain gap sequence "h". In each iteration, the gap is reduced
+    until it reaches one. This way, the algorithm can quickly move elements that
+    are far from their correct position closer to their sorted position. Once
+    the gap is reduced to one, the algorithm performs a standard insertion sort
+    on the entire array, which is now close to being sorted. This approach leads
+    to a faster sorting process compared to insertion sort because elements are
+    moved closer to their final position more quickly.
+  </p>
+
+  <div style="text-align: center">
+    <img src="{{"/images/shellsort.gif"| relative_url}}" alt="shellsort
+    animation">
+  </div>
+
+  <p>
+    In order to effectively implement the shellsort algorithm, it's important to
+    grasp the concept of a gap sequence. The gap sequence defines the spacing
+    between the elements being compared during each iteration of the algorithm.
+    The choice of gap sequence can significantly impact the efficiency of the
+    algorithm, and there has been extensive research conducted on the subject.
+    If you're interested in diving deeper into the topic, I highly encourage you
+    to do so. However, for the purpose of keeping this post concise and easy to
+    follow, we will be utilizing the Knuth Sequence for the implementation of
+    shellsort.
+  </p>
+  <p>
+    Let $h_{i}$ be an integer in the sequence H. The Knuth sequence is defined
+    h<sub>i</sub> = 3h<sub>i-1</sub> + 1, where the first integer in the
+    sequence h<sub>0</sub>=1
+  </p>
+
+  <p>
+    Below is an implementation of the algorithm in Python. You will notice that
+    it is essentially the same as shellsort, but includes the gap sequence
+    described above.
+  </p>
+  <pre>
+  {%highlight python%}
+def shell_sort(array):
+  n = len(array)
+  knuth = lambda h: 3 * h + 1
+  inverse_knuth = lambda h: (h - 1) // 3
+
+  # build Knuth sequence
+  h = 1
+  while knuth(h) < n:
+      h = knuth(h)
+
+  while h > 0:
+      for outer in range(h, n):
+          value = array[outer]
+          inner = outer
+
+          # same logic as insertion sort
+          while inner >= h and value < array[inner - h]:
+              array[inner] = array[inner - h]
+              inner -= h
+
+          array[inner] = value
+
+      # decrement the gap
+      h = inverse_knuth(h)
+  {%endhighlight%}
+  </pre>
+</div>
