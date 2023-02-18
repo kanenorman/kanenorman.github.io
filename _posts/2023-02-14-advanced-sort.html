@@ -46,7 +46,7 @@ excerpt: More sophisticated sorting algorithms
     shifting a lot of intermediate elements.
   </p>
   <p>
-    To address this issue, we can use shellsort, which is an algorithm that
+    To address this issue, we can use shell sort, which is an algorithm that
     sorts elements that are spaced far apart before sorting elements that are
     close together. This approach allows the algorithm to quickly move elements
     that are far from their correct position closer to their sorted position
@@ -54,43 +54,52 @@ excerpt: More sophisticated sorting algorithms
     making the sorting process faster and more efficient.
   </p>
   <hr />
-  <h4>How Shellsort Works</h4>
+  <h4>Shell Sort</h4>
   <p>
-    The shellsort algorithm starts by sorting elements that are spaced far apart
-    using a certain gap sequence "h". In each iteration, the gap is reduced
-    until it reaches one. This way, the algorithm can quickly move elements that
-    are far from their correct position closer to their sorted position. Once
-    the gap is reduced to one, the algorithm performs a standard insertion sort
-    on the entire array, which is now close to being sorted. This approach leads
-    to a faster sorting process compared to insertion sort because elements are
-    moved closer to their final position more quickly.
+    The shell sort algorithm starts by sorting elements that are spaced far
+    apart using a certain gap sequence "h". In each iteration, the gap is
+    reduced until it reaches one. This way, the algorithm can quickly move
+    elements that are far from their correct position closer to their sorted
+    position. Once the gap is reduced to one, the algorithm performs a standard
+    insertion sort on the entire array, which is now close to being sorted. This
+    approach leads to a faster sorting process compared to insertion sort
+    because elements are moved closer to their final position more quickly.
   </p>
 
   <div style="text-align: center">
-    <img src="{{"/images/shellsort.gif"| relative_url}}" alt="shellsort
+    <img src="{{"/images/shellsort.gif"| relative_url}}" alt="shell sort
     animation">
   </div>
 
   <p>
-    In order to effectively implement the shellsort algorithm, it's important to
-    grasp the concept of a gap sequence. The gap sequence defines the spacing
-    between the elements being compared during each iteration of the algorithm.
-    The choice of gap sequence can significantly impact the efficiency of the
-    algorithm, and there has been extensive research conducted on the subject.
-    If you're interested in diving deeper into the topic, I highly encourage you
-    to do so. However, for the purpose of keeping this post concise and easy to
-    follow, we will be utilizing the Knuth Sequence for the implementation of
-    shellsort.
+    In order to effectively implement the shell sort algorithm, it's crucial to
+    understand gap sequences that define the spacing between elements being
+    compared in each iteration. Various gap sequences are available, including
+    Sedgewick, Knuth, and Donald Shell's original sequence. The choice of
+    sequence significantly affects the algorithm's efficiency, and extensive
+    research has been conducted on the subject. Interested readers are
+    encouraged to explore further. For the sake of simplicity and to keep things
+    brief, we'll focus specifically on implementing using the Knuth Sequence.
   </p>
   <p>
-    Let $h_{i}$ be an integer in the sequence H. The Knuth sequence is defined
-    h<sub>i</sub> = 3h<sub>i-1</sub> + 1, where the first integer in the
-    sequence h<sub>0</sub>=1
+    The Knuth sequence is a sequence of integers defined recursively by the
+    formula:
+    <span class="math inline">
+      <em>h<sub>i</sub></em> = 3<em>h<sub>i-1</sub></em> + 1
+    </span>
+    where
+    <span class="math inline"
+      ><em>h<sub>0</sub></em> = 1</span
+    >. The first several terms of the sequence are 1, 4, 13, 40, 121, 364, and
+    1093. It's important to note that you should only use values of
+    <em>h<sub>i</sub></em> that are less than the size of your array. For
+    example, if your array has 500 elements, you should only use values of
+    <em>h<sub>i</sub></em> up to 364.
   </p>
 
   <p>
     Below is an implementation of the algorithm in Python. You will notice that
-    it is essentially the same as shellsort, but includes the gap sequence
+    it is essentially the same as shell sort, but includes the gap sequence
     described above.
   </p>
   <pre>
@@ -121,4 +130,14 @@ def shell_sort(array):
       h = inverse_knuth(h)
   {%endhighlight%}
   </pre>
+
+  <p>
+    The average complexity of this algorithm is rather complex to derive. For
+    now, just know the implementation that is shown above has an average run
+    time complexity of O(n(log(n))<sup>2</sup>), and a worst-case complexity of
+    O(n<sup>3/2</sup>).
+  </p>
+
+  <hr>
+  <h4>Quick Sort</h4>
 </div>
