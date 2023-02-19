@@ -1,0 +1,169 @@
+---
+layout: posts
+title: "Data Structures and Algorithms : Intermediate Sorting"
+author: Kane Norman
+categories: [programming]
+excerpt: An introduction to a slightly more sophisticated  sorting algorithm
+---
+
+<div class="discussion-content">
+  <h4>Introduction</h4>
+  <p>
+    In the
+    <a href="{{'/programming/simple-sorting' | relative_url}}">
+      previous post</a
+    >
+    , we discussed three simple sorting algorithms: bubble sort, selection sort,
+    and insertion sort. Although all of these algorithms have a worst-case time
+    complexity of O(n<sup>2</sup>), we acknowledged that insertion sort is the
+    most efficient among them. This is because the algorithm is designed in a
+    way that allows for fewer comparisons to be made with each iteration. As a
+    result, insertion sort performs relatively better than the other simple
+    sorting algorithms, particularly when the array is already almost sorted.
+  </p>
+
+  <p>
+    Consider this example where the element is only slightly out of place. We
+    would only have to copy and shift a single element to sort the entire array.
+    Thus, insertion sort would preform pretty efficiently.
+  </p>
+  <p style="text-align: center; font-size: x-large">
+    [ 2, <span style="color: red"><u>1</u></span
+    >, 3, 4, 5, 6 ]
+  </p>
+  <p>
+    Now consider the following example where the smallest element is on the far
+    right of the array. In this scenario, we would have to shift and copy all
+    elements to sort a single value. As a general rule, insertion sort becomes
+    less efficient when small values are located on the far right, requiring
+    many shift operations to sort an element.
+  </p>
+  <p style="text-align: center; font-size: x-large">
+    [ 2, 3, 4, 5, 6, <span style="color: red"><u>1</u></span> ]
+  </p>
+  <p>
+    As we've seen, the efficiency of insertion sort depends on how close the
+    array is to being sorted. When the array is close to being sorted, insertion
+    sort performs efficiently with a time complexity closer to O(n). However, in
+    the worst-case scenario where the array is in reverse order, the time
+    complexity becomes O(n<sup>2</sup>). The inefficiency arises when the
+    elements are located far from their final position, requiring the shifting
+    of many intermediate elements.
+  </p>
+  <p>
+    To avoid the inefficiencies that may arise in insertion sort, we can use
+    shell sort as an alternative. The algorithm is an extension of insertion
+    sort that first sorts elements spaced far apart before sorting elements that
+    are close together. This approach enables the algorithm to quickly move
+    elements that are far from their correct position closer to their sorted
+    position, without requiring the shifting of a large number of intermediate
+    elements. Consequently, shell sort can significantly improve the speed and
+    efficiency of the sorting process.
+  </p>
+  <hr />
+  <h4>Shell Sort</h4>
+  <p>
+    The shell sort algorithm starts by sorting elements that are spaced far
+    apart using a certain gap sequence "h". In each iteration, the gap is
+    reduced until it reaches one. This way, the algorithm can quickly move
+    elements that are far from their correct position closer to their sorted
+    position. Once the gap is reduced to one, the algorithm performs a standard
+    insertion sort on the entire array, which is now close to being sorted. This
+    approach leads to a faster sorting process compared to insertion sort
+    because elements are moved closer to their final position more quickly.
+  </p>
+
+  <div style="text-align: center">
+    <img
+      src="{{'/images/shellsort.gif'| relative_url}}"
+      alt="shell sort
+    animation"
+    />
+  </div>
+
+  <p>
+    In order to effectively implement the shell sort algorithm, it's important
+    to grasp the concept of a gap sequence. The gap sequence defines the spacing
+    between the elements being compared during each iteration of the algorithm.
+    There are various choices for gap sequences and each sequence leads to
+    various time-complexities. There has been extensive research conducted on
+    each variation, and if you're interested in diving deeper into the topic, I
+    highly encourage you to do so. However, for the purpose of keeping this post
+    concise and easy to follow, we will be utilizing the Knuth Sequence for the
+    implementation of shell sort.
+  </p>
+  <p>
+    The Knuth sequence is a sequence of integers defined recursively by the
+    formula:
+    <span class="math inline">
+      <em>h<sub>i</sub></em> = 3<em>h<sub>i-1</sub></em> + 1
+    </span>
+    where
+    <span class="math inline"
+      ><em>h<sub>0</sub></em> = 1</span
+    >. The first several terms of the sequence are 1, 4, 13, 40, 121, 364, and
+    1093. It's important to note that you should only use values of
+    <em>h<sub>i</sub></em> that are less than the size of your array. For
+    example, if your array has 500 elements, you should only use values of
+    <em>h<sub>i</sub></em> up to 364.
+  </p>
+
+  <p>
+    Below is an implementation of the algorithm in Python. You will notice that
+    it is essentially the same as insertion sort, but includes the gap sequence
+    described above.
+  </p>
+  <pre>
+  {%highlight python%}
+def shell_sort(array):
+  n = len(array)
+  knuth = lambda h: 3 * h + 1
+  inverse_knuth = lambda h: (h - 1) // 3
+
+  # build Knuth sequence
+  h = 1
+  while knuth(h) < n:
+      h = knuth(h)
+
+  while h > 0:
+      for outer in range(h, n):
+          value = array[outer]
+          inner = outer
+
+          # same logic as insertion sort
+          while inner >= h and value < array[inner - h]:
+              array[inner] = array[inner - h]
+              inner -= h
+
+          array[inner] = value
+
+      # decrement the gap
+      h = inverse_knuth(h)
+  {%endhighlight%}
+  </pre>
+
+  <p>
+    The average complexity of this algorithm is rather complex to derive. For
+    now, just know the implementation that is shown above has an average run
+    time complexity of O(n(log(n))<sup>2</sup>), and a worst-case complexity of
+    O(n<sup>3/2</sup>).
+  </p>
+
+  <hr />
+  <h4>Conclusion</h4>
+  <p>
+    In conclusion, while insertion sort is an efficient algorithm, its
+    performance drops when sorting large arrays that are not close to being
+    sorted. To mitigate this issue, we can use shell sort, which is an extension
+    of insertion sort. Shell sort improves the efficiency of the sorting process
+    by first sorting elements that are spaced far apart before sorting those
+    that are close together. This approach enables the algorithm to quickly move
+    elements that are far from their correct position closer to their sorted
+    position, without requiring the shifting of a large number of intermediate
+    elements. The choice of gap sequence can significantly impact the efficiency
+    of the algorithm, and the Knuth sequence is a commonly used sequence. The
+    implementation of shell sort may be slightly more complex than insertion
+    sort, but it's a powerful algorithm that can sort medium to large arrays
+    pretty efficiently.
+  </p>
+</div>
