@@ -236,6 +236,61 @@ def find_pairs_with_sum(array, target_sum):
     src="/charts_and_graphs/On2_example.html"
   ></iframe>
   <hr />
+  <h4>O(mn)</h4>
+
+  <p>
+    The notation O(mn) indicates that the time complexity of an algorithm is
+    proportional to both m and n. For instance, when working with matrices or
+    two-dimensional arrays, the time complexity can increase based on the number
+    of rows and columns in the matrix. In simpler terms, it means that the
+    algorithm will take more time to execute when there are multiple elements in
+    the input.
+  </p>
+  <p>
+    One example of this is when iterating through every element in a matrix. The
+    function below prints out all the elements in a matrix to the console, where
+    the matrix can have dimensions m x n. Since it iterates through every
+    element, its time complexity is O(mn).
+  </p>
+  <pre>
+      {% highlight python %}
+    def print_matrix(matrix):
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                print(matrix[i][j], end=" ")
+      {% endhighlight %}
+    </pre
+  >
+  <p>
+    It's worth noting that O(n<sup>2</sup>) is a special case of O(mn). If we
+    consider O(mn) where m is equal to n, we get O(n<sup>2</sup>). This means
+    that O(n<sup>2</sup>) is just a specific scenario of O(mn) when m is equal
+    to n.
+  </p>
+  <p>
+    Overall, the O(mn) notation is helpful to understand the time complexity of
+    an algorithm that is dependent on two variables. It's important to consider
+    the notation when dealing with complex algorithms, especially when the input
+    size is large.
+  </p>
+  <p>
+    Please note, O(mn) is commonly used to express the time complexity of an
+    algorithm with two variables, but it is not the only possible notation. In
+    some cases, the time complexity may be better expressed using other
+    notations such as O(m + n), O(m log n), or O(n log m), among others.
+  </p>
+  <div style="text-align: center">
+    <a
+      title="Mavaddat, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons"
+      href="https://commons.wikimedia.org/wiki/File:MatrixLabelled.svg"
+      ><img
+        style="max-width: -webkit-fill-available"
+        alt="MatrixLabelled"
+        src="/images/MatrixLabelled.svg.png"
+    /></a>
+  </div>
+
+  <hr />
   <h4>O(log n)</h4>
   <p>
     O(log n) is a measure of logarithmic time complexity, indicating that the
@@ -247,6 +302,7 @@ def find_pairs_with_sum(array, target_sum):
     1,000,000, which is a significantly smaller increase in time compared to the
     linear case.
   </p>
+  <hr />
   <p>
     A popular example of an algorithm with O(log n) complexity is binary search.
     It repeatedly divides a sorted array in half until the target value is
