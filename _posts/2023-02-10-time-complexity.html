@@ -9,42 +9,41 @@ excerpt: How to measure efficiency and scalability
 <div class="discussion-content">
   <h4>Introduction</h4>
   <p>
-    As computer scientists, predicting the exact time an algorithm will take to
-    execute can be one of the most significant challenges we face. Many
-    variables can affect the execution time, and even the same device may not
-    always produce consistent results. Instead of focusing on the exact
-    execution time, we are often more interested in understanding how an
-    algorithm performs as the input size increases. For instance, will an
-    algorithm that sorts an array of 10 elements take longer to sort an array of
-    1,000,000 elements? This is where Big-O notation comes into play. Big-O
-    notation provides a way to describe an algorithm's expected time complexity
-    in terms of the number of inputs.
+    As a computer scientist, predicting the exact amount of time an algorithm
+    will take to execute can be extremely difficult. Various factors can affect
+    the execution time, and even the same device may not always produce
+    consistent results. Instead of focusing on the exact execution time, we are
+    often more interested in understanding how an algorithm performs as the
+    input size increases. For instance, will an algorithm that sorts an array of
+    10 elements take longer to sort an array of 1,000,000 elements? If so, can
+    we quantify how much longer it will take? This is where Big-O notation comes
+    into play. Big-O notation provides a way to describe an algorithm's expected
+    time complexity in terms of the number or magnitude of it inputs.
   </p>
 
   <p>
     In this post, we will explore the importance of Big-O notation in analyzing
     algorithm performance. While the mathematical theory behind Big-O notation
-    can be complex, we will focus on providing simple, easy-to-understand
+    can be complex, I will focus on providing simple, easy-to-understand
     examples to help you comprehend the basics of Big-O notation. By using
-    real-world scenarios, we will demonstrate how Big-O notation can help you
+    real-world scenarios, I will demonstrate how Big-O notation can help you
     compare the efficiency of different algorithms and make informed decisions
-    when implementing them. By the end of this post, we hope you will have a
-    solid understanding of Big-O notation and its significance in computer
-    science.
+    when implementing them. By the end of this post, you should have a solid
+    understanding of Big-O notation and its significance in computer science.
   </p>
 
   <hr />
   <h4>Best, Worst, and Average Case</h4>
   <p>
     When analyzing algorithms, we may encounter inputs that meet special
-    conditions that can significantly affect their performance. When an input
-    allows for optimal performance, we refer to it as the best-case time
-    complexity, denoted by the Ω symbol. The average case represents the
-    performance we can expect on average when the input does not meet any
-    exceptional conditions, and it is denoted by the θ symbol. In contrast, the
-    worst-case time complexity refers to the performance when the input meets
-    some condition that causes the algorithm to perform its absolute worst. This
-    is denoted by the capital O symbol.
+    conditions that can significantly affect their performance. Some inputs
+    create optimal performance conditions, allowing for far better than average
+    runtime. We refer to this as the best-case time complexity, denoted by the Ω
+    symbol. The average case represents the performance we can expect on average
+    when the input does not meet any exceptional conditions, and it is denoted
+    by the θ symbol. Finally, the worst-case time complexity refers to the
+    performance when the input meets some condition that causes the algorithm to
+    perform its absolute worst. This is denoted by the capital O symbol.
   </p>
 
   <p>
@@ -52,7 +51,7 @@ excerpt: How to measure efficiency and scalability
     focus on the average and worst cases. For most algorithms, these cases tend
     to be the same. In this post, we'll primarily focus on the worst-case time
     complexity, since it provides an upper bound on the amount of time an
-    algorithm will take to complete, regardless of the input.
+    algorithm will take to complete.
   </p>
 
   <hr />
@@ -79,12 +78,14 @@ def get_first_element(array):
 </pre
   >
   <p>
-    The above function simply retrieves the first element of an input array by
-    accessing the base address of the array and returning the value stored at
-    that address. It executes the same steps regardless of the size of the input
-    array, meaning it runs in constant time. Whether the array has 1 element or
-    1,000,000 elements, we expect <code>get_first_element()</code> to execute in
-    the same amount of time.
+    The function above, <code>get_first_element()</code>, is a straightforward
+    operation that retrieves the first element of an input array. It does so by
+    accessing the base memory address of the array and returning the value
+    stored at that address. Since it performs the same number of operations
+    regardless of the size of the input array, this function runs in constant
+    time. This means that whether the array has one element or one million
+    elements, we can expect <code>get_first_element()</code> to execute in the
+    same amount of time.
   </p>
 
   <hr />
@@ -94,13 +95,13 @@ def get_first_element(array):
     an algorithm increases in direct proportion to the size of the input. In
     other words, if the input size increases by a factor of k, then the time
     taken by the algorithm will also increase by a factor of k. For example, if
-    an algorithm takes 10 seconds to process an array with 10 elements, it would
-    take around 100 seconds to process an array with 100 elements and around
-    1,000 seconds to process an array with 1,000 elements.
+    an algorithm takes 5 seconds to process an array with 10 elements, it would
+    take around 50 seconds to process an array with 100 elements and around 500
+    seconds to process an array with 1,000 elements.
   </p>
   <p>
     A simple example to illustrate linear time complexity is the following
-    function <code>sum_array()</code>:
+    function:
   </p>
   <pre>
     {% highlight python %}
@@ -120,14 +121,17 @@ def sum_array(array):
     As expected, the relationship between input size and average execution time
     is clearly linear.
   </p>
-  <iframe
-    width="100%"
-    height="500"
-    frameborder="0"
-    seamless="seamless"
-    scrolling="no"
-    src="/charts_and_graphs/On_example.html"
-  ></iframe>
+  <figure>
+    <iframe
+      width="100%"
+      height="500"
+      frameborder="0"
+      seamless="seamless"
+      scrolling="no"
+      src="/charts_and_graphs/On_example.html"
+    ></iframe>
+  </figure>
+
   <p>
     Another example of a linear algorithm is the linear search algorithm, which
     iterates through an array until it finds the value it is looking for. Here's
@@ -144,16 +148,16 @@ def linear_search(array, value):
 </pre
   >
   <p>
-    In the worst-case scenario, the value we are searching for would be the last
-    element in the array. This means that for an array containing n elements, we
-    would have to make n iterations to find our target value. Thus, the
-    worst-case time complexity of the linear search algorithm can be best
-    described as O(n).
+    In the worst-case scenario for a linear search algorithm, where the target
+    value is located at the end of the array, the algorithm would need to
+    perform n iterations to find it, where n is the number of elements in the
+    array. Therefore, the worst-case time complexity of the linear search
+    algorithm is O(n), where n is the input size.
   </p>
   <p>
-    Here's a tricky question. If we added a constant operation to the function
-    <code>sum_array()</code> like below, would it still be considered O(n) time
-    complexity?
+    Here's a tricky question: If we add an extra constant operation to the
+    function <code>sum_array()</code> like the code snippet below, would the
+    time complexity still be considered O(n), or would it be considered O(n+1)?
   </p>
   <pre>
     {% highlight python %}
@@ -169,13 +173,13 @@ def sum_array(array):
 </pre
   >
   <p>
-    The answer is yes, it would still be considered O(n) time complexity. The
-    reason why is because we drop constants when calculating big-O notation.
-    Remember, the purpose of big-O is to measure how the algorithm scales as the
-    input size increases, and we are only concerned with the general trend of
-    the algorithm's behavior. In other words, we don't care about the exact
-    amount of time the algorithm takes to execute, but rather about how that
-    time changes as the input size grows.
+    It would still be considered O(n) time complexity. The reason why is because
+    we drop constants when calculating big-O notation. Remember, the purpose of
+    big-O is to measure how the algorithm scales as the input size increases,
+    and we are only concerned with the general trend of the algorithm's
+    behavior. In other words, we don't care about the exact amount of time the
+    algorithm takes to execute, but rather about how that time changes as the
+    input size grows.
   </p>
   <p>
     To put it in mathematical terms, we don't care if the time a function takes
@@ -214,13 +218,14 @@ def find_pairs_with_sum(array, target_sum):
   <p>
     In this function, for each element in the array, it checks every other
     element to see if their sum is equal to the target sum. This results in a
-    nested loop where the number of iterations in the inner loop is dependent on
-    the size of the array. The number of operations performed by this algorithm
-    is proportional to the square of the input size, making its time complexity
+    nested loop where the number of iterations is dependent on the size of the
+    array. The number of operations performed by this algorithm is proportional
+    to the square of the input size, making its time complexity
     O(n<sup>2</sup>). As the input size grows, the time taken by the algorithm
     increases rapidly. The graph below shows the performance of the function
-    find_pairs_with_sum() as the size of the input array increases. As expected,
-    the relationship between input size and time is clearly quadratic.
+    <code>find_pairs_with_sum()</code> as the size of the input array increases.
+    As expected, the relationship between input size and time is clearly
+    quadratic.
   </p>
   <iframe
     width="100%"
@@ -243,7 +248,7 @@ def find_pairs_with_sum(array, target_sum):
     linear case.
   </p>
   <p>
-    A prime example of an algorithm with O(log n) complexity is binary search.
+    A popular example of an algorithm with O(log n) complexity is binary search.
     It repeatedly divides a sorted array in half until the target value is
     found. As the size of the array doubles, the number of steps needed to find
     the target value increases only by one, making binary search an extremely
@@ -296,10 +301,10 @@ def binary_search(array, value):
   <p>
     For those who are interested in a mathematical explanation of the log
     function, recall that if log<sub>b</sub>(n) roughly tells us how many times
-    we can subdivide n by b before the result is less than 1. For example, if we
-    wanted to know how many times we can divide 100 by 2, we simply calculate
-    log<sub>2</sub>(100), which equals 6.44 (approximately). This means that
-    binary search would subdivide an array of size 100 into at most 7 parts to
-    find a maximum value, making it a very efficient algorithm for large inputs.
+    we can subdivide n by b. For example, if we wanted to know how many times we
+    can divide 100 by 2, we simply calculate log<sub>2</sub>(100), which equals
+    6.44 (approximately). This means that binary search would subdivide an array
+    of size 100 into at most 7 parts to find a maximum value, making it a very
+    efficient algorithm for large inputs.
   </p>
 </div>
