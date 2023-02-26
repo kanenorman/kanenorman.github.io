@@ -51,10 +51,11 @@ excerpt: A beginner friendly introduction to simple sorting algorithms
   <p>
     In general, for an array containing n values, bubble sort performs n-1
     comparisons in the first iteration, n-2 comparisons in the second iteration,
-    and so on, until n-k comparisons are made in the k<sup>th</sup> iteration. The total
-    number of comparisons in the entire sorting process can be expressed as the
-    sum of the series: (n-1) + (n-2) + (n-3) + ... + 1 which is equivalent to
-    (n<sup>2</sup>-n)/2. As the size of the input grows, the term n<sup>2</sup>
+    and so on, until n-k comparisons are made in the k<sup>th</sup> iteration.
+    The total number of comparisons in the entire sorting process can be
+    expressed as the sum of the series: (n-1) + (n-2) + (n-3) + ... + 1 which is
+    equivalent to (n<sup>2</sup>-n)/2. As the size of the input grows, the term
+    n<sup>2</sup>
     becomes dominant over the term n, leading to a time complexity of
     O(n<sup>2</sup>).
   </p>
@@ -77,8 +78,8 @@ def bubble_sort(array):
   <p>
     One of the major limitations of bubble sort is its slow performance due to
     the numerous intermediate swaps required to sort the values in the array. A
-    slightly more efficient alternative is selection sort. This algorithm
-    starts by locating the smallest value in the list and moving it to the first
+    slightly more efficient alternative is selection sort. This algorithm starts
+    by locating the smallest value in the list and moving it to the first
     position. In the second iteration, it finds the second smallest value and
     places it in the second position, and in the k<sup>th</sup> iteration it
     finds the k<sup>th</sup> smallest value and places it in the k<sup>th</sup>
@@ -99,10 +100,10 @@ def bubble_sort(array):
   <p>
     Like bubble sort, selection sort also preforms (n-k) comparisons in each
     k<sup>th</sup> iteration. Hence, the total number of comparisons in the
-    entire sorting process is also expressed as the sum of the series : (n-1) + (n-2) + (n-3)
-    + ... + 1, and a time complexity of O(n<sup>2</sup>). Despite having a
-    similar number of comparisons, selection sort is usually faster than bubble
-    sort because it requires fewer swaps to be made.
+    entire sorting process is also expressed as the sum of the series : (n-1) +
+    (n-2) + (n-3) + ... + 1, and a time complexity of O(n<sup>2</sup>). Despite
+    having a similar number of comparisons, selection sort is usually faster
+    than bubble sort because it requires fewer swaps to be made.
   </p>
 
   <p>An implementation of the algorithm in Python can be found below</p>
