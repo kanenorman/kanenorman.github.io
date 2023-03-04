@@ -8,27 +8,61 @@ excerpt: How to measure efficiency and scalability
 
 <div class="discussion-content">
   <h4>Introduction</h4>
+
   <p>
-    As a software engineer, it's tough to predict precisely how long an
-    algorithm will take to execute. Many factors can affect execution time, and
-    even the same device may not always provide consistent results. Instead of
-    focusing on the exact execution time, we are often more interested in
-    understanding how an algorithm performs as the input size increases. For
-    instance, will an algorithm that sorts an array of 10 elements take longer
-    to sort an array of 1,000,000 elements? If so, can we quantify how much
-    longer it will take? This is where Big-O notation comes into play. Big-O
-    notation provides a way to describe an algorithm's expected time complexity
-    in terms of the number or magnitude of it inputs.
+    In the
+    <a href="{{ '/programming/data-structures-and-algorithms' | relative_url }}"
+      >previous post</a
+    >
+    , I mentioned that it is difficult to predict the
+    <span style="font-style: italic; font-weight: bold; color: darkorange"
+      >exact</span
+    >
+    amount of time an algorithm takes to execute. Since it is difficult to
+    predict the exact execution time, we often focus on understanding how the
+    execution time scales as the size of the input(s) increases. For instance,
+    will an algorithm that sorts 10 elements take longer to sort 1,000,000
+    elements? If so, can we quantify how much longer it will take? This is where
+    Big-O notation comes into play. Big-O notation provides a way to describe an
+    algorithm's expected execution time in terms of the number or magnitude of
+    it inputs (n).
   </p>
+  <p>
+    The graph presented below illustrates several common Big-O notations. It
+    shows that certain complexities, like O(log n), require a relatively small
+    number of operations, even as the number of elements grows. In contrast, for
+    other complexities like O(n!), the number of required operations increases
+    rapidly as the size of the input increases. This rapid increase in
+    operations can cause poor performance if we handle large amounts of data.
+    For this reason, we need to be aware of situations where Big-O tells us that
+    we may encounter a large number of operations leading to poor performance.
+  </p>
+
+  <div style="text-align: center">
+    <figure>
+      <img
+        src="{{ '/images/Big-O-graph.png' | relative_path}}"
+        alt="Comparison of
+      Big-0 time complexities"
+        style="max-width: -webkit-fill-available"
+      />
+      <figcaption>
+        Image courtesy of
+        <a href="https://www.bigocheatsheet.com">bigocheatsheet.com</a>
+      </figcaption>
+    </figure>
+  </div>
+
+  <p></p>
 
   <p>
     In this post, we will explore the importance of Big-O notation in analyzing
-    algorithm performance. While the mathematical theory behind Big-O notation
-    can be complex, I will focus on providing simple, easy-to-understand
-    examples to help you comprehend the basics of Big-O notation. By using
-    real-world scenarios, I will demonstrate how Big-O notation can help you
-    compare the efficiency of different algorithms and make informed decisions
-    when implementing them. By the end of this post, you should have a solid
+    algorithm performance. Although the mathematical theory behind Big-O
+    notation can be complicated, I will provide simple, easy-to-understand
+    examples to help you grasp the basics of Big-O notation. By using real-world
+    scenarios, I will demonstrate how Big-O notation can help you compare the
+    efficiency of different algorithms and make informed decisions when
+    implementing them. By the end of this post, you should have a solid
     understanding of Big-O notation and its significance in computer science.
   </p>
 
@@ -47,7 +81,9 @@ excerpt: How to measure efficiency and scalability
   <ul>
     <li>
       <b>Best-case time complexity (Ω):</b> represents the minimum possible
-      runtime of an algorithm under ideal conditions.
+      runtime of an algorithm under ideal conditions. It occurs when the
+      algorithm's performance is optimal due to input values that make it run
+      faster than usual.
     </li>
     <li>
       <b>Average-case time complexity (θ):</b> represents the performance we can
@@ -55,56 +91,65 @@ excerpt: How to measure efficiency and scalability
     </li>
     <li>
       <b>Worst-case time complexity (O):</b> represents the maximum possible
-      runtime of an algorithm under the least favorable conditions.
+      runtime of an algorithm under the least favorable conditions. It occurs
+      when the algorithm's performance is the worst due to input values that
+      make it run slower than usual.
     </li>
   </ul>
 
-  Here is an example to demonstrate these three cases. Consider the List method
-  <code>index()</code>, which searches for a target value in a Python List and
-  returns the index of its first occurrence. The performance of the method can
-  be evaluated based on the best, average, and worst-case scenarios:
+  <p>
+    Here is an example to demonstrate these three cases. Consider the Python
+    List method
+    <code>index()</code>, which searches for a target value in a Python List and
+    returns the index of its first occurrence. The performance of the method can
+    be evaluated based on the best, average, and worst-case scenarios:
+  </p>
 
   <ul>
     <li>
       Best-case scenario: occurs when the element we are looking for is the
-      first element in the list, and the method returns almost immediately.
+      first element in the list. We won't have to search through any other
+      values in the list, and the method can return almost immediately,
+      resulting in the minimum possible runtime.
     </li>
     <li>
       Average-case scenario: occurs when the value we are searching for is
-      located somewhere in the middle of the list. On average, we will have to
-      search through about half the elements until we find it.
+      located somewhere in the middle of the list. In this scenario, we will
+      have to search through about half the elements in the list until we find
+      our target value, resulting in an average runtime.
     </li>
     <li>
       Worst-case scenario: occurs when the element is not in the list or occurs
       towards the end. In this case, the method will have to search through a
-      larger portion of the list, leading to the longest possible runtime.
+      large portion of the list, leading to the longest possible runtime.
     </li>
   </ul>
 
   <pre>
 {%highlight python%}
-# 100 numbers
+# list that looks like [0, 1, 2, 3, ...97, 98, 99]
 numbers = [number for number in range(100)]
 
-# elements in array
+# specific elements in array to use as inputs
 first = 0
 middle = 50
 last = 99
 
-# three scenarios
+# create three scenarios based on inputs
 best_case = numbers.index(first)
 average_case = numbers.index(middle)
 worst_case = numbers.index(last)
 {%endhighlight%}
   </pre>
-
   <p>
-    Below we can see the average execution time of the best, average, and
-    worst-case scenarios
+    Below we can see the execution times for the <code>best_case</code>,
+    <code>average_case</code>, and <code>worst_case</code> scenarios. As
+    expected, the best-case scenario executed the fastest, followed by the
+    average case and the worst-case, respectively.
   </p>
 
   <iframe
-    width="100%"
+    width=" 100%"
     height="500"
     frameborder="0"
     seamless="seamless"
@@ -133,16 +178,18 @@ worst_case = numbers.index(last)
   </p>
   <hr />
   <h4>Rules for Big-O Notation</h4>
-  The following guidelines should be kept in mind while using Big-O notation:
+  The following guidelines should be kept in mind while determining Big-O
+  notation:
   <ul>
     <li>
       <b>Ignore non-dominant terms and constants:</b> When analyzing the time
       complexity of an algorithm, we can safely ignore the non-dominant terms
-      and constants. This allows us to focus on the most significant factor that
-      affects the run time of the algorithm. For example, O(2n + 1) can be
+      and constants. This allows us to focus on the most significant factors
+      that affects the run time of the algorithm. For example, O(2n + 1) can be
       simplified to O(n), and O(n<sup>2</sup> + n) can be simplified to
-      O(n<sup>2</sup>). By doing so, we only focus on the dominant terms that
-      significantly impact runtime performance.
+      O(n<sup>2</sup>) By doing so, we only focus on the most dominant terms
+      that significantly impact runtime performance and provide a general
+      expected runtime rather than a specific one.
     </li>
     <li>
       <b>Treat different inputs as separate variables:</b> When analyzing the
@@ -155,8 +202,8 @@ worst_case = numbers.index(last)
       <b>Sum or multiply steps:</b> When an algorithm has multiple steps, we can
       either sum or multiply the complexities of each step to obtain the overall
       time complexity. For example, if an algorithm repeats an O(log n)
-      operation n times, the overall time complexity would be O(n) x O(log(n)) =
-      O(n log (n)).
+      operation n times, the overall time complexity would be O(n) x O(log n) =
+      O(n log n).
     </li>
   </ul>
   <p>
@@ -244,8 +291,9 @@ def sum_array(array):
 
   <p>
     Another example of a O(n) algorithm is the linear search algorithm, which
-    iterates through an array until it finds the value it is looking for. Here's
-    an implementation of the algorithm in Python:
+    iterates through an array until it finds the value it is looking for
+    (similar to the Python <code>index()</code> method we discussed earlier).
+    Here's an implementation of the algorithm in Python:
   </p>
   <pre>
     {% highlight python %}
@@ -258,11 +306,11 @@ def linear_search(array, value):
 </pre
   >
   <p>
-    In the worst-case scenario for a linear search algorithm, where the target
-    value is located at the end of the array, the algorithm would need to
-    perform n iterations to find it, where n is the number of elements in the
-    array. Therefore, the worst-case time complexity of the linear search
-    algorithm is O(n), where n is the input size.
+    In the worst-case scenario for a linear search algorithm, the target value
+    is located at the end of the array. This means the algorithm would need to
+    perform n iterations to find our target value, where n is the number of
+    elements in the array. Therefore, the worst-case time complexity of the
+    linear search algorithm is O(n).
   </p>
   <p>
     Here's a tricky question: If we add an extra constant operation to the
@@ -329,8 +377,7 @@ def find_pairs_with_sum(array, target_sum):
 
     return pairs
     {% endhighlight %}
-</pre
-  >
+  </pre>
   <p>
     In this function, for each element in the array, it checks every other
     element to see if their sum is equal to the target sum. We can calculate the
@@ -409,9 +456,14 @@ def find_pairs_with_sum(array, target_sum):
     working with matrices or two-dimensional arrays.
   </p>
   <div style="text-align: center">
-    <img src={{"/images/mxn_matrix.png" | relative_path}} alt="Element wise
-    representation of (mxn) matrix" style="max-width: -webkit-fill-available;"
-    width="50%" height="50%" />
+    <img
+      src="{{ '/images/mxn_matrix.png' | relative_path}}"
+      alt="Element wise
+    representation of (mxn) matrix"
+      style="max-width: -webkit-fill-available"
+      width="50%"
+      height="50%"
+    />
   </div>
   <p>
     For example, an O(mn) algorithm is one that iterates through every element
@@ -429,23 +481,23 @@ def print_matrix(matrix):
     </pre
   >
   <p>
-    It's important to note a few facts about O(mn). First, O(n<sup>2</sup>) is a
-    specific scenario of the more general O(mn) notation. When m is equal to n,
-    O(mn) simplifies to O(nn) = O(n<sup>2</sup>). Secondly, while O(mn) is
+    It's important to note a few facts about O(mn). First, while O(mn) is
     commonly used to express the time complexity of an algorithm with two
     variables, other notations such as O(m + n), O(m log n), or O(n log m) may
-    be more appropriate in certain cases.
+    be more appropriate in certain cases. We must carefully choose the correct
+    way to sum or multiply the variables based on the steps our algorithm
+    performs.
   </p>
 
   <p>
-    Finally, it's important to note that O(mn) can result in a poor or average
+    Secondly, it's important to note that O(mn) can result in a poor or average
     runtime, particularly when m and n are large. In such cases, the runtime
     behaves more like O(n<sup>2</sup>). On the other hand, if one variable is
     significantly large, and the other is very small, the runtime behaves more
     like O(n) or O(m), depending on which variable is larger. The sizes of m and
-    n can have a significant impact on the execution time, as demonstrated in
-    the plot below, which shows the slower execution speed of traversing an m x
-    n matrix as the size of m and n increases.
+    n can have a significant impact on the execution time. As demonstrated in
+    the plot below, the execution speed of traversing an m x n matrix slows down
+    as the size of m and n increase.
   </p>
   <iframe
     width="100%"
@@ -458,14 +510,14 @@ def print_matrix(matrix):
   <p>
     Overall, the O(mn) notation is helpful to understand the time complexity of
     an algorithm that is dependent on two variables. It's important to consider
-    the notation when dealing with complex algorithms, especially when the input
-    size is large.
+    the notation when dealing matrices or two-dimensional arrays, especially
+    when their size is large.
   </p>
 
   <hr />
-  <h4>O(log(n))</h4>
+  <h4>O(log n)</h4>
   <p>
-    O(log(n)) is a measure of logarithmic time complexity, indicating that the
+    O(log n) is a measure of logarithmic time complexity, indicating that the
     time taken by an algorithm grows in proportion to the logarithm of the input
     size. As the input size increases, the time taken by the algorithm will
     increase much slower than linearly, making it efficient for large inputs.
@@ -476,14 +528,24 @@ def print_matrix(matrix):
   </p>
 
   <p>
-    A popular example of an algorithm with O(log(n)) complexity is binary
-    search. It repeatedly divides a sorted array in half until the target value
-    is found. As the size of the array doubles, the number of steps needed to
-    find the target value increases only by one, making binary search an
-    extremely efficient algorithm for large inputs. An implementation is
+    A popular example of an algorithm with O(log n) complexity is binary search.
+    It repeatedly divides a sorted array in half until the target value is
+    found. As the size of the array doubles, the number of steps needed to find
+    the target value increases only by one, making binary search an extremely
+    efficient algorithm for large inputs. An implementation and animation are
     provided below, but don't worry too much about understanding the code just
     yet. (This algorithm will be discussed in detail in a future post).
   </p>
+  <div style="text-align: center">
+    <a
+      title="Mazen Embaby, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons"
+      href="https://commons.wikimedia.org/wiki/File:Binary-search-work.gif"
+      ><img
+        width="60%"
+        alt="Binary-search-work"
+        src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Binary-search-work.gif"
+    /></a>
+  </div>
   <pre>
       {% highlight python %}
 def binary_search(array, value):
@@ -510,7 +572,7 @@ def binary_search(array, value):
       {% endhighlight %}
   </pre>
   <p>
-    The graph below shows the performance of our O(log(n))
+    The graph below shows the performance of our O(log n)
     <code>binary_search()</code> algorithm compared to O(n)
     <code>linear search()</code>
     as the size of our input array increases increases. As expected, the O(log
@@ -526,28 +588,28 @@ def binary_search(array, value):
   ></iframe>
 
   <p>
-    For those who are interested in a mathematical explanation of the log
-    function, recall that log<sub>b</sub>(n) tells us how many times we can
-    subdivide n by b. For example, if we wanted to know how many times we can
-    divide 100 by 2, we simply calculate log<sub>2</sub>(100), which equals 6.44
-    (approximately). This means that binary search would subdivide an array of
-    size 100 at most 7 times to find a maximum value, making it a very efficient
-    algorithm for large inputs.
+    For those who are interested in a mathematical explanation of the
+    logarithmic function, recall that log<sub>b</sub>(n) tells us how many times
+    we can subdivide n by b. For example, if we wanted to know how many times we
+    can divide 100 by 2, we simply calculate log<sub>2</sub>(100), which equals
+    6.44 (approximately). This means that binary search would subdivide an array
+    of size 100 at most 7 times to find a maximum value, making it a very
+    efficient algorithm for large inputs.
   </p>
   <hr />
-  <h4>O(n log(n))</h4>
+  <h4>O(n log n)</h4>
   <p>
-    Understanding the concept of O(log(n)) helps in comprehending the time
-    complexity of algorithms with O(n log(n)). Such algorithms execute O(log(n))
+    Understanding the concept of O(log n) helps in comprehending the time
+    complexity of algorithms with O(n log n). Such algorithms execute O(log n)
     operations n times. Sorting algorithms, like merge sort and quicksort, are
     common examples of algorithms with an average-case time complexity of O(n
-    log(n)). Although O(n log(n)) is more complex than O(n), it is still
+    log n). Although O(n log n) is more complex than O(n), it is still
     considered a fairly good runtime for large input sizes because the
     logarithmic factor grows much slower than linearly.
   </p>
   <p>
-    We'll explore specific O(n log(n)) algorithms in future posts, but for now,
-    it's crucial to understand that the time complexity of O(n log(n)) scales
+    We'll explore specific O(n log n) algorithms in future posts, but for now,
+    it's crucial to understand that the time complexity of O(n log n) scales
     proportionally to n times the logarithm of n.
   </p>
   <hr />
@@ -585,9 +647,14 @@ def fibonacci(n):
     increment of n.
   </p>
   <div style="text-align: center">
-    <img src={{"/images/fibonacci.png" | relative_path}} alt="Recursive tree of
-    fibonacci sequence" style="max-width: -webkit-fill-available;" width="80%"
-    height="80%" />
+    <img
+      src="{{ '/images/fibonacci.png' | relative_path}}"
+      alt="Recursive tree of
+    fibonacci sequence"
+      style="max-width: -webkit-fill-available"
+      width="100%"
+      height="100%"
+    />
   </div>
 
   <p>
@@ -640,32 +707,22 @@ def fibonacci(n):
   <hr />
   <h4>Good, Bad, and Ugly</h4>
   <p>
-    By now, you should have a good understanding of how to determine the time
-    complexity of algorithms. However, you may still wonder how each time
-    complexity relates to one another. Generally, we classify these time
-    complexities according to the graph shown below.
+    By now, you should have a solid understanding of how to determine the time
+    complexity of algorithms. However, you may still wonder what constitutes an
+    exceptional time complexity. As a general rule of thumb, it's best to avoid
+    any algorithm with a time complexity worse than O(n<sup>2</sup>). Although
+    sometimes we may not be able to avoid using inefficient algorithms, it's
+    crucial to be mindful of the size of inputs we provide. Our goal is to
+    design algorithms with the best possible time complexity while still
+    achieving the desired results.
   </p>
-
-  <div style="text-align: center">
-    <figure>
-      <img src={{"/images/Big-O-graph.png" | relative_path}} alt="Comparison of
-      Big-0 time complexities" style="max-width: -webkit-fill-available;" />
-      <figcaption>
-        Image courtesy of
-        <a href="https://www.bigocheatsheet.com/">bigocheatsheet.com</a>
-      </figcaption>
-    </figure>
-  </div>
-
   <p>
-    As a general rule of thumb, it's best to avoid any algorithm with a time
-    complexity of O(n<sup>2</sup>) or worse. Although sometimes we may not be
-    able to avoid these inefficient algorithms, it's essential to be careful
-    about the size of the inputs we provide. In the end, our goal is to design
-    algorithms that have the best possible time complexity while still achieving
-    the desired results. With the help of Big-O notation, we can compare
-    different algorithms and make informed decisions about which ones to use for
-    particular tasks.
+    While it's ideal to avoid algorithms with a time complexity worse than
+    O(n<sup>2</sup>), there are cases where it's unavoidable. In these
+    situations, it's essential to be mindful of the size of your inputs and
+    optimize your code for the best possible performance while still delivering
+    the expected results. There are techniques that will be introduced in later
+    post that can help optimize code and reduce its time complexity.
   </p>
 
   <hr />
