@@ -194,7 +194,7 @@
 .highlight .nn {
   color: #f4bf75;
 }
-.highlight .nc {
+.highlight .nc, .bp{
   color: #f4bf75;
 }
 .highlight .no {
