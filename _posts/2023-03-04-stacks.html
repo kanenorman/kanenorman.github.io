@@ -43,7 +43,7 @@ excerpt: Last in first out? That doesn't seem very fair!
       title="Imk3nnyma, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons"
       href="https://commons.wikimedia.org/wiki/File:A_face-up_deck_of_cards.jpg"
       ><img
-        width="512"
+        style="max-width: -webkit-fill-available"
         alt="A face-up deck of cards"
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/A_face-up_deck_of_cards.jpg/512px-A_face-up_deck_of_cards.jpg"
     /></a>
@@ -128,11 +128,12 @@ def is_full(self) -> bool:
   <pre>
 {% highlight python %}
 def push(self, new_item: Any) -> None:
-    if not self.is_full():
+    if self.is_full():
+         raise Exception("Cannot push to a full stack.")
+    else:
         self._top += 1
         self._stack_items[self._top] = new_item
-    else:
-        raise Exception("Cannot push to a full stack.")
+       
 {% endhighlight %}
 </pre
   >
@@ -150,13 +151,13 @@ def push(self, new_item: Any) -> None:
   <pre>
 {% highlight python %}
 def pop(self) -> Any:
-    if not self.is_empty():
+    if self.is_empty():
+        raise Exception("Cannot pop value from empty stack")
+    else:
         top_copy = self._stack_items[self._top]
         self._stack_items[self._top] = None
         self._top -= 1
         return top_copy
-    else:
-        raise Exception("Cannot pop value from empty stack")
 {% endhighlight %}
   </pre>
 
@@ -169,10 +170,11 @@ def pop(self) -> Any:
   <pre>
 {% highlight python %}
 def peek(self) -> Any:
-    if not self.is_empty():
-        return self._stack_items[self._top]
+    if self.is_empty():
+        raise Exception("Cannot peek into an empty stack")  
     else:
-        raise Exception("Cannot peek into an empty stack")
+        return self._stack_items[self._top]
+        
 {% endhighlight %}
 
 </pre
@@ -198,7 +200,7 @@ def __str__(self) -> str:
         else:
             result += f"{self._stack_items[index]}\n"
 
-    return result.rstrip() + "\n"
+    return result.rstrip()
 {% endhighlight %}
 
 
@@ -209,7 +211,8 @@ def __str__(self) -> str:
     Putting it all together, the following implementation shows one way to
     implement a stack using a Python List object. However, it's important to
     note that this is not the only way to implement a stack. Another common
-    implementation uses a singly linked list.
+    implementation uses a singly linked list which is another data structure we
+    will cover in future posts.
   </p>
 
   <pre>
@@ -230,11 +233,11 @@ class Stack:
         Raises:
             Exception: Raised if attempting to push to a full stack
         """
-        if not self.is_full():
+        if self.is_full():
+            raise Exception("Cannot push to full stack")
+        else:
             self._top += 1
             self._stack_items[self._top] = new_item
-        else:
-            raise Exception("Cannot push to full stack")
 
     def pop(self) -> Any:
         """Removes and returns top value from the stack
@@ -242,13 +245,13 @@ class Stack:
         Raises:
             Exception: Raised if attempting to pop from empty stack
         """
-        if not self.is_empty():
+        if self.is_empty():
+            raise Exception("Cannot pop value from empty stack")
+        else:
             top_copy = self._stack_items[self._top]
             self._stack_items[self._top] = None
             self._top -= 1
             return top_copy
-        else:
-            raise Exception("Cannot pop value from empty stack")
 
     def peek(self) -> Any:
         """View top value on stack without removing
@@ -256,10 +259,10 @@ class Stack:
         Raises:
             Exception: Raised if attempting to peek into empty stack
         """
-        if not self.is_empty():
-            return self._stack_items[self._top]
-        else:
+        if self.is_empty():
             raise Exception("Cannot peek into empty stack")
+        else:
+            return self._stack_items[self._top]
 
     def is_empty(self) -> bool:
         return self._top < 0
@@ -279,7 +282,7 @@ class Stack:
             else:
                 result += f"{self._stack_items[index]}\n"
 
-        return result.rstrip() + "\n"
+        return result.rstrip()
   {% endhighlight %}
 </pre
   >
@@ -314,7 +317,7 @@ class Stack:
     </table>
   </div>
   <p>
-    Stacks provide fast access to the top element, making insertion, removal,
+    Stacks provide direct access to the top element, making insertion, removal,
     and access O(1) algorithms. However, this fast and restricted access means
     that searching through a stack can be slow. In the worst-case scenario, we
     may need to pop off all n elements in the stack to find the desired value,
