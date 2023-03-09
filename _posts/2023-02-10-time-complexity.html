@@ -143,9 +143,9 @@ worst_case = numbers.index(last)
   </pre>
   <p>
     Below we can see the execution times for the <code>best_case</code>,
-    <code>average_case</code>, and <code>worst_case</code> scenarios. As
-    expected, the best-case scenario executed the fastest, followed by the
-    average case and the worst-case, respectively.
+    <code>average_case</code>, and <code>worst_case</code> scenarios from the
+    code snippet above. As expected, the best-case scenario executed the
+    fastest, followed by the average case and the worst-case, respectively.
   </p>
 
   <iframe
@@ -160,34 +160,33 @@ worst_case = numbers.index(last)
   <p>
     By understanding the performance characteristics of the
     <code>index()</code> method under different scenarios, we can make informed
-    decisions about when to use it in our code. Overall, understanding the best,
+    decisions about how to use it in our code. Overall, understanding the best,
     average, and worst-case scenarios can help us to optimize our code and avoid
     unexpected performance issues.
   </p>
 
   <p>
-    In this post, we'll primarily focus on the worst-case time complexity, as it
-    provides an upper bound on the amount of time that an algorithm will take to
-    complete. Understanding the worst-case scenario is particularly important in
-    time-critical applications, where we need to guarantee that the algorithm
-    will complete within a certain time frame. However, we should keep in mind
-    that the worst-case scenario may not always be the most common or
+    In this post, we'll primarily focus on the worst-case time complexity,
+    big-0, as it provides an upper bound on the amount of time that an algorithm
+    will take to complete. Understanding the worst-case scenario is particularly
+    important in time-critical applications, where we need to guarantee that the
+    algorithm will complete within a certain time frame. However, we should keep
+    in mind that the worst-case scenario may not always be the most common or
     representative of real-world performance. Therefore, we should also consider
     the average-case scenario to ensure that our algorithm meets performance
     requirements in typical use cases.
   </p>
   <hr />
   <h4>Rules for Big-O Notation</h4>
-  The following guidelines should be kept in mind while determining Big-O
-  notation:
+  We calculate big-O using the following set of rules:
   <ul>
     <li>
-      <b>Ignore non-dominant terms and constants:</b> When analyzing the time
+      <b>Ignore non-dominant terms and constants:</b> When calculating the time
       complexity of an algorithm, we can safely ignore the non-dominant terms
       and constants. This allows us to focus on the most significant factors
       that affects the run time of the algorithm. For example, O(2n + 1) can be
       simplified to O(n), and O(n<sup>2</sup> + n) can be simplified to
-      O(n<sup>2</sup>) By doing so, we only focus on the most dominant terms
+      O(n<sup>2</sup>) By doing so, we only focus on the most dominant term(s)
       that significantly impact runtime performance and provide a general
       expected runtime rather than a specific one.
     </li>
@@ -710,15 +709,15 @@ def fibonacci(n):
     By now, you should have a solid understanding of how to determine the time
     complexity of algorithms. However, you may still wonder what constitutes an
     exceptional time complexity. As a general rule of thumb, it's best to avoid
-    any algorithm with a time complexity worse than O(n<sup>2</sup>). Although
+    any algorithm with a time complexity of O(n<sup>2</sup>) or worse. Although
     sometimes we may not be able to avoid using inefficient algorithms, it's
     crucial to be mindful of the size of inputs we provide. Our goal is to
     design algorithms with the best possible time complexity while still
     achieving the desired results.
   </p>
   <p>
-    While it's ideal to avoid algorithms with a time complexity worse than
-    O(n<sup>2</sup>), there are cases where it's unavoidable. In these
+    While it's ideal to avoid algorithms with a time complexity of
+    O(n<sup>2</sup>) or worse, there are cases where it's unavoidable. In these
     situations, it's essential to be mindful of the size of your inputs and
     optimize your code for the best possible performance while still delivering
     the expected results. There are techniques that will be introduced in later
