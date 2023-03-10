@@ -1,0 +1,376 @@
+---
+layout: posts
+title: "Data Structures and Algorithms : Queue (Part I)"
+author: Kane Norman
+categories: [programming]
+excerpt: First one in, first one out.
+---
+
+<div class="discussion-content">
+  <h4>Introduction</h4>
+
+  <p>
+    Queues are a important data structure used for organizing elements in a
+    specific order. In this post, we'll provide an introduction to queues,
+    including their strengths, weaknesses, and time complexities for essential
+    operations. We'll walkthrough a simple implementation of the data structure
+    and explore its performance limitations. We'll then discuss ways to improve
+    the performance of the queue and alternative implementations that can
+    enhance its capabilities. By the end of this post, you'll have a strong
+    understanding of queues, their performance characteristics, and how to
+    optimize their design for your specific needs.
+  </p>
+  <hr />
+  <h4>Queues and FIFO</h4>
+  <p>
+    Queues are similar to stacks, but unlike stacks, they prioritize oldest
+    elements in the structure rather than the newest. This prioritization
+    pattern is often referred to as "first in, first out" or
+    <span style="color: darkorange; font-weight: bold">FIFO</span>. To
+    illustrate, think of waiting in line (or "queue" for British readers) to
+    enter a coffee shop. The first person to enter the line is the first to be
+    served, followed by the second person, and so on. New customers must join
+    the rear of the line and wait until the customers in front of them are
+    served before it is their turn. In this way, we place a higher priority on
+    customers who entered the line first.
+  </p>
+  <div style="text-align: center">
+    <figure>
+      <img
+        src="{{ '/images/people-in-queue.jpg' | relative_path}}"
+        alt="people waiting in line"
+        style="max-width: -webkit-fill-available; height: 30vw"
+      />
+      <figcaption>
+        <span style="font-size: smaller">
+          Photo by
+          <a
+            href="https://unsplash.com/@meizhilang?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+            >Meizhi Lang</a
+          >
+          on
+          <a
+            href="https://unsplash.com/photos/R72P3yZyYJ8?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+            >Unsplash</a
+          >
+        </span>
+      </figcaption>
+    </figure>
+  </div>
+  <hr />
+  <h4>Queue Operations</h4>
+  <p>
+    Similar to stacks, queues provide restricted access to their data, allowing
+    only the oldest added item to be accessed. This limited access results in
+    only three primary operations that can be performed on a queue:
+  </p>
+  <ul>
+    <li><b>enqueue:</b> add a new value to the rear of the queue.</li>
+
+    <li>
+      <b>dequeue:</b> remove and return the front element (oldest element) of
+      the queue.
+    </li>
+
+    <li>
+      <b>peek:</b> return the front element of the queue, but don't remove it.
+    </li>
+  </ul>
+  <hr />
+  <h4>Implementation</h4>
+  <p>
+    There are several ways to implement the queue data structure, each with its
+    own set of advantages and disadvantages. In this post, we will explore some
+    of the most common implementations of the data structure. To maintain a
+    consistent interface across our implementations, it is best to define an
+    abstract base class that establishes the interface for our various
+    implementations. This will ensure some consistency across our
+    implementations.
+  </p>
+  <pre>
+{% highlight python %}
+from typing import Any
+from abc import ABC, abstractmethod
+
+
+class AbstractQueue(ABC):
+    @abstractmethod
+    def enqueue(self, new_item) -> None:
+        pass
+
+    @abstractmethod
+    def dequeue(self) -> Any:
+        pass
+
+    @abstractmethod
+    def peek(self) -> Any:
+        pass
+
+    @abstractmethod
+    def is_empty(self) -> bool:
+        pass
+
+{% endhighlight %}
+</pre
+  >
+
+  <p>
+    We will start off by implementing the most basic form of the queue, called a
+    simple or linear queue. To get started, we can create a class called
+    <code>SimpleQueue</code> that includes one attribute named
+    <code>_items</code> used for storing the elements in the queue.
+  </p>
+
+  <pre>
+{% highlight python %}
+class SimpleQueue(AbstractQueue):
+    def __init__(self) -> None:
+        self._items = []
+{% endhighlight %}
+</pre
+  >
+
+  <p>
+    Next, we will implement our abstract methods, starting with the
+    <code>is_empty</code> method, which simply tells us if the queue contains
+    any elements.
+  </p>
+  <pre>
+{% highlight python %}
+def is_empty(self) -> bool:
+    return len(self._items) == 0
+{% endhighlight %}
+  </pre>
+  <p>
+    Next, we can implement the <code>enqueue</code> method, which adds an item
+    into the rear of queue. To accomplish this, we can simply append the new
+    item to <code>self._items</code>.
+  </p>
+  <pre>
+{% highlight python %}
+def enqueue(self, new_item: Any) -> None:
+    self._items.append(new_item)
+{% endhighlight %}
+  </pre>
+  <p>
+    The implementation of the <code>dequeue</code> method is also
+    straightforward. We simply remove the front-most item from the queue, but we
+    need to ensure that we don't try to remove elements from an empty queue.
+    Therefore, if the queue is empty, we need to raise an exception. Otherwise,
+    we can remove and return the oldest element from the front of the queue,
+    which is stored at index 0 in <code>self._items</code>.
+  </p>
+  <pre>
+{% highlight python %}
+def dequeue(self) -> Any:
+    if self.is_empty():
+        raise Exception("Can not dequeue empty queue")
+    else:
+        return self._items.pop(0)
+{% endhighlight %}
+  </pre>
+  <p>
+    The final abstract method we need to implement is <code>peek</code>, which
+    functions similarly to <code>dequeue</code>. The key difference is that
+    <code>peek</code>
+    only returns the oldest element in the queue. It does not remove it.
+  </p>
+  <pre>
+{% highlight python %}
+def peek(self) -> Any:
+    if self.is_empty():
+        raise Exception("Can not peek into empty queue")
+    else:
+        return self._items[0]
+{% endhighlight %}
+  </pre>
+
+  <p>
+    To finish our class, we can implement two dunder methods
+    <code>__len__</code> to tell us the number of elements stored in the queue
+    and <code>__str__</code> to print a visual representation of the elements.
+  </p>
+  <pre>
+{% highlight python %}
+def __len__(self) -> int:
+    return len(self._items)
+
+def __str__(self) -> str:
+    return ", ".join(self._items)
+{% endhighlight %}
+  </pre>
+
+  <p>
+    This implementation is a straightforward way to create a simple queue using
+    Python's built-in list object. However, it's important to note that there
+    are better ways to implement a simple queue. Although this particular
+    implementation is straightforward, it's worth mentioning that the
+    <code>dequeue</code>
+    method's efficiency can be significantly improved. We'll dive into the
+    details of why in the next section of this post.
+  </p>
+
+  <pre>
+{% highlight python %}
+from typing import Any
+
+from data_structures._abstract_queue import AbstractQueue
+
+
+class LinearQueue(AbstractQueue):
+    def __init__(self) -> None:
+        self._items = []
+
+    def enqueue(self, new_item: Any) -> None:
+        self._items.append(new_item)
+
+    def dequeue(self) -> Any:
+        if self.is_empty():
+            raise Exception("Can not dequeue empty queue")
+        else:
+            return self._items.pop(0)
+
+    def peek(self) -> Any:
+        if self.is_empty():
+            raise Exception("Can not peek into empty queue")
+        else:
+            return self._items[0]
+
+    def is_empty(self) -> bool:
+        return len(self._items) == 0
+
+    def __len__(self) -> int:
+        return len(self._items)
+
+    def __str__(self) -> str:
+        return ", ".join(self._items)
+{% endhighlight %}
+  </pre>
+
+  <div>
+    <hr />
+    <h4>Big-O Analysis</h4>
+    <p>
+      Below are the time-complexities of our current implementation. Access and
+      insertion are extremely efficient, but search and deletion have poor and
+      average time complexities, respectively.
+    </p>
+    <div class="table-wrapper">
+      <table class="alt">
+        <thead>
+          <tr>
+            <th>Operation</th>
+            <th>Time Complexity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Access</td>
+            <td>O(1)</td>
+          </tr>
+          <tr>
+            <td>Insert</td>
+            <td>O(1)</td>
+          </tr>
+          <tr>
+            <td>Search</td>
+            <td>O(n<sup>2</sup>)</td>
+          </tr>
+          <tr>
+            <td>Delete</td>
+            <td>O(n)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p>
+    Accessing elements in a queue is possible in constant time, regardless of
+    its size. This is because the <code>peek</code> method controls access and
+    simply returns the item stored at index 0 of the Python list
+    <code>self._items</code>. To understand why this operation takes O(1) time,
+    we can take a look at how Python's built-in list object is implemented.
+    Python is implemented using the C programming language, and the List object
+    is implemented using C's contiguous array, as explained in the
+    <a
+      href="https://docs.python.org/3/faq/design.html#how-are-lists-implemented-in-cpython"
+      >Python documentation</a
+    >. As we learned from our post on
+    <a href="{{'/programming/arrays' | relative_url}}">arrays</a>, this
+    contiguous memory storage allows for O(1) access by quickly returning the
+    value stored at the base memory address of the contiguous array.
+  </p>
+
+  <p>
+    Insertion into the queue is also achieved in constant time. When the
+    <code>enqueue</code> method calls <code>append</code> on
+    <code>self._items</code>, under the hood, Python is able to jump directly to
+    the end of the underlying contiguous array that implements
+    <code>self._items</code>. Thus, we can achieve O(1) constant
+    time-complexity.
+  </p>
+  <p>
+    As mentioned in the previous section, our current implementation of the
+    queue is inefficient for deleting data. To delete data, we rely on the
+    <code>dequeue</code> method, which calls the <code>pop</code> method of
+    <code>self._items</code>. The bottleneck in our performance comes from the
+    fact that <code>pop</code> has a worst-case time complexity of O(n). This is
+    because deleting the first element from a contiguous array requires shifting
+    the remaining n-1 values to the left in order to maintain the contiguous
+    memory storage used by Python's List implementation.
+  </p>
+  <p>
+    The slow deletion process also affects our ability to search through the
+    queue. Since we only have access to the first element in the queue, we have
+    to dequeue each element until we find the value we are searching for. In the
+    worst-case scenario, the element we are looking for is not in the queue, and
+    we will have dequeued all n elements. Given that dequeuing is an O(n)
+    operation, and we have n elements in the queue, we can expect searching to
+    have a worst-case time complexity of O(n*n) = O(n<sup>2</sup>).
+  </p>
+  <hr />
+  <h4>Improving Our Queue Implementation</h4>
+  <p>
+    Our current queue implementation suffers from slow deletion and search
+    operations. Fortunately, there are a few ways to improve it. One option is
+    to use a linked list instead of Python's built-in list. Unlike Python's
+    built-in list, linked lists allow for deletion of the first element without
+    shifting the remaining n-1 elements. However, since linked lists have not
+    been covered in this series yet, we won't dive into this solution just yet.
+  </p>
+  <p>
+    Alternatively, we could simply delete the first element in the array without
+    shifting the remaining n-1 elements, which would reduce our time complexity
+    to O(1). However, this would cause another issue of wasting too much memory.
+    If we don't shift the remaining n-1 elements, the underlying array for our
+    queue would have a large amount of unused space allocated in the front. To
+    remedy this issue, we can implement the queue using a circular array. A
+    circular array is an array data structure that uses modulo arithmetic to
+    wrap around to the beginning of the array when it reaches the end. This
+    approach allows us to reuse the empty space at the beginning of the array
+    without shifting elements as they are dequeued, effectively making the array
+    circular. With this approach, we can achieve constant time-complexity for
+    both insertion and deletion operations, making the queue more efficient
+    overall.
+  </p>
+  <p>
+    Using either of the alternate implementations described above we can reduce
+    deletion to O(1) and search to O(n) time-complexity. If this doesn't make
+    sense at this point, don't worry. We are going to cover circular arrays in
+    detail and use them to improve our queue implementation in the next post.
+  </p>
+  <hr />
+  <h4>Conclusion</h4>
+  <p>
+    In this article, we explored the concept of queues and a simple
+    implementation. We learned that queues are a powerful tool for managing data
+    structures in a first-in, first-out (FIFO) order. We also saw that Python's
+    built-in list data type can be used to implement a queue, but the resulting
+    implementation suffers from slow deletion and search operations. To improve
+    performance, we discussed the use of linked lists and circular arrays for
+    alternative implementations for queues. In the next post, we will build upon
+    the idea of a circular array and use it to improve the performance of our
+    <code>SimpleQueue</code> implementation.
+  </p>
+</div>
