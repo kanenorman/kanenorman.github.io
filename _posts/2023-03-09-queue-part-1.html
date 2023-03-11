@@ -27,7 +27,7 @@ excerpt: First one in, first one out.
     elements in the structure rather than the newest. This prioritization
     pattern is often referred to as "first in, first out" or
     <span style="color: darkorange; font-weight: bold">FIFO</span>. To
-    illustrate, think of waiting in line (or "queue" for British readers) to
+    provide an analogy, think of waiting in line (or "queue" for British readers) to
     enter a coffee shop. The first person to enter the line is the first to be
     served, followed by the second person, and so on. New customers must join
     the rear of the line and wait until the customers in front of them are
@@ -80,7 +80,7 @@ excerpt: First one in, first one out.
   <h4>Implementation</h4>
   <p>
     There are several ways to implement the queue data structure, each with its
-    own set of advantages and disadvantages. In this post, we will explore some
+    own set of advantages and disadvantages. In this series of  post, we will explore some
     of the most common implementations of the data structure. To maintain a
     consistent interface across our implementations, it is best to define an
     abstract base class that establishes the interface for our various
@@ -337,7 +337,7 @@ class LinearQueue(AbstractQueue):
     to use a linked list instead of Python's built-in list. Unlike Python's
     built-in list, linked lists allow for deletion of the first element without
     shifting the remaining n-1 elements. However, since linked lists have not
-    been covered in this series yet, we won't dive into this solution just yet.
+    been covered in this series, we won't dive into this solution just yet.
   </p>
   <p>
     Alternatively, we could simply delete the first element in the array without
@@ -346,8 +346,9 @@ class LinearQueue(AbstractQueue):
     If we don't shift the remaining n-1 elements, the underlying array for our
     queue would have a large amount of unused space allocated in the front. To
     remedy this issue, we can implement the queue using a circular array. A
-    circular array is an array data structure that uses modulo arithmetic to
-    wrap around to the beginning of the array when it reaches the end. This
+    circular array is an array data structure that uses 
+    <a href="https://en.wikipedia.org/wiki/Modular_arithmetic">modular arithmetic</a> 
+    to wrap around to the beginning of the array when it reaches the end. This
     approach allows us to reuse the empty space at the beginning of the array
     without shifting elements as they are dequeued, effectively making the array
     circular. With this approach, we can achieve constant time-complexity for
