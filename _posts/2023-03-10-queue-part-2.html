@@ -1,0 +1,470 @@
+---
+layout: posts
+title: "Data Structures and Algorithms : Queue (Part II)"
+author: Kane Norman
+categories: [programming]
+excerpt: Modular arithmetic and circular queues
+---
+
+<div class="discussion-content">
+  <h4>Introduction</h4>
+
+  <p>
+    In our previous post, we created a simple queue using Python's built-in list
+    object. However, we mentioned that using the list's <code>pop</code> method
+    to dequeue items caused performance issues. This is because , in Python's C
+    source code, the list object is implemented using a contiguous array, so
+    calling <code>pop</code> on the first element requires shifting all
+    remaining n-1 elements to maintain the array's continuity. As a result, our
+    previous implementation of <code>dequeue</code> had a time-complexity of
+    O(n).
+  </p>
+  <pre>
+{%highlight python%}
+def dequeue(self) -> Any:
+    if self.is_empty():
+        raise Exception("Can not dequeue empty queue")
+    else:
+        return self._items.pop(0) # this is an O(n) operation
+{%endhighlight%}
+
+  </pre>
+
+  <p>
+    In this post, we will start by introducing modular arithmetic and circular
+    arrays. Then, we will demonstrate how we can use these concepts to
+    significantly improve the performance of our <code>dequeue</code> operation,
+    reducing its time-complexity to O(1).
+  </p>
+  <hr />
+  <h4>Modular Arithmetic</h4>
+  <p>
+    Modular arithmetic is a type of arithmetic that deals with remainders when
+    dividing by a certain number, called the modulus. In modular arithmetic,
+    numbers "wrap around" to the start after reaching the modulus value. An
+    example to illustrate this is a clock, which has 12 hours. Once we reach
+    hour 12, we "wrap around" and begin counting at hour 1 again.
+  </p>
+  <div style="text-align: center">
+    <figure>
+      <a
+        title="Balti sahib, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons"
+        href="https://commons.wikimedia.org/wiki/File:Animated_clock.gif"
+        ><img
+          width="128"
+          alt="Animated clock"
+          src="https://upload.wikimedia.org/wikipedia/commons/9/90/Animated_clock.gif"
+      /></a>
+    </figure>
+  </div>
+
+  <p>
+    In Python, we can perform modular arithmetic using the
+    <code>%</code> (modulo) operator. When we write <code>foo % bar</code> in
+    Python, the <code>%</code> operator returns the remainder when
+    <code>foo</code> is divided by <code>bar</code>. For instance, if we execute
+    <code>15 % 12 </code>, the result will be 3 because when we divide 15 by 12,
+    we get a quotient of 1 with a remainder of 3. To illustrate this with the
+    clock example, if we count up to 15 hours, we would pass 12 and wrap back
+    around to hour 3.
+  </p>
+  <hr />
+  <h4>Circular Arrays</h4>
+  <p>
+    Circular arrays are a type of data structure that share many similarities
+    with linear arrays. However, there is a key difference: when we reach the
+    end of a circular array, we start over at the beginning and "wrap around" to
+    the front. This wrapping around feature has a significant advantage over
+    linear arrays: it allows us to make use of any unused space at the beginning
+    of the array. In a linear array, any unused space at the beginning is
+    effectively wasted and cannot be used for storage. But in a circular array,
+    we can still use this space by wrapping around to the front of the array
+    when we reach the end.
+  </p>
+  <p>
+    For instance, consider a fixed-length array with 5 elements, where the first
+    three elements are empty, and the last two elements are occupied. If we want
+    to insert an additional item, say, <code>baz</code>, into the array, we can
+    use the empty space in the front. We can continue to use the remaining empty
+    space in the front until all the unused space is occupied. This can be
+    illustrated as follows:
+  </p>
+  <p style="text-align: center; font-size: x-large">
+    <code>[ _, _, _, foo, bar ]</code>
+    <br />
+    <code>[ baz, _, _, foo, bar ]</code>
+    <br />
+    <code>[ baz, buzz, _, foo, bar ]</code>
+    <br />
+    <code>[ baz, buzz, spam, foo, bar ]</code>
+  </p>
+
+  <p>
+    Implementing a circular array can be slightly more challenging than
+    implementing a linear array. In a linear array, we know that the starting
+    index is always zero and the ending index is n-1, where n is the length of
+    the array. However, to implement a circular array, we need to keep track of
+    two pointers: a front and a rear index. We use the front index to keep track
+    of where the first element of the array is located, and we use the rear
+    index to keep track of where the next element should be inserted.
+  </p>
+  <p>
+    When we add an element to a circular array, we insert it at the rear index
+    and then move the rear index one position forward. When we remove an element
+    from a circular array, we remove it from the front index and move the front
+    index one position forward. By using these two pointers, we can effectively
+    implement a circular array data structure.
+  </p>
+  <p>
+    Additionally, we must use modular arithmetic to wrap around to the front of
+    the circular array when the rear pointer exceeds n-1. For example, let's say
+    we have a circular array of length 5 and the rear index is currently 4
+    (meaning the last element is occupied). If we try to insert a new element,
+    we would normally increment the rear index to 5, but this is outside the
+    bounds of the array. Instead, we use modular arithmetic to calculate the new
+    position of the rear index: (4 + 1) % 5 = 0. This means that the rear index
+    should "wrap around" to the front of the array, and the new element should
+    be inserted at index 0. Similarly, when we remove an element from the front
+    of the array and increment the front index, we must also use modular
+    arithmetic to wrap around to the front of the array if the front index
+    exceeds n-1.
+  </p>
+  <p>
+    Using modular arithmetic in this way allows us to effectively implement the
+    wrapping around feature of circular arrays and make use of any unused space
+    at the beginning of the array.
+  </p>
+  <hr />
+  <h4>Circular Queue</h4>
+  <p>
+    Our previous implementation of a queue suffered from an inefficient dequeue
+    operation. This was because every time we called pop to remove an element
+    from the front of the queue, we had to shift all the remaining elements one
+    position to the left, which resulted in a time-complexity of O(n). As an
+    alternative solution, we suggested that we could continue using a linear
+    data structure such as a Python built-in list, but avoid shifting elements
+    after we deleted them from the front. This would improve the dequeue
+    operation's time-complexity to O(1), but we noted that this approach would
+    waste space by leaving unused memory at the front of our queue.
+  </p>
+  <p>
+    To achieve an O(1) time-complexity dequeue without wasting space, we can use
+    a circular array. In a circular queue, we avoid shifting items and utilize
+    any unused space in the circular array by wrapping around to the front. This
+    eliminates the need for the time-consuming operation of shifting all
+    elements to the front of the array, resulting in an O(1) time-complexity.
+  </p>
+  <p>
+    If you're not clear on this concept, don't worry. We'll use our abstract
+    base class and walk through a step-by-step implementation of a circular
+    queue to help you understand it better.
+  </p>
+  <p>
+    To implement a circular queue, we will define a new class called
+    <code>CircularQueue</code>. This class will inherit from the
+    <code>AbstractQueue</code> class that we defined in the previous post. When
+    we initialize a new <code>CircularQueue</code> object, we need to provide
+    one parameter, <code>max_size</code>, which represents the size of our
+    circular array. In our <code>__init__</code> method, we will define a few
+    attributes for our class. First, we will create a circular array called
+    <code>_items</code>. We will also define two pointers,
+    <code>_front</code> and <code>_rear</code>, which will keep track of the
+    front and rear of our circular array. Finally, we will create an attribute
+    called <code>_number_items</code> which will keep track of the number of
+    items in the queue.
+  </p>
+  <pre>
+{% highlight python %}
+class CircularQueue(AbstractQueue):
+    def __init__(self, max_size: int) -> None:
+        self._max_size: int = max_size
+        self._items: List[Any] = [None] * max_size
+        self._number_items: int = 0
+        self._front: int = 0
+        self._rear: int = -1
+{% endhighlight %}
+  </pre>
+  <p>
+    To implement a circular queue, we need to implement the four abstract
+    methods defined by our <code>AbstractQueue</code> . Additionally, we must
+    implement a method to check if the queue is full, since our circular array
+    is restricted to a maximum size of <code>max_size</code>.
+  </p>
+  <pre>
+{% highlight python %}
+def is_full(self) -> bool:
+    return self._number_items == self._max_size
+{% endhighlight %}
+  </pre>
+
+  <p>
+    Now, we begin implement our abstract methods, starting with the
+    <code>is_empty</code> method, which simply checks the
+    <code>_number_items</code> attribute and tells us if the queue contains any
+    elements.
+  </p>
+  <pre>
+{% highlight python %}
+def is_empty(self) -> bool:
+    return self._number_items == 0
+{% endhighlight %}
+</pre
+  >
+  <p>
+    Moving on, let's implement the <code>enqueue</code> method. In a queue, we
+    add new items to the rear, so we need to use our <code>_rear</code> pointer
+    to locate the correct position in our circular array. Before inserting new
+    values, we should always check that the queue is not full to avoid
+    overflowing.
+  </p>
+
+  <pre>
+{% highlight python %}
+def enqueue(self, new_item: Any) -> None:
+    if self.is_full():
+        raise Exception("Can not insert new items into full queue")
+    else:
+        self._rear = (self._rear + 1) % self._max_size
+        self._items[self._rear] = new_item
+        self._number_items += 1
+{% endhighlight %}
+</pre
+  >
+  <p>
+    The <code>dequeue</code> method follows a similar logic. We begin by
+    checking that the queue is not empty. Then, we make a copy of the front
+    item, free up the space used by it, shift the front pointer by one position,
+    decrement the number of items in the queue, and finally return the copy we
+    made of the front item.
+  </p>
+  <pre>
+{% highlight python %}
+def dequeue(self) -> Any:
+    if self.is_empty():
+        raise Exception("Can not remove from empty queue")
+    else:
+        front_copy = self._items[self._front]
+        self._items[self._front] = None
+        self._front = (self._front + 1) % self._max_size
+        self._number_items -= 1
+        return front_copy
+{% endhighlight %}
+</pre
+  >
+  <p>
+    The <code>peek</code> method is similar to <code>dequeue</code> except we
+    don't remove the element at the front of the queue, we simply return it.
+  </p>
+  <pre>
+{% highlight python %}
+def peek(self) -> Any:
+    if self.is_empty():
+        raise Exception("Can not peek into  empty queue")
+    else:
+        return self._items[self._front] 
+{% endhighlight %}
+</pre
+  >
+  <p>
+    To finish our class, we can implement two dunder methods
+    <code>__len__</code> to tell us the number of elements stored in the queue
+    and <code>__str__</code> to print a visual representation of the elements.
+  </p>
+  <pre>
+{% highlight python %}
+def __len__(self) -> int:
+    return self._number_items
+
+def __str__(self) -> str:
+    result = ""
+
+    # start at front and circle through all positions
+    # until we reach the front again
+    position = self._front
+    while True:
+        result += f"{self._items[position]}, "
+        position = (position + 1) % self._max_size
+
+        if position == self._front:
+            break
+
+    # remove the comma and space from the last item printed
+    return result[:-2]
+{% endhighlight %}
+</pre
+  >
+  <p>
+    If we put it all together, we can create the following class to implement an
+    abstract queue
+  </p>
+
+  <pre>
+{% highlight python %}
+from typing import Any
+
+from data_structures._abstract_queue import AbstractQueue
+
+
+class CircularQueue(AbstractQueue):
+    def __init__(self, max_size: int) -> None:
+        self._max_size: int = max_size
+        self._items: List[Any] = [None] * max_size
+        self._number_items: int = 0
+        self._front: int = 0
+        self._rear: int = -1
+
+    def enqueue(self, new_item: Any) -> None:
+        """Insert new item into queue
+        Args:
+            new_item: New item to be added
+        Raises:
+            Exception: Raised if queue is already full
+        """
+        if self.is_full():
+            raise Exception("Can not insert new items into full queue")
+        else:
+            self._rear = (self._rear + 1) % self._max_size
+            self._items[self._rear] = new_item
+            self._number_items += 1
+
+    def dequeue(self) -> Any:
+        """Removes oldest (front) item from the queue
+        Returns:
+            Item at front of queue
+        Raises:
+            Exception: Raised if queue is empty
+        """
+        if self.is_empty():
+            raise Exception("Can not remove from empty queue")
+        else:
+            front_copy = self._items[self._front]
+            self._items[self._front] = None
+            self._front = (self._front + 1) % self._max_size
+            self._number_items -= 1
+            return front_copy
+
+    def peek(self) -> Any:
+        """Return oldest (front) item in queue without removing
+        Returns:
+            Oldest item in queue
+        Raises:
+            Exception: Raised if queue is empty
+        """
+        if self.is_empty():
+            raise Exception("Can not peek into empty queue.")
+        else:
+            return self._items[self._front]
+
+    def is_full(self) -> bool:
+        """Indicates if queue has reached its maximum size allowance
+        Returns:
+            True if queue has reached maximum capacity. False otherwise.
+        """
+        return self._number_items == self._max_size
+
+    def is_empty(self) -> bool:
+        """Indicates if queue is empty
+        Returns:
+            True if queue contains zero elements. False otherwise.
+        """
+        return self._number_items == 0
+
+    def __len__(self) -> int:
+        return self._number_items
+
+    def __str__(self) -> str:
+        result = ""
+
+        # start at front and circle through all positions
+        # until we reach the front again
+        position = self._front
+        while True:
+            result += f"{self._items[position]}, "
+            position = (position + 1) % self._max_size
+
+            if position == self._front:
+                break
+
+        # remove the comma and space from the last item printed
+        return result[:-2]
+{% endhighlight %}
+</pre
+  >
+  <hr />
+
+  <h4>Big-O Analysis</h4>
+  <div class="table-wrapper">
+    <table class="alt">
+      <thead>
+        <tr>
+          <th>Operation</th>
+          <th>Time-Complexity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Access</td>
+          <td>O(1)</td>
+        </tr>
+        <tr>
+          <td>Insert</td>
+          <td>O(1)</td>
+        </tr>
+        <tr>
+          <td>Search</td>
+          <td>O(n)</td>
+        </tr>
+        <tr>
+          <td>Delete</td>
+          <td>O(1)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    The <code>CircularQueue</code> class offers O(1) access, insertion, and
+    deletion operations. Access and insertion remain O(1) for the same reasons
+    as in our <code>SimpleQueue</code> class. However, deletion is now also an
+    O(1) operation, thanks to the use of a circular array. Since the front
+    element can be removed without shifting the remaining n-1 elements, deleting
+    an element takes constant time. Also searching is reduced from an
+    O(n<sup>2</sup>) an O(n) operation because it is proportional to the time it
+    takes to dequeue each element.
+  </p>
+  <p>
+    While the circular queue offers faster operations, it does come with a
+    tradeoff of a fixed size. Unlike the built-in list, which can grow or shrink
+    as needed, a circular queue has a fixed capacity. This means that the queue
+    can only hold a certain number of elements, and if that capacity is
+    exceeded, the queue will either need to be resized or some elements will
+    need to be discarded.
+  </p>
+  <p>
+    Another implementation of the queue that offers O(1) insertion, deletion,
+    and access operations is based on the linked list data structure. Unlike the
+    circular queue, this implementation does not require a fixed size and can
+    grow or shrink dynamically. We will explore the linked list data structure
+    in an upcoming post and show how it can be used to implement a queue.
+  </p>
+  <hr />
+  <h4>Conclusion</h4>
+  <p>
+    In conclusion, the circular queue is a powerful data structure that provides
+    O(1) access, insertion, and deletion operations. The circular array
+    implementation enables O(1) deletion without the need to shift elements,
+    making it a great choice for applications where fast access and deletion are
+    essential. However, the circular queue comes with a fixed capacity, which
+    means it cannot accommodate a variable number of elements. Despite this
+    limitation, the circular queue is still an excellent choice for applications
+    where the number of elements is known in advance, and fast access and
+    deletion are critical. By contrast, a implementation using Python's built-in
+    list has the flexibility to grow or shrink as needed but may suffer from
+    performance limitations.
+  </p>
+  <p>
+    In the next post, we will explore priority queues, a variation of the queue
+    data structure that assigns a priority to each element and allows for
+    efficient access to the highest-priority element.
+  </p>
+</div>
