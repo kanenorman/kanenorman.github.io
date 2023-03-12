@@ -3,7 +3,7 @@ layout: posts
 title: "Data Structures and Algorithms : Stacks"
 author: Kane Norman
 categories: [programming]
-excerpt: Last in first out? That doesn't seem very fair!
+excerpt: Last one in, first one out.
 ---
 
 <div class="discussion-content">
@@ -75,13 +75,15 @@ excerpt: Last in first out? That doesn't seem very fair!
   <hr />
   <h4>Implementation</h4>
   <p>
-    The Python
-    <a href="https://docs.python.org/3/library/queue.html">queue</a> module
-    provides a built-in stack data structure called <code>LifoQueue</code>.
-    However, for the purpose of learning, we will focus on implementing a stack
-    from scratch and explaining it step by step. There are different ways to
-    implement the data structure, but we will use a simple implementation that
-    uses the concepts discussed in this and previous posts.
+    According to the
+    <a
+      href="https://docs.python.org/3/tutorial/datastructures.html#using-lists-as-stacks"
+      >Python documentation</a
+    >, the built-in list object can be used as a stack via its pop and append
+    methods. However, for the purpose of learning, we will focus on implementing
+    a fixed-size stack from scratch and explaining the process step by step.
+    Although there are different ways to implement this data structure, we will
+    use a simple approach that builds on concepts covered in previous posts.
   </p>
   <p>
     To start, we will create a class called <code>Stack</code> that accepts one
