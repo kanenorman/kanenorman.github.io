@@ -1,9 +1,11 @@
 ---
 layout: posts
-title: "Data Structures and Algorithms : Big-O Notation"
+title: "Big-O Notation"
 author: Kane Norman
 categories: [programming]
 excerpt: How to measure efficiency and scalability
+order: 2
+toc: true
 ---
 
 <div class="discussion-content">
@@ -11,7 +13,9 @@ excerpt: How to measure efficiency and scalability
 
   <p>
     In the
-    <a href="{{ '/programming/data-structures-and-algorithms' | relative_url }}"
+    <a
+      href="{{ '/programming/data-structures-and-algorithms' | relative_url }}"
+      target="_blank"
       >previous post</a
     >
     , I mentioned that it is difficult to predict the
@@ -25,17 +29,20 @@ excerpt: How to measure efficiency and scalability
     elements? If so, can we quantify how much longer it will take? This is where
     Big-O notation comes into play. Big-O notation provides a way to describe an
     algorithm's expected execution time in terms of the number or magnitude of
-    it inputs (n).
+    it inputs.
   </p>
   <p>
-    The graph presented below illustrates several common Big-O notations. It
-    shows that certain complexities, like O(log n), require a relatively small
-    number of operations, even as the number of elements grows. In contrast, for
-    other complexities like O(n!), the number of required operations increases
-    rapidly as the size of the input increases. This rapid increase in
-    operations can cause poor performance if we handle large amounts of data.
-    For this reason, we need to be aware of situations where Big-O tells us that
-    we may encounter a large number of operations leading to poor performance.
+    The graph presented below illustrates several common Big-O notations,
+    showcasing the relationship between the number of operations (y-axis) and
+    the size or magnitude of the inputs (x-axis). By analyzing the graph, we can
+    observe distinct complexities such as O(log n) which require a relatively
+    small number of operations even as the number of inputs grows. Conversely,
+    complexities like O(n!) exhibit a rapid increase in the number of required
+    operations as the input size increases. This rapid growth can result in poor
+    performance when handling large amounts of data. Hence, it is crucial to
+    recognize situations where the Big-O notation warns us about the potential
+    for a significant number of operations and the subsequent impact on
+    performance.
   </p>
 
   <div style="text-align: center">
@@ -48,12 +55,12 @@ excerpt: How to measure efficiency and scalability
       />
       <figcaption>
         Image courtesy of
-        <a href="https://www.bigocheatsheet.com">bigocheatsheet.com</a>
+        <a href="https://www.bigocheatsheet.com" target="_blank"
+          >bigocheatsheet.com</a
+        >
       </figcaption>
     </figure>
   </div>
-
-  <p></p>
 
   <p>
     In this post, we will explore the importance of Big-O notation in analyzing
@@ -64,6 +71,118 @@ excerpt: How to measure efficiency and scalability
     efficiency of different algorithms and make informed decisions when
     implementing them. By the end of this post, you should have a solid
     understanding of Big-O notation and its significance in computer science.
+  </p>
+  <p>
+    In this article, our primary focus will be on time complexity, but it's
+    important to note that a similar analysis can be applied to space complexity
+    as well. In future posts, we will dive into the topic of space complexity in
+    more detail.
+  </p>
+  <hr />
+  <h4>Mathematical Preliminaries</h4>
+  <p>
+    Before diving into the details of Big-O notation, it is essential to grasp
+    the fundamentals of a few basic mathematical functions that frequently arise
+    when determining time complexity:
+  </p>
+
+  <ul>
+    <li>
+      <span style="color: purple; font-weight: bold">Constant Functions </span>:
+      These are the simplest type of functions, defined as
+      <span class="mathematical">f(x) = c</span>, where
+      <span class="mathematical">c</span> is a constant value. In other words,
+      regardless of the input <span class="mathematical">x</span>, the output
+      remains the same. Graphically, constant functions are represented by a
+      horizontal line, indicating that their value does not change with
+      different inputs. These functions are particularly significant in
+      algorithm analysis as they represent operations that execute in a fixed
+      amount of time, regardless of the input size.
+    </li>
+    <li>
+      <span style="color: purple; font-weight: bold">Linear Functions </span>:
+      These are first-degree polynomials in the form of
+      <span class="mathematical">f(x) = m*x + b</span>, where
+      <span class="mathematical">m</span> and
+      <span class="mathematical">b</span> are constant values indicating the
+      slope and y-intercept, respectively. The graph of a linear function is a
+      straight line, with the steepness of the line determined by the value of
+      <span class="mathematical">m</span>. When
+      <span class="mathematical">m</span> is large, the line is steep, and when
+      <span class="mathematical">m</span> is small (near zero), the line is
+      relatively flat.
+    </li>
+    <li>
+      <span style="color: purple; font-weight: bold">Quadratic Functions </span
+      >: These functions are second-degree polynomials that often represent
+      curved relationships between variables. They have the general form
+      <span class="mathematical">f(x) = a*x<sup>2</sup> + b*x + c</span>, where
+      <span class="mathematical">a</span>, <span class="mathematical">b</span>,
+      and <span class="mathematical">c</span> are constants determining the
+      shape and position of the graph. Graphically, quadratic functions
+      typically exhibit a curved shape, with slow growth for small values of
+      <span class="mathematical">x</span> near zero and rapid growth as
+      <span class="mathematical">x</span> increases.
+    </li>
+    <li>
+      <span style="color: purple; font-weight: bold"
+        >Logarithmic Functions </span
+      >: These functions are represented as
+      <span class="mathematical">f(x) = log<sub>b</sub>(x)</span>. It roughly
+      answers the question: "How many times can we divide
+      <span class="mathematical">x</span> by
+      <span class="mathematical">b</span>?".Graphically, logarithmic functions
+      exhibit rapid growth initially and then slowdown as
+      <span class="mathematical">x</span> increases.
+    </li>
+    <li>
+      <span style="color: purple; font-weight: bold"
+        >Exponential Functions </span
+      >: These functions are defined as
+      <span class="mathematical">f(x) = a<sup>x</sup></span
+      >, where <span class="mathematical">a</span> is a constant base. These
+      functions exhibit rapid growth as
+      <span class="mathematical">x</span> increases. As a side note, this
+      function has an inverse relationship to the logarithmic function.
+    </li>
+    <li>
+      <span style="color: purple; font-weight: bold">Factorial Functions </span
+      >: These are denoted as <span class="mathematical">f(x) = x!</span> and
+      represent the product of all positive integers from 1 to
+      <span class="mathematical">x</span>. Factorial functions arise in
+      combinatorial mathematics, especially when counting permutations and
+      combinations. These functions grow rapidly as
+      <span class="mathematical">x</span> increases, with the graph exhibiting
+      steep growth.
+    </li>
+  </ul>
+  <div style="text-align: center">
+    <figure>
+      <img
+        src="{{ '/images/math-functions.png' | relative_path}}"
+        alt="Comparison of Preliminary Functions"
+        style="max-width: -webkit-fill-available"
+        height="90%"
+        width="90%"
+      />
+      <figcaption>Graphs of key elementary mathematical functions</figcaption>
+    </figure>
+  </div>
+
+  <p>
+    While you don't need a deep understanding of these functions, it is
+    important to have a basic understanding of their behavior as
+    <span class="mathematical">x</span> approaches infinity. This knowledge
+    becomes particularly valuable when comparing the growth rate of algorithms
+    to these functions. Understanding the growth patterns and relative rates of
+    these functions enables you to make insightful comparisons and assess the
+    expected runtime of different algorithms. As a general rule of thumb,
+    algorithms with constant runtime are the fastest, followed by logarithmic,
+    linear, quadratic, exponential, then factorial. The graph shown in the
+    introduction illustrates these differences clearly, so you can refer to it
+    as you familiarize yourself with these functions. You will see later, being
+    able to relate algorithmic performance to these familiar growth patterns
+    will assist you in calculating Big-O notation.
   </p>
 
   <hr />
@@ -80,20 +199,24 @@ excerpt: How to measure efficiency and scalability
   </p>
   <ul>
     <li>
-      <b>Best-case time complexity (Ω):</b> represents the minimum possible
-      runtime of an algorithm under ideal conditions. It occurs when the
-      algorithm's performance is optimal due to input values that make it run
-      faster than usual.
+      <span style="color: purple; font-weight: bold"
+        >Best-case time complexity </span
+      >: represents the minimum possible runtime of an algorithm under ideal
+      conditions. It occurs when the algorithm's performance is optimal due to
+      input values that make it run faster than usual.
     </li>
     <li>
-      <b>Average-case time complexity (θ):</b> represents the performance we can
-      expect on average when the input does not meet any exceptional conditions.
+      <span style="color: purple; font-weight: bold"
+        >Average-case time complexity </span
+      >: represents the performance we can expect on average when the input does
+      not meet any exceptional conditions.
     </li>
     <li>
-      <b>Worst-case time complexity (O):</b> represents the maximum possible
-      runtime of an algorithm under the least favorable conditions. It occurs
-      when the algorithm's performance is the worst due to input values that
-      make it run slower than usual.
+      <span style="color: purple; font-weight: bold"
+        >Worst-case time complexity </span
+      >: represents the maximum possible runtime of an algorithm under the least
+      favorable conditions. It occurs when the algorithm's performance is the
+      worst due to input values that make it run slower than usual.
     </li>
   </ul>
 
@@ -148,14 +271,17 @@ worst_case = numbers.index(last)
     fastest, followed by the average case and the worst-case, respectively.
   </p>
 
-  <iframe
-    width=" 100%"
-    height="500"
-    frameborder="0"
-    seamless="seamless"
-    scrolling="no"
-    src="/charts_and_graphs/best_average_worst.html"
-  ></iframe>
+  <div style="text-align: center">
+    <figure>
+      <img
+        src="{{ '/images/best-average-worst-case.png' | relative_path}}"
+        alt="Execution times of best, average, and worst case"
+        style="max-width: -webkit-fill-available"
+        height="70%"
+        width="70%"
+      />
+    </figure>
+  </div>
 
   <p>
     By understanding the performance characteristics of the
@@ -181,28 +307,32 @@ worst_case = numbers.index(last)
   We calculate big-O using the following set of rules:
   <ul>
     <li>
-      <b>Ignore non-dominant terms and constants:</b> When calculating the time
-      complexity of an algorithm, we can safely ignore the non-dominant terms
-      and constants. This allows us to focus on the most significant factors
-      that affects the run time of the algorithm. For example, O(2n + 1) can be
-      simplified to O(n), and O(n<sup>2</sup> + n) can be simplified to
-      O(n<sup>2</sup>) By doing so, we only focus on the most dominant term(s)
-      that significantly impact runtime performance and provide a general
-      expected runtime rather than a specific one.
+      <span style="color: purple; font-weight: bold"
+        >Ignore non-dominant terms and constants </span
+      >: When calculating the time complexity of an algorithm, we can safely
+      ignore the non-dominant terms and constants. This allows us to focus on
+      the most significant factors that affects the run time of the algorithm.
+      For example, O(2n + 1) can be simplified to O(n), and O(n<sup>2</sup> + n)
+      can be simplified to O(n<sup>2</sup>) By doing so, we only focus on the
+      most dominant term(s) that significantly impact runtime performance and
+      provide a general expected runtime rather than a specific one.
     </li>
     <li>
-      <b>Treat different inputs as separate variables:</b> When analyzing the
-      time complexity of an algorithm, it's important to consider the impact of
-      multiple inputs. Some algorithms may take two-dimensional inputs, or
-      multiple function arguments. It's important to treat these inputs as
-      separate variables when determining the Big-O notation.
+      <span style="color: purple; font-weight: bold"
+        >Treat different inputs as separate variables </span
+      >: When analyzing the time complexity of an algorithm, it's important to
+      consider the impact of multiple inputs. Some algorithms may take
+      two-dimensional inputs, or multiple function arguments. It's important to
+      treat these inputs as separate variables when determining the Big-O
+      notation.
     </li>
     <li>
-      <b>Sum or multiply steps:</b> When an algorithm has multiple steps, we can
-      either sum or multiply the complexities of each step to obtain the overall
-      time complexity. For example, if an algorithm repeats an O(log n)
-      operation n times, the overall time complexity would be O(n) x O(log n) =
-      O(n log n).
+      <span style="color: purple; font-weight: bold"
+        >Sum or multiply steps </span
+      >: When an algorithm has multiple steps, we can either sum or multiply the
+      complexities of each step to obtain the overall time complexity. For
+      example, if an algorithm repeats an O(log n) operation n times, the
+      overall time complexity would be O(n) x O(log n) = O(n log n).
     </li>
   </ul>
   <p>
@@ -222,26 +352,46 @@ worst_case = numbers.index(last)
   </p>
   <pre>
   {%highlight python%}
-def get_first_element(array):
+from typing import Any, List
+
+def get_first_element(array: List[Any]) -> Any:
+    """
+    Get the first element from the given array.
+
+    Parameters
+    ----------
+    array : List[Any]
+        A list of elements.
+
+    Returns
+    -------
+    Any
+        The first element of the array.
+    """
     return array[0]
+
   {%endhighlight%}
 </pre
   >
+
   <p>
-    The function above, <code>get_first_element()</code>, is a straightforward
-    operation that retrieves the first element of an input array. It does so by
+    The function <code>get_first_element()</code> is a simple operation that
+    retrieves the first element of an input array. It achieves this by directly
     accessing the base memory address of the array and returning the value
-    stored at that address. Since it performs the same number of operations
-    regardless of the size of the input array, this function runs in constant
-    time. This means that whether the array has one element or one million
-    elements, we can expect <code>get_first_element()</code> to execute in the
-    same amount of time.
+    stored there. Since the number of operations performed remains constant
+    regardless of the array size, the function runs in constant time. This means
+    that regardless of whether the array contains one element or one million
+    elements, the execution time of <code>get_first_element()</code> remains the
+    same. On my computer, this function typically executes in approximately 4e-5
+    seconds, regardless of the array size. It's important to note that the exact
+    execution time may vary slightly due to background processes, but it
+    consistently falls within this range.
   </p>
 
   <p>
-    As an important note, earlier that we said we drop constants when reporting
-    Big-O. O(1) is the special case that breaks this rule. Any time we have
-    constant runtime we report it as O(1).
+    As another important note, earlier that we said we drop constants when
+    reporting Big-O. O(1) is the special case that breaks this rule. Any time we
+    have constant runtime we report it as O(1).
   </p>
 
   <hr />
@@ -261,11 +411,27 @@ def get_first_element(array):
   </p>
   <pre>
     {% highlight python %}
-def sum_array(array):
+from typing import List
+
+def sum_array(array: List[int]) -> int:
+    """
+    Compute the sum of all numbers in the given array.
+
+    Parameters
+    ----------
+    array : List[int]
+        A list of integers.
+
+    Returns
+    -------
+    int
+        The sum of all numbers in the array.
+    """
     total = 0
     for number in array:
         total += number
     return total
+
     {% endhighlight %}
 </pre
   >
@@ -277,16 +443,18 @@ def sum_array(array):
     As expected, the relationship between input size and average execution time
     is clearly linear.
   </p>
-  <figure>
-    <iframe
-      width="100%"
-      height="500"
-      frameborder="0"
-      seamless="seamless"
-      scrolling="no"
-      src="/charts_and_graphs/On_example.html"
-    ></iframe>
-  </figure>
+
+  <div style="text-align: center">
+    <figure>
+      <img
+        src="{{ '/images/linear-complexity.png' | relative_path}}"
+        alt="Execution time of sum_array()"
+        style="max-width: -webkit-fill-available"
+        height="70%"
+        width="70%"
+      />
+    </figure>
+  </div>
 
   <p>
     Another example of a O(n) algorithm is the linear search algorithm, which
@@ -296,11 +464,29 @@ def sum_array(array):
   </p>
   <pre>
     {% highlight python %}
-def linear_search(array, value):
+from typing import List, Any
+
+def linear_search(array: List[Any], value: Any) -> int:
+    """
+    Perform a linear search to find the index of the given value in the array.
+
+    Parameters
+    ----------
+    array : List[Any]
+        A list of elements.
+    value : Any
+        The value to search for in the array.
+
+    Returns
+    -------
+    int
+        The index of the value in the array, or -1 if the value is not found.
+    """
     for i in range(len(array)):
         if array[i] == value:
             return i
     return -1
+
     {% endhighlight %}
 </pre
   >
@@ -318,14 +504,31 @@ def linear_search(array, value):
   </p>
   <pre>
     {% highlight python %}
-def sum_array(array):
+from typing import List
+
+def sum_array(array: List[int]) -> int:
+    """
+    Calculate the sum of all numbers in the given array.
+
+    Parameters
+    ----------
+    array : List[int]
+        A list of integers.
+
+    Returns
+    -------
+    int
+        The sum of all numbers in the array.
+    """
     total = 0
     for number in array:
         total += number
 
-    # adding a constant operation
-    total = total + 1 
-    return total 
+    # Adding a constant operation
+    total = total + 1
+
+    return total
+
     {% endhighlight %}
 </pre
   >
@@ -340,9 +543,11 @@ def sum_array(array):
   </p>
   <p>
     To put it in mathematical terms, we don't care if the time a function takes
-    to execute is modeled by the function f(x) = x, f(x) = ax, f(x) = x + b, or
-    f(x) = ax + b. All we care about is that the function is a linear function
-    that can be described proportionally to x.
+    to execute is modeled by the function
+    <span class="mathematical">f(x) = x, f(x) = ax, f(x) = x + b,</span> or
+    <span class="mathematical">f(x) = ax + b</span>. All we care about is that
+    the function is a linear function that can be described proportionally to
+    <span class="mathematical">x</span>.
   </p>
 
   <hr />
@@ -365,16 +570,34 @@ def sum_array(array):
   </p>
   <pre>
     {% highlight python %}
-def find_pairs_with_sum(array, target_sum):
+from typing import List, Tuple
+
+def find_pairs_with_sum(array: List[int], target_sum: int) -> List[Tuple[int, int]]:
+    """
+    Find pairs of numbers in the given array that sum up to the target sum.
+
+    Parameters
+    ----------
+    array : List[int]
+        A list of integers.
+    target_sum : int
+        The target sum.
+
+    Returns
+    -------
+    List[Tuple[int, int]]
+        A list of tuples representing pairs of numbers that sum up to the target sum.
+    """
     n = len(array)
     pairs = []
 
     for i in range(n):
-        for j in range(i+1, n):
+        for j in range(i + 1, n):
             if array[i] + array[j] == target_sum:
                 pairs.append((array[i], array[j]))
 
     return pairs
+
     {% endhighlight %}
   </pre>
   <p>
@@ -437,14 +660,18 @@ def find_pairs_with_sum(array, target_sum):
     As expected, the relationship between input size and time is clearly
     quadratic.
   </p>
-  <iframe
-    width="100%"
-    height="500"
-    frameborder="0"
-    seamless="seamless"
-    scrolling="no"
-    src="/charts_and_graphs/On2_example.html"
-  ></iframe>
+
+  <div style="text-align: center">
+    <figure>
+      <img
+        src="{{ '/images/quadratic-complexity.png' | relative_path}}"
+        alt="Execution time of find_pairs_with_sum()"
+        style="max-width: -webkit-fill-available"
+        height="70%"
+        width="70%"
+      />
+    </figure>
+  </div>
   <hr />
   <h4>O(mn)</h4>
 
@@ -471,11 +698,27 @@ def find_pairs_with_sum(array, target_sum):
   </p>
   <pre>
       {% highlight python %}
-def print_matrix(matrix):
-    m,n = matrix.shape
-    for i in range(m):
-        for j in range(n):
-            print(matrix[i][j])
+import numpy as np
+
+def print_matrix(matrix: np.ndarray) -> None:
+    """
+    Print the elements of a matrix.
+
+    Parameters
+    ----------
+    matrix : np.ndarray
+        A NumPy array representing the matrix.
+
+    Returns
+    -------
+    None
+        This function does not return anything.
+    """
+    m, n = matrix.shape
+    for row in range(m):
+        for column in range(n):
+            print(matrix[row][column])
+
       {% endhighlight %}
     </pre
   >
@@ -498,14 +741,15 @@ def print_matrix(matrix):
     the plot below, the execution speed of traversing an m x n matrix slows down
     as the size of m and n increase.
   </p>
-  <iframe
-    width="100%"
-    height="600"
-    frameborder="0"
-    seamless="seamless"
-    scrolling="no"
-    src="/charts_and_graphs/Omn_example.html"
-  ></iframe>
+  <div style="text-align: center">
+    <img
+      src="{{ '/images/matrix-traverse.png' | relative_path}}"
+      alt="Traversal speed of (mxn) matrix"
+      style="max-width: -webkit-fill-available"
+      width="80%"
+      height="80%"
+    />
+  </div>
   <p>
     Overall, the O(mn) notation is helpful to understand the time complexity of
     an algorithm that is dependent on two variables. It's important to consider
@@ -539,34 +783,59 @@ def print_matrix(matrix):
     <a
       title="Mazen Embaby, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons"
       href="https://commons.wikimedia.org/wiki/File:Binary-search-work.gif"
+      target="_blank"
       ><img
-        width="60%"
+        width="50%"
         alt="Binary-search-work"
         src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Binary-search-work.gif"
     /></a>
   </div>
   <pre>
       {% highlight python %}
-def binary_search(array, value):
+from typing import List
 
+def binary_search(array: List, target) -> int:
+    """
+    Perform binary search on a sorted array to find the index of a target value.
+    
+    Parameters:
+    ----------
+    array: List
+        A sorted list of integers or floats.
+    target:
+        The value to search for in the array.
+    
+    Returns:
+    --------
+    int
+        The index of the target value in the array if found, otherwise -1.
+
+    Example:
+    --------
+    >>> array = [2, 5, 7, 10, 14, 19, 20]
+    >>> target = 10
+    >>> binary_search(array, target)
+    3
+
+    """
     low = 0
     high = len(array) - 1
 
     while low <= high:
         middle = (low + high) // 2
 
-        if array[middle] == value:
+        if target == array[middle]:
             return middle
 
-        # if midpoint is smaller, ignore the left half
-        if array[middle] < value:
+        # If target is larger than midpoint, ignore the left half
+        if target > array[middle]:
             low = middle + 1
 
-        # if midpoint is larger, ignore the right half
-        if array[middle] > value:
+        # If target is smaller than midpoint, ignore the right half
+        if target < array[middle]:
             high = middle - 1
 
-    # return -1 if match not found
+    # Return -1 if match not found
     return -1
       {% endhighlight %}
   </pre>
@@ -577,23 +846,26 @@ def binary_search(array, value):
     as the size of our input array increases increases. As expected, the O(log
     n) algorithm has a much slower increase in time as the input size increases.
   </p>
-  <iframe
-    width="100%"
-    height="500"
-    frameborder="0"
-    seamless="seamless"
-    scrolling="no"
-    src="/charts_and_graphs/binary_vs_linear_search.html"
-  ></iframe>
+  <div style="text-align: center">
+    <img
+      src="{{ '/images/binary_vs_linear_search.png' | relative_path}}"
+      alt="Binary vs linear search"
+      style="max-width: -webkit-fill-available"
+      width="80%"
+      height="80%"
+    />
+  </div>
 
   <p>
     For those who are interested in a mathematical explanation of the
-    logarithmic function, recall that log<sub>b</sub>(n) tells us how many times
-    we can subdivide n by b. For example, if we wanted to know how many times we
-    can divide 100 by 2, we simply calculate log<sub>2</sub>(100), which equals
-    6.44 (approximately). This means that binary search would subdivide an array
-    of size 100 at most 7 times to find a maximum value, making it a very
-    efficient algorithm for large inputs.
+    logarithmic function, recall that
+    <span class="mathematical">log<sub>b</sub>(n)</span> tells us how many times
+    we can subdivide <span class="mathematical">n</span> by
+    <span class="mathematical">b</span>. For example, if we wanted to know how
+    many times we can divide 100 by 2, we simply calculate log<sub>2</sub>(100),
+    which equals 6.44 (approximately). This means that binary search would
+    subdivide an array of size 100 at most 7 times to find a maximum value,
+    making it a very efficient algorithm for large inputs.
   </p>
   <hr />
   <h4>O(n log n)</h4>
@@ -623,7 +895,7 @@ def binary_search(array, value):
   <p>
     An example of an algorithm with O(2<sup>n</sup>) time complexity is the
     recursive Fibonacci function, which calculates the n<sup>th</sup>
-    <a href="https://en.wikipedia.org/wiki/Fibonacci_number"
+    <a href="https://en.wikipedia.org/wiki/Fibonacci_number" target="_blank"
       >Fibonacci number</a
     >
     by recursively calling itself for the two preceding numbers in the sequence.
@@ -631,7 +903,21 @@ def binary_search(array, value):
   </p>
   <pre>
   {% highlight python %}
-def fibonacci(n):
+def fibonacci(n: int) -> int:
+    """
+    Calculate the Fibonacci number for the given input.
+
+    Parameters
+    ----------
+    n : int
+        The position of the Fibonacci number to calculate.
+
+    Returns
+    -------
+    int
+        The Fibonacci number at the specified position.
+
+    """
     if n == 0 or n == 1:
         return n
     else:
@@ -661,14 +947,15 @@ def fibonacci(n):
     as demonstrated in the plot below.
   </p>
 
-  <iframe
-    width="100%"
-    height="600"
-    frameborder="0"
-    seamless="seamless"
-    scrolling="no"
-    src="/charts_and_graphs/O2n_example.html"
-  ></iframe>
+  <div style="text-align: center">
+    <img
+      src="{{ '/images/exponential_complexity.png' | relative_path}}"
+      alt="Performance of fibonacci function"
+      style="max-width: -webkit-fill-available"
+      width="80%"
+      height="80%"
+    />
+  </div>
   <p>
     It's worth noting that O(2<sup>n</sup>) is considered an inefficient time
     complexity for most real-world applications. Algorithms with this time
@@ -681,6 +968,21 @@ def fibonacci(n):
     these types of algorithms can help improve the performance of your code and
     prevent performance issues when dealing with large input sizes.
   </p>
+
+  <p>
+    For the more advanced readers, it is worth noting that the time complexity
+    of the recursive Fibonacci implementation is technically O(φ<sup>n</sup>),
+    where φ is the golden ratio (~1.618). However, to maintain the
+    beginner-friendly nature of this tutorial, we will use the looser but still
+    accurate bound of O(2<sup>n</sup>). See
+    <a
+      href="https://stackoverflow.com/questions/360748/computational-complexity-of-fibonacci-sequence"
+      target="_blank"
+      >here</a
+    >
+    if you are interested in a technical explanation.
+  </p>
+
   <hr />
   <h4>O(n!)</h4>
   <p>
