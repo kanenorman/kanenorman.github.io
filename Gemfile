@@ -34,3 +34,7 @@ gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 
 gem "rouge"
 gem "webrick", "~> 1.7"
+
+# Table of contents
+gem "jekyll-toc"
+gem "racc"
