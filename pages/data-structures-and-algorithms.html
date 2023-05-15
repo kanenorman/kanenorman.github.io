@@ -1,0 +1,18 @@
+---
+layout: discussion
+---
+
+<div class="items onload-fade-in fullscreen">
+  <ul>
+    {% assign programmingPosts = site.categories.programming | sort: 'order'  %}
+    {% for post in programmingPosts %}
+    {% if post.order %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a> <br />
+      <i> {{ post.excerpt }} </i>
+    </li>
+    <br />
+    {%endif%}
+    {% endfor %}
+  </ul>
+</div>

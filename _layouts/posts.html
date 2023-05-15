@@ -22,8 +22,11 @@ layout: default
         </p>
         <hr />
       </div>
-
-      {{ content }}
+      <h4 class="table-of-contents-header">Table of Contents</h3>
+   {% include toc.html html=content %}
+   <hr>
+      {{ content | inject_anchors}}
+      
     </div>
   </section>
 </body>
