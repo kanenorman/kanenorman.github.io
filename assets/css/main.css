@@ -443,11 +443,6 @@ blockquote {
   border-left-color: rgba(0, 0, 0, 0.2);
 }
 
-code {
-  color: #d0d0d0;
-  background-color: #151515;
-}
-
 hr {
   border-bottom-color: rgba(0, 0, 0, 0.2);
 }
