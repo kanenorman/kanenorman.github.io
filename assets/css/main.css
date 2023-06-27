@@ -346,6 +346,8 @@ blockquote {
 }
 
 code {
+  color: #b22222;
+  font-weight: 600;
   border-radius: 4px;
   font-family: "Courier New", monospace;
   font-size: 0.9em;
