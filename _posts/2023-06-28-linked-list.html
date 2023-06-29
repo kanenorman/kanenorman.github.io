@@ -1,0 +1,452 @@
+---
+layout: posts
+title: "Linked List"
+author: Kane Norman
+categories: [programming]
+excerpt: Singly linked list
+order: 8
+---
+
+<div class="discussion-content">
+  <h4>Introduction</h4>
+  <p>
+    Linked lists offer an efficient approach to organizing and manipulating data
+    in a linear fashion, presenting distinct advantages over other structures
+    such as arrays. In this post, our focus will be on a specific type of linked
+    list known as a singly linked list. Through this discussion, you'll gain a
+    solid understanding of the principles and operations underlying singly
+    linked lists. Before reading this post, it is important that you have a
+    basic understanding of
+    <a href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)"
+      >pointers</a
+    >.
+  </p>
+  <hr />
+  <h4>Nodes</h4>
+  <p>
+    A linked list is a collection of nodes that are connected in a linear
+    sequence. Each node in the linked list contains two important pieces of
+    information: a reference to an object that represents an element in the
+    sequence, and a reference to the next node in the linear sequence.
+  </p>
+
+  <div style="text-align: center">
+    <figure>
+      <a
+        title="Vectorization:  Lasindi, Public domain, via Wikimedia Commons"
+        href="https://commons.wikimedia.org/wiki/File:Singly-linked-list.svg"
+        ><img
+          width="40%"
+          alt="Singly-linked-list"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Singly-linked-list.svg/256px-Singly-linked-list.svg.png"
+      /></a>
+    </figure>
+  </div>
+  <p>
+    In the example above, we can see a specific type of linked list called a
+    singly linked list. This linked list consists of three nodes. The first
+    node, often called the head, contains a reference to the number 12 and
+    points to the second node. The second node holds a reference to the number
+    99 and points to the last node, known as the tail. The tail node contains a
+    reference to the number 37. It's important to note that since the tail node
+    is the last one in the linked list, it doesn't point to any other node
+    because there are no more nodes in the sequence. This depiction effectively
+    demonstrates the connections between the nodes, where each node refers to
+    the next node in the sequence, except for the last node, which indicates the
+    end of the linked list.
+  </p>
+
+  <p>In Python, we can implement a Node object as follows</p>
+  <pre>
+    {% highlight python %}
+    from __future__ import annotations
+    from typing import Any, Union
+
+
+    class Node:
+        def __init__(self, data: Any, next_node: Union[Node, None] = None) -> None:
+        """
+        Node object for a linked list.
+
+        Parameters
+        ----------
+        data : Any
+            Primary data stored by linked list
+        next_node : Node
+            Next node in the linear sequence to succeed the current node
+
+        """
+        self.data: Any = data
+        self.next: Union[Node, None] = next_node
+    {% endhighlight%}
+  </pre>
+  <hr />
+  <h4>Implementing a Singly Linked List</h4>
+  <p>
+    In memory, a singly linked list is represented through the collaborative
+    efforts of multiple objects. Each node is treated as an individual object,
+    holding its own distinct set of data, which includes a reference to its
+    element and a reference to the next node in the sequence (or None if it
+    happens to be the last node). Alongside these nodes, there exists another
+    object that acts as the overarching representation of the singly linked
+    list, ensuring its cohesiveness as a unified entity.
+  </p>
+  <p>
+    This encompassing object at a minimum maintains a record of the head node.
+    This allows us to start at the head and access the next node in the sequence
+    until we reach the end of the singly linked list. To enhance convenience,
+    it's common practice to also store a reference to the tail of the list. This
+    allows us to avoid iterating through each node in search of the end.
+    Additionally, for similar reasons, it is also common to store the size of
+    the list in a separate variable. This way, we can quickly access the size of
+    the list without the need to count each node through a complete traversal.
+  </p>
+
+  <p>
+    Python does not have a built-in singly linked list data structure, so we
+    will focus on how we can write our own implementation from scratch. As
+    always, we will start with defining our <code>__init__</code> method. Here
+    we will make two pointers, <code>_head</code> which represents the first
+    node in the list and <code>_tail</code> which represents the last node in
+    the list. Additionally, we will define an attribute <code>_size</code> that
+    keeps track of how many nodes are currently in the list.
+  </p>
+
+  <pre>
+    {%highlight python%}
+    class LinkedList:
+        def __init__(self) -> None:
+            """A singly linked list implementation with head, tail, and size tracking."""
+            self.head = None
+            self.tail = None
+            self.size = 0
+    {%endhighlight%}
+  </pre>
+
+  <p>
+    Inserting a node at the beginning of our linked list is a straightforward
+    process. To accomplish this, we follow these steps:
+  </p>
+  <ul>
+    <li>Create a new node that we want to prepend.</li>
+    <li>
+      If the list is empty, make the new node both the head and the tail of the
+      list.
+    </li>
+    <li>
+      Otherwise, set the <code>next</code> pointer of the new node to the
+      current head of the list.
+    </li>
+    <li>Update the head pointer to point to our new node.</li>
+  </ul>
+  <p>
+    By performing these steps, the new node becomes the new head of the linked
+    list, and it is effectively inserted at the beginning.
+  </p>
+
+  <pre>
+    {%highlight python%}
+        def prepend(self, data):
+            """
+            Prepend a new node with the given data at the beginning of the linked list.
+
+            Parameters
+            ----------
+                data: The data to be stored in the new node.
+            """
+            new_node = Node(data)
+            if self.head is None:
+                self.head = new_node
+                self.tail = new_node
+            else:
+                new_node.next = self.head
+                self.head = new_node
+            self.size += 1
+    {%endhighlight%}
+  </pre>
+
+  <p>
+    Appending a node to the end of our linked list is a very similar process. To
+    accomplish this, we follow these steps:
+  </p>
+  <ul>
+    <li>Create a new node that we want to append.</li>
+    <li>
+      If the list is empty, make the new node both the head and the tail of the
+      list.
+    </li>
+    <li>
+      Otherwise, set the <code>next</code> pointer of the current tail to the
+      new node.
+    </li>
+    <li>Update the tail pointer to point to our new node.</li>
+  </ul>
+  <p>
+    By performing these steps, the new node becomes the new tail of the linked
+    list, and it is effectively inserted at the end.
+  </p>
+  <pre>
+    {%highlight python%}
+        def append(self, data):
+            """
+            Append a new node with the given data at the beginning of the linked list.
+
+            Parameters
+            ----------
+                data: The data to be stored in the new node.
+            """
+            new_node = Node(data)
+            if self.head is None:
+                self.head = new_node
+                self.tail = new_node
+            else:
+                self.tail.next = new_node
+                self.tail = new_node
+            self.size += 1
+    {%endhighlight%}
+  </pre>
+  <p>
+    We can also insert nodes at intermediate positions. The
+    <code>insert_after</code> method enables us to insert a new node with the
+    provided data into the linked list after a specific node. This operation
+    expands the linked list by adding new elements in between existing nodes. To
+    accomplish this, we follow these steps:
+  </p>
+  <ul>
+    <li>
+      Traverse the linked list, starting from the head node, until we find the
+      target node after which we want to insert the new node.
+    </li>
+    <li>Create a new node with the desired data.</li>
+    <li>
+      Adjust the <code>next</code> pointers to insert the new node after the
+      target node. This involves updating the <code>next</code> pointer of the
+      target node to point to the new node, and the <code>next</code> pointer of
+      the new node to point to the node originally after the target node.
+    </li>
+    <li>
+      If the target node is the current tail node, update the tail pointer to
+      point to the new node.
+    </li>
+  </ul>
+  <p>
+    By following these steps, we seamlessly insert the new node into the linked
+    list after the desired node, preserving the order and continuity of the
+    list.
+  </p>
+  <pre>
+    {%highlight python%}
+    def insert_after(self, data, after_data):
+        """
+        Insert a new node with the given data after the node with the specified data.
+        
+        Parameters
+        ----------
+        data:
+            The data of the desired precursor to the new node
+        after_data:
+            The data to be stored in the new node
+        """
+        new_node = self.Node(data)
+        current = self._head
+        while current is not None:
+            if current.data == after_data:
+                new_node.next = current.next
+                current.next = new_node
+                if current == self._tail:
+                    self._tail = new_node
+                self._size += 1
+                return
+            current = current.next
+    {%endhighlight%}
+  </pre>
+
+  <p>
+    So far, we have learned that inserting nodes into a singly linked list is a
+    straightforward process. However, when it comes to deletion, it can be more
+    challenging. The difficulty arises from the requirement of knowing both the
+    previous node <code>i-1</code> and the next node <code>i+1</code> in order
+    to delete node <code>i</code>. This is because deleting node
+    <code>i</code> involves connecting node <code>i-1</code> to node
+    <code>i+1</code>, effectively removing node <code>i</code>from the list. In
+    the case of a singly linked list, we only know the succeeding node. In other
+    words, we don't have direct access to node <code>i-1</code>. This limitation
+    makes it slightly more difficult to delete nodes in a singly linked list.
+  </p>
+
+  <p>
+    The <code>delete</code> method allows us to remove the first occurrence of a
+    node with the specified data from the linked list. This operation involves
+    the following steps:
+  </p>
+  <ul>
+    <li>Start traversing the linked list from the head node.</li>
+    <li>
+      If the head node itself contains the target data, update the head pointer
+      to point to the next node.
+    </li>
+    <li>
+      Otherwise, iterate through the linked list until we find the node
+      immediately before the target node.
+    </li>
+    <li>
+      Adjust the <code>next</code> pointer of the preceding node to skip over
+      the target node and connect it directly to the node following the target
+      node.
+    </li>
+    <li>
+      If the target node is the tail node, update <code>_tail</code> to point to
+      the preceding node.
+    </li>
+  </ul>
+  <p>
+    By following these steps, the node with the specified data is effectively
+    removed from the linked list, and the remaining nodes are properly connected
+    to maintain the integrity of the list.
+  </p>
+
+  <pre>
+    {%highlight python%}
+ def delete(self, data):
+      """
+      Delete the first occurrence of a node with the given data from the linked list.
+      
+      Parameters
+      ----------
+      data:
+          The data referenced by the node to be deleted
+      """
+      if self._head is None:
+          return
+
+      if self._head.data == data:
+          self._head = self._head.next
+          if self._head is None:
+              self._tail = None
+          self._size -= 1
+          return
+
+      current = self._head
+      while current.next is not None:
+          if current.next.data == data:
+              current.next = current.next.next
+              if current.next is None:
+                  self._tail = current
+              self._size -= 1
+              return
+          current = current.next
+    {%endhighlight%}
+  </pre>
+  <hr />
+
+  <h4>Big-O Analysis</h4>
+  <div class="table-wrapper">
+    <table class="alt">
+      <thead>
+        <tr>
+          <th>Operation</th>
+          <th>Time Complexity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Access</td>
+          <td>O(n)</td>
+        </tr>
+        <tr>
+          <td>Insert</td>
+          <td>O(1)</td>
+        </tr>
+        <tr>
+          <td>Search</td>
+          <td>O(n)</td>
+        </tr>
+        <tr>
+          <td>Delete</td>
+          <td>O(n)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    Unlike arrays, linked lists do not support direct access to elements using
+    an integer-based index system, which would provide O(1) access. Instead, to
+    access the <code>j<sup>th</sup></code> element in a linked list, we need to
+    start from the head of the list and iterate <code>j</code> times until we
+    reach the desired node.
+  </p>
+  <p>
+    Searching through a linked list can be performed using a linear search
+    approach, similar to arrays. To find a specific data value, we start at the
+    head node and traverse through the list until we locate the desired data. In
+    the worst-case scenario, where the data is located at the end of the list or
+    completely absent, the search operation would have a time complexity of
+    O(n).
+  </p>
+  <p>
+    Inserting into a linked list is a fast operation. To insert a new node, we
+    only need to update a few pointers, without the need to move any existing
+    nodes. Unlike arrays, where shifting elements may be required to accommodate
+    new elements, linked lists offer efficient insertion. Due to this
+    characteristic, insertion in a linked list can be completed in constant
+    time, denoted as O(1).
+  </p>
+  <p>
+    Deleting a node from a singly linked list can be challenging. To delete a
+    node, we need to know its preceding node. However, in a singly linked list,
+    nodes do not store a reference to their previous node. This lack of backward
+    reference makes the deletion process more complex, as we must first traverse
+    the list to locate the preceding node. In the worst-case scenario, deleting
+    the last node in the list would require traversing through n-1 nodes,
+    resulting in an O(n) worst-case time complexity.
+  </p>
+  <hr>
+  <h4>Linked List vs Arrays</h4>
+  <p>
+    Linked lists and dynamic arrays share some similarities as linear data
+    structures without a fixed size, but it's important to note their key
+    differences.
+  </p>
+  <ul>
+    <li>
+      Linked lists do not have amortized cases. As discussed in a previous post,
+      dynamic arrays require constant resizing to accommodate new elements. This
+      resizing operation can be costly, causing worst-case time complexity of
+      O(n) for append operations instead of the usual O(1). In contrast, linked
+      lists dynamically allocate memory proportional to the number of nodes in
+      the list. This means that each append and deletion operation has a
+      constant execution time, avoiding amortized cases.
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Linked lists are faster for insertion. In an array, elements need to be
+      shifted to make room for new elements, resulting in slower insertion.
+      However, linked lists do not require such shifting, making insertion
+      operations faster.
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Arrays offer faster access to data, and random access is supported. In
+      contrast, linked lists require traversing the list from the beginning to
+      access a specific element, which can be slower for large lists.
+    </li>
+  </ul>
+
+  <hr />
+  <h4>Conclusion</h4>
+  <p>
+    Linked lists are a widely-used linear data structure, and they are often
+    encountered in job interviews as a means to assess a programmer's
+    proficiency with pointers. Similar to arrays, linked lists are fundamental
+    building blocks of data structures and play a crucial role in implementing
+    more complex systems. To make informed decisions about their usage, it is
+    important to familiarize yourself with the appropriate scenarios for
+    employing linked lists versus arrays. By understanding their characteristics
+    and trade-offs, you can leverage the strengths of linked lists, such as
+    dynamic resizing and efficient insertion/deletion, when they align with the
+    requirements of your problem.
+  </p>
+</div>
