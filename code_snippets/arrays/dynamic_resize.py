@@ -2,7 +2,6 @@ import sys
 
 import matplotlib.pyplot as plt
 
-
 if __name__ == "__main__":
     my_list = []
     x_values = []
@@ -25,7 +24,6 @@ if __name__ == "__main__":
     plt.gca().spines["bottom"].set_visible(False)
     plt.gca().spines["left"].set_visible(False)
 
-
     plt.figtext(
         1,
         -0.14,
@@ -42,4 +40,3 @@ if __name__ == "__main__":
 
     # Display the plot
     plt.savefig("../../images/memory-usage-dynamic-array.png", dpi=400)
-
