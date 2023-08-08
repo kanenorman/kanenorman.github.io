@@ -3,42 +3,37 @@ layout: default
 ---
 
 <body class="is-preload">
-  <section
-    class="spotlight style1 content-align-left fullscreen"
-  >
-  <div class="content">
-    <div align="right" valign="top">{%include navigation.html%}</div>
-    <h2 align="center">Tutorials</h2>
+  <section class="spotlight style1 content-align-left fullscreen">
+    <div class="content">
+      <div align="right" valign="top">{%include navigation.html%}</div>
+      <h2 align="center">Tutorials</h2>
       <div class="inner">
-        <ul class="actions  fit small">
+        <ul class="actions fit small">
           <li>
-            <a href="{{ '/pages/data_science' | relative_path }}" class="button fit small disabled"
+            <a
+              href="{{ '/pages/data-structures-and-algorithms' | relative_path }}"
+              class="button fit small"
+              >Data Structures & Algorithms</a
+            >
+          </li>
+          <li>
+            <a
+              href="{{ '/pages/data_science' | relative_path }}"
+              class="button fit small disabled"
               >Machine Learning - (Coming Soon)</a
             >
           </li>
           <li>
-            <a href="{{ '/pages/mathematics' | relative_path }}" class="button fit small disabled"
+            <a
+              href="{{ '/pages/mathematics' | relative_path }}"
+              class="button fit small disabled"
               >Mathematics - (Coming Soon)</a
-            >
-          </li>
-           <li>
-            <a href="{{ '/pages/data-structures-and-algorithms' | relative_path }}" class="button fit small"
-              >Data Structures & Algorithms</a
-            >
-          </li>
-
-          <li>
-            <a href="{{ '/pages/other' | relative_path }}" class="button fit small disabled"
-              >Other - (Coming Soon)</a
             >
           </li>
         </ul>
       </div>
 
       <div>{{content}}</div>
-
-
-
-
+    </div>
   </section>
 </body>
