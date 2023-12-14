@@ -1,0 +1,114 @@
+body {
+  font-family: monospace;
+}
+/* ==========================================================================
+   IDS
+   ========================================================================== */
+#section-intro {
+  text-align: center;
+}
+
+/* ==========================================================================
+   TERMINAL SHELL
+   ========================================================================== */
+.shell {
+  width: calc(50% - 54px);
+  display: inline-block;
+  background-color: #353839;
+  border-radius: 5px 5px 0 0;
+  text-align: left;
+  margin-right: 54px;
+}
+.shell-header {
+  background: #414a4c;
+  padding: 0 7px;
+  position: relative;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.shell-header-actions {
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  margin: 0 2px;
+  box-shadow: 0 0 10px 1px;
+  display: inline-block;
+}
+.shell-demo {
+  position: absolute;
+  right: 15px;
+  top: 13px;
+  color: #0e1111;
+}
+.shell-demo:hover {
+  text-decoration: underline;
+  float: right;
+}
+.shell-header-close {
+  background: #fe5e56;
+}
+.shell-header-minimize {
+  background: #fdbe38;
+}
+.shell-header-maximize {
+  background: #02cb49;
+}
+.shell-tab {
+  padding: 5px 10px;
+  display: inline-block;
+  padding: 14px 10px;
+}
+.shell-tab {
+  color: #173549;
+}
+.shell-tab.active {
+  background: #fff;
+  margin: 0;
+}
+.shell-tab:hover {
+  color: #000;
+}
+.shell-tab-content {
+  display: none;
+}
+.shell-tab-content.active {
+  display: block;
+}
+figure {
+  margin: 0;
+}
+.shell-body {
+  margin: 0.5em;
+  font-size: 1.4em;
+  color: #ffffff;
+  overflow-x: scroll;
+  min-height: 200px;
+}
+
+/* CSS */
+.shell-cursor {
+  display: inline-block;
+  width: 6px; /* Adjust the width as needed */
+  height: 18px; /* Adjust the height as needed */
+  background-color: white;
+  animation: blinkCursor 1s infinite; /* Define the animation */
+  vertical-align: middle; /* Align the cursor with the bottom of text */
+}
+
+#typed-message {
+  font-family: monospace;
+  color: #ffffff;
+  overflow-x: scroll;
+  min-height: 200px;
+}
+
+@keyframes blinkCursor {
+  0%,
+  100% {
+    opacity: 1; /* Cursor visible at the start and end */
+  }
+  50% {
+    opacity: 0; /* Cursor invisible in the middle */
+  }
+}
