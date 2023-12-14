@@ -1,6 +1,7 @@
 body {
   font-family: monospace;
 }
+
 /* ==========================================================================
    IDS
    ========================================================================== */
@@ -83,10 +84,10 @@ figure {
   font-size: 1.4em;
   color: #ffffff;
   overflow-x: scroll;
-  min-height: 200px;
+  min-height: 160px;
+  height: 160px;
 }
 
-/* CSS */
 .shell-cursor {
   display: inline-block;
   width: 6px; /* Adjust the width as needed */

@@ -7,21 +7,19 @@ layout: default
     <div id="fullpage">
       <div class="section" id="section-intro">
         <div>
-          <div class="shell-container">
-            <div class="shell">
-              <div class="shell-header">
-                <span class="shell-header-actions shell-header-close"></span>
-                <span class="shell-header-actions shell-header-minimize"></span>
-                <span class="shell-header-actions shell-header-maximize"></span>
-              </div>
-              <div class="shell-body">
-                <div class="shell-tab-content active">
-                  <p>
-                    <span style="color:#90ee90">kane@server:~$ </span>
-                    <span id="typed-message"></span>
-                    <span class="shell-cursor"></span>
-                  </p>
-                </div>
+          <div class="shell">
+            <div class="shell-header">
+              <span class="shell-header-actions shell-header-close"></span>
+              <span class="shell-header-actions shell-header-minimize"></span>
+              <span class="shell-header-actions shell-header-maximize"></span>
+            </div>
+            <div class="shell-body">
+              <div class="shell-tab-content active">
+                <p>
+                  <span style="color: #90ee90">kane@server:~$ </span>
+                  <span id="typed-message"></span>
+                  <span class="shell-cursor"></span>
+                </p>
               </div>
             </div>
           </div>
@@ -32,30 +30,5 @@ layout: default
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
   <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
-  <script>
-    // JavaScript
-    const messageElement = document.getElementById("typed-message");
-    const messageText = "Hello, this is a typing animation.";
-    const typingSpeed = 50; // Adjust typing speed (characters per second)
-
-    function typeMessage(index) {
-      if (index < messageText.length) {
-        messageElement.textContent += messageText.charAt(index);
-        setTimeout(function () {
-          typeMessage(index + 1);
-          adjustShellHeight(); // Call the function to adjust shell height
-        }, typingSpeed);
-      }
-    }
-
-    // Start typing the message when the page loads
-    typeMessage(0);
-
-    // Function to adjust shell height
-    function adjustShellHeight() {
-      const shellContainer = document.querySelector(".shell-container");
-      const shell = document.querySelector(".shell");
-      shellContainer.style.height = `${shell.offsetHeight}px`;
-    }
-  </script>
+  <script src="{{ '/assets/js/shell-typing.js' | relative_url }}"></script>
 </body>
