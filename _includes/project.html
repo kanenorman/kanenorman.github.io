@@ -1,0 +1,22 @@
+<div>
+  <article>
+    <a href="{{ include.url }}">
+      <img
+        class="project-thumbnail"
+        src="{{ include.image | relative_url }}"
+        alt="{{ include.title }}"
+      />
+    </a>
+
+    <h4 class="project-title">{{ include.title }}</h4>
+    <p class="project-description">{{ include.description }}</p>
+    <footer>
+      {% for tool in include.tools %}
+      <img
+        class="project-tool"
+        src="https://raw.githubusercontent.com/devicons/devicon/master/icons/{{ tool }}/{{ tool }}-original.svg"
+      />
+      {% endfor %}
+    </footer>
+  </article>
+</div>

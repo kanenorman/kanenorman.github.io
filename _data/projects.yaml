@@ -1,0 +1,17 @@
+- title: "Race for the White House"
+  url: "https://luke-stoner.github.io/RWH/"
+  image: "/assets/images/race-for-the-white-house.png"
+  description: "This project simplifies tracking news during elections by using machine learning to extract media mentions of presidential candidates from internet archives, offering concise summaries and sentiment analysis. The website acts as a visualization platform for the data and has earned recognition, including an award from Dr. Hanspeter Pfister and a feature in the Harvard University CS 171 Hall of Fame."
+  tools: ["javascript", "d3js", "css3", "html5"]
+
+- title: "Mobility"
+  url: "https://github.com/kanenorman/mobility-ai"
+  image: "/assets/images/mobility.png"
+  description: "Experience real-time streaming of Boston's public transit data, highlighting cutting-edge data engineering frameworks for seamless real-time data flow."
+  tools: ["python", "apachekafka", "flask", "postgresql"]
+
+- title: "Automatic Differentiation"
+  url: "https://github.com/kanenorman/automatic-differentiation"
+  image: "/assets/images/automatic-differentiation.png"
+  description: "This repository offers a practical implementation of automatic differentiation using dual numbers, simplifying the process of obtaining accurate derivatives. It's a valuable resource for understanding  gradient-based optimization algorithms."
+  tools: ["python"]
