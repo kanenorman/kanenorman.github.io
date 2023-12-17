@@ -3,20 +3,41 @@ body {
 }
 
 /* ==========================================================================
+   Fullpage JS
+   ========================================================================== */
+.animated {
+  position: absolute;
+  left: 0;
+  transform: translate3d(0, -100vh, 0);
+  transition: transform 600ms ease;
+  right: 0;
+}
+.fp-section.active .animated {
+  transform: translate3d(0, 0, 0);
+}
+
+/* ==========================================================================
    IDS
    ========================================================================== */
+
 #section-intro {
+  /* animation: fadeIn 3s ease-in-out; */
   text-align: center;
+}
+
+#about-me-bio {
+  padding: 3em;
 }
 
 /* ==========================================================================
    TERMINAL SHELL
    ========================================================================== */
 .shell {
-  width: calc(50% - 54px);
+  width: calc(40% - 54px);
+  max-width: 500px;
   display: inline-block;
   background-color: #353839;
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 5px 5px;
   text-align: left;
   margin-right: 54px;
 }
@@ -103,7 +124,6 @@ figure {
   overflow-x: scroll;
   min-height: 200px;
 }
-
 @keyframes blinkCursor {
   0%,
   100% {
@@ -113,3 +133,79 @@ figure {
     opacity: 0; /* Cursor invisible in the middle */
   }
 }
+
+/* ==========================================================================
+   KEYFRAMES 
+   ========================================================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   CLASSES
+   ========================================================================== */
+
+.circular-image {
+  border-radius: 50%;
+  border: 10px solid #000000;
+  width: 350px;
+  height: 350px;
+  object-fit: cover;
+  background-color: #ffffff;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-icons {
+  text-align: center;
+  padding: 2em;
+  font-size: xx-large;
+}
+.social-icons a {
+  margin-right: 15px;
+  color: #353839;
+  text-decoration: none;
+}
+
+.social-icons a:hover {
+  color: #5d7e89;
+}
+
+.social-icons a:last-child {
+  margin-right: 0;
+}
+
+/* ==========================================================================
+   PROJECT 
+   ========================================================================== */
+
+.project-tool {
+  height: auto;
+  width: 35px;
+}
+
+.project-title {
+  text-align: center;
+}
+
+.project-description {
+  font-size: smaller;
+}
+
+.project-thumbnail {
+  width: 80%; /* full width of the card */
+  height: auto; /* height is adjusted automatically to maintain aspect ratio */
+  object-fit: cover; /* to maintain aspect ratio without stretching */
+  display: block;
+  margin: 0 auto;
+}
+

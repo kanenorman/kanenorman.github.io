@@ -3,31 +3,70 @@ layout: default
 ---
 
 <body>
-  <main class="container">
-    <div id="fullpage">
-      <div class="section" id="section-intro">
-        <div>
-          <div class="shell">
-            <div class="shell-header">
-              <span class="shell-header-actions shell-header-close"></span>
-              <span class="shell-header-actions shell-header-minimize"></span>
-              <span class="shell-header-actions shell-header-maximize"></span>
-            </div>
-            <div class="shell-body">
-              <div class="shell-tab-content active">
-                <p>
-                  <span style="color: #90ee90">kane@server:~$ </span>
-                  <span id="typed-message"></span>
-                  <span class="shell-cursor"></span>
-                </p>
-              </div>
-            </div>
+  <div id="fullpage">
+    <!--BEGIN INTRO SECTION-->
+    <div class="section" id="section-intro">
+      <div class="shell">
+        <div class="shell-header">
+          <span class="shell-header-actions shell-header-close"></span>
+          <span class="shell-header-actions shell-header-minimize"></span>
+          <span class="shell-header-actions shell-header-maximize"></span>
+        </div>
+        <div class="shell-body">
+          <div class="shell-tab-content active">
+            <p>
+              <span style="color: #90ee90">kane@server:~$ </span>
+              <span id="typed-message"></span>
+              <span class="shell-cursor"></span>
+            </p>
           </div>
         </div>
       </div>
-      <div class="section">Some section</div>
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/kanenorman/"
+          ><i class="cib-linkedin-in"></i
+        ></a>
+        <a href="https://github.com/kanenorman"><i class="cib-github"></i></a>
+        <a href="https://leetcode.com/kane_norman/"
+          ><i class="cib-leetcode"></i
+        ></a>
+      </div>
     </div>
-  </main>
+    <!--END INTRO SECTION-->
+    <!--BEGIN ABOUT SECTION-->
+    <div class="section">
+      <div class="grid">
+        <div>
+          <p id="about-me-bio">
+            Hi, my name is Kane Norman. My academic background is anchored in
+            mathematics, computer science, machine learning, and deep learning.
+            I possess a profound expertise in the Python programming language,
+            databases, and Linux environments, enabling me to seamlessly
+            integrate data science with software engineering principles.
+          </p>
+        </div>
+        <div class="centered">
+          <img
+            class="circular-image"
+            src="{{ '/assets/images/portrait.png' | relative_url }}"
+            alt="Kane Headshot"
+          />
+        </div>
+      </div>
+    </div>
+    <!--END ABOUT SECTION-->
+    <!--BEGIN PROJECTS SECTION-->
+    <div class="section">
+      <div class="grid">
+        {% for project in site.data.projects %} {% include project.html
+        url=project.url image=project.image title=project.title
+        description=project.description tools=project.tools %} {% endfor %}
+      </div>
+    </div>
+
+    <!--END PROJECTS SECTION-->
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
   <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/shell-typing.js' | relative_url }}"></script>
