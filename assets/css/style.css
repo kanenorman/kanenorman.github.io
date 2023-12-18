@@ -2,6 +2,12 @@ body {
   font-family: monospace;
 }
 
+[data-tooltip]:not(a,button,input) {
+  border-bottom: none;
+  position: relative;
+  cursor: auto;
+}
+
 /* ==========================================================================
    Fullpage JS
    ========================================================================== */
@@ -20,13 +26,41 @@ body {
    IDS
    ========================================================================== */
 
-#section-intro {
+#landing-section {
   /* animation: fadeIn 3s ease-in-out; */
   text-align: center;
 }
 
-#about-me-bio {
-  padding: 3em;
+#biography p {
+  font-size: smaller;
+  padding-left: 3em;
+}
+
+/* ==========================================================================
+   CLASSES
+   ========================================================================== */
+
+.circular-image {
+  border-radius: 50%;
+  border: 10px solid #000000;
+  width: 350px;
+  height: 350px;
+  object-fit: cover;
+  background-color: #ffffff;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-header {
+  text-align: center;
+}
+
+.section-subheader {
+  text-align: center;
 }
 
 /* ==========================================================================
@@ -147,23 +181,8 @@ figure {
 }
 
 /* ==========================================================================
-   CLASSES
+   SOCIAL ICONS
    ========================================================================== */
-
-.circular-image {
-  border-radius: 50%;
-  border: 10px solid #000000;
-  width: 350px;
-  height: 350px;
-  object-fit: cover;
-  background-color: #ffffff;
-}
-
-.centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .social-icons {
   text-align: center;
@@ -185,7 +204,7 @@ figure {
 }
 
 /* ==========================================================================
-   PROJECT 
+   PROJECTS
    ========================================================================== */
 
 .project-tool {
@@ -202,10 +221,13 @@ figure {
 }
 
 .project-thumbnail {
-  width: 80%; /* full width of the card */
-  height: auto; /* height is adjusted automatically to maintain aspect ratio */
-  object-fit: cover; /* to maintain aspect ratio without stretching */
+  width: 90%;
+  height: auto;
+  object-fit: cover;
   display: block;
   margin: 0 auto;
 }
 
+.project-card-footer{
+  text-align: center;
+}
