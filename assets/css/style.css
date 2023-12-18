@@ -2,7 +2,7 @@ body {
   font-family: monospace;
 }
 
-[data-tooltip]:not(a,button,input) {
+[data-tooltip]:not(a, button, input) {
   border-bottom: none;
   position: relative;
   cursor: auto;
@@ -217,7 +217,7 @@ figure {
 }
 
 .project-description {
-  font-size: smaller;
+  font-size: 14px;
 }
 
 .project-thumbnail {
@@ -228,6 +228,19 @@ figure {
   margin: 0 auto;
 }
 
-.project-card-footer{
+article {
+  display: flex;
+  flex-direction: column;
+  height: 90%; 
+}
+
+.project-thumbnail,
+.project-title,
+.project-description {
+  flex-shrink: 0; 
+}
+
+.project-card-footer {
+  margin-top: auto; 
   text-align: center;
 }

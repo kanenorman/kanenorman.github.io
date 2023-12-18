@@ -1,17 +1,16 @@
 <div>
   <article>
-    <div class="project-card-body">
-      <a href="{{ include.url }}">
-        <img
-          class="project-thumbnail"
-          src="{{ include.image | relative_url }}"
-          alt="{{ include.title }}"
-        />
-      </a>
-      <h4 class="project-title">{{ include.title }}</h4>
+    <a href="{{ include.url }}">
+      <img
+        class="project-thumbnail"
+        src="{{ include.image | relative_url }}"
+        alt="{{ include.title }}"
+      />
+    </a>
+    <h4 class="project-title">{{ include.title }}</h4>
 
-      <p class="project-description">{{ include.description }}</p>
-    </div>
+    <p class="project-description">{{ include.description }}</p>
+
     <div class="project-card-footer">
       {% for tool in include.tools %}
       <span data-tooltip="{{ tool | capitalize }}" data-placement="bottom">
