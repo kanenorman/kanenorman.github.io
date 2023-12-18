@@ -4,7 +4,7 @@
   description: "This project uses NLP to summarize and analyze sentiments about the 2024 presidential election media coverage. The website uses D3.js to make highly custom data visualizations. It's received praise from Dr. Hanspeter Pfister and is featured in the Harvard University CS 171 Hall of Fame."
   tools: ["javascript", "d3js", "css3", "html5"]
 
-- title: "Mobility"
+- title: "MBTA Real Time Data Streaming"
   url: "https://github.com/kanenorman/mobility-ai"
   image: "/assets/images/mobility.png"
   description: "Experience real-time streaming of Boston's public transit data, highlighting cutting-edge data engineering frameworks for seamless real-time data flow."
