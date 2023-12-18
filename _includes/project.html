@@ -1,12 +1,14 @@
 <div>
   <article>
-    <a href="{{ include.url }}">
-      <img
-        class="project-thumbnail"
-        src="{{ include.image | relative_url }}"
-        alt="{{ include.title }}"
-      />
-    </a>
+    <div class="project-thumbnail-wrapper">
+      <a href="{{ include.url }}">
+        <img
+          class="project-thumbnail"
+          src="{{ include.image | relative_url }}"
+          alt="{{ include.title }}"
+        />
+      </a>
+    </div>
     <h4 class="project-title">{{ include.title }}</h4>
 
     <p class="project-description">{{ include.description }}</p>
