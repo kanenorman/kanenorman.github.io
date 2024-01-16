@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   const messages = [
-    "Hello, welcome to my website!",
+    "Hello, I'm Kane. Welcome to my website!",
     "Feel free to look around and contact me if you have any questions!",
   ];
   const typingEffect = new TypingEffect("typed-message", messages, 50, 30);

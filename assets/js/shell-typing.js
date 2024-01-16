@@ -1,5 +1,11 @@
 class TypingEffect {
-  constructor(elementId, messages, typingSpeed, erasingSpeed, pauseBeforeFirstMessage=1000) {
+  constructor(
+    elementId,
+    messages,
+    typingSpeed,
+    erasingSpeed,
+    pauseBeforeFirstMessage = 1000,
+  ) {
     this.element = document.getElementById(elementId);
     this.messages = messages;
     this.typingSpeed = typingSpeed;
