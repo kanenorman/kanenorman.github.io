@@ -1,15 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--
   Designed by Kane Norman
   (c) 2022 Kane Norman
 -->
 <html lang="en" data-theme="light">
-  <link
-    rel="shortcut icon"
-    type="image/x-icon"
-    href="{{ site.baseurl }}/images/favicon.ico"
-  />
+  {%include header.html%}
+
   <body>
-    {%include header.html%} {{content}} {%include footer.html%}
+    {{content}} {%include footer.html%}
   </body>
 </html>
