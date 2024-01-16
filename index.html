@@ -46,10 +46,10 @@ layout: default
     <!--END INTRO SECTION-->
     <!--BEGIN ABOUT SECTION-->
     <div class="section">
-      <h2 class="section-header">About Me</h2>
+      <h2 class="section-header animated-top">About Me</h2>
       <div class="grid">
         <div>
-          <div class="container">
+          <div class="container animated-left">
             <div id="biography">
               <p>
                 Hi, I'm Kane Norman, a dedicated full-stack engineer with a
@@ -72,7 +72,7 @@ layout: default
             </div>
           </div>
         </div>
-        <div class="centered">
+        <div class="centered animated-right">
           <img
             class="circular-image"
             src="{{ '/assets/images/portrait.png' | relative_url }}"
@@ -84,11 +84,11 @@ layout: default
     <!--END ABOUT SECTION-->
     <!--BEGIN PROJECTS SECTION-->
     <div class="section">
-      <hgroup>
+      <hgroup class="animated-top">
         <h2 class="section-header">Projects</h2>
         <h3 class="section-subheader">Personal and Open Source</h3>
       </hgroup>
-      <div class="container">
+      <div class="container animated-left">
         <div class="grid">
           {% for project in site.data.projects %} {% include project.html
           url=project.url image=project.image title=project.title

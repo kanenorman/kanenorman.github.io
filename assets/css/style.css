@@ -269,3 +269,49 @@ article {
   margin-top: auto;
   text-align: center;
 }
+
+/* 
+ 
+ ==========================================================================
+ ANIMATIONS
+ ========================================================================== 
+
+ */
+.animated-left,
+.animated-right,
+.animated-top,
+.animated-bottom {
+  position: relative;
+  transition: transform 800ms ease;
+}
+
+.animated-left {
+  left: 0;
+  transform: translate3d(-100vw, 0, 0);
+  right: 0;
+}
+
+.animated-right {
+  right: 0;
+  transform: translate3d(100vw, 0, 0);
+  left: 0;
+}
+
+.animated-top {
+  top: 0;
+  transform: translate3d(0, -100vh, 0);
+  bottom: 0;
+}
+
+.animated-bottom {
+  top: 0;
+  transform: translate3d(0, 100vh, 0);
+  bottom: 0;
+}
+
+.fp-section.active .animated-left,
+.fp-section.active .animated-right,
+.fp-section.active .animated-top,
+.fp-section.active .animated-bottom {
+  transform: translate3d(0, 0, 0);
+}
