@@ -4,6 +4,12 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  font-size: 16px;
+  height: 100%;
+}
+
+main {
+  flex: 1;
 }
 
 [data-tooltip]:not(a, button, input) {
@@ -13,12 +19,12 @@ body {
 }
 
 .footer {
-  font-size: 0.8em;
-  margin-top: auto;
+  background: inherit;
+  padding: 1rem 0;
   text-align: center;
-  padding: 0em 0;
+  width: 100%;
   border-top: 1px solid #bbb;
-  margin: 1em 0;
+  font-size: x-small;
 }
 
 .container {
@@ -246,7 +252,8 @@ nav {
   font-weight: bold;
   margin-bottom: 10px;
   text-align: center;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+  transition:
+    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .grid article header img {
