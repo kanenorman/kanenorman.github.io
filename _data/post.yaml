@@ -1,0 +1,11 @@
+- title: "Math Prerequisites"
+  page: "/posts/preliminary-math"
+  image: "/assets/images/math-equations.jpg"
+  caption: "Image Credit: Dan Cristian"
+  description: "Machine learning is a field that requires a strong foundation in mathematics. Specifically, calculus, linear algebra, and probability."
+
+- title: "What is Machine Learning?"
+  page: "/posts/what-is-machine-learning"
+  image: "/assets/images/machine-learning-steve-johnson.jpg"
+  caption: "Image Credit: Steve Johnson"
+  description: "A high level overview and introduction to machine learning. What is it? How does it work? What are the different types of machine learning?"
