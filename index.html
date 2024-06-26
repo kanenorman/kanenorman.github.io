@@ -2,106 +2,48 @@
 layout: default
 ---
 
-<body>
-  <div id="fullpage">
-    <!--BEGIN INTRO SECTION-->
-    <div class="section" id="landing-section">
-      <div class="shell">
-        <div class="shell-header">
-          <span class="shell-header-actions shell-header-close"></span>
-          <span class="shell-header-actions shell-header-minimize"></span>
-          <span class="shell-header-actions shell-header-maximize"></span>
-        </div>
-        <div class="shell-body">
-          <div class="shell-tab-content active">
-            <p>
-              <span style="color: #90ee90">kane@server:~$ </span>
-              <span id="typed-message"></span>
-              <span class="shell-cursor"></span>
-            </p>
-          </div>
-        </div>
+<div class="container" id="landing-section">
+  <div style="margin-block: 10%">
+    <div class="shell">
+      <div class="shell-header">
+        <span class="shell-header-actions shell-header-close"></span>
+        <span class="shell-header-actions shell-header-minimize"></span>
+        <span class="shell-header-actions shell-header-maximize"></span>
       </div>
-      <div class="social-icons">
-        <a
-          data-tooltip="linkedin"
-          data-placement="bottom"
-          href="https://www.linkedin.com/in/kanenorman/"
-          ><i class="cib-linkedin-in"></i
-        ></a>
-        <a
-          data-tooltip="github"
-          data-placement="bottom"
-          href="https://github.com/kanenorman"
-          ><i class="cib-github"></i
-        ></a>
-        <a
-          data-tooltip="leetcode"
-          data-placement="bottom"
-          href="https://leetcode.com/kane_norman/"
-          ><i class="cib-leetcode"></i
-        ></a>
-      </div>
-    </div>
-    <!--END INTRO SECTION-->
-    <!--BEGIN ABOUT SECTION-->
-    <div class="section">
-      <h2 class="section-header animated-top">About Me</h2>
-      <div class="grid">
-        <div>
-          <div class="container animated-left">
-            <div id="biography">
-              <p>
-                Hello, I'm Kane Norman, a dedicated full-stack engineer with a
-                strong focus on data and machine learning. My passion lies in
-                crafting innovative solutions that harness the power of data to
-                drive real-world impact.
-              </p>
-              <p>
-                My skill sets are deeply anchored in Python, databases, and
-                machine learning, forming a strong foundation for my expertise.
-                I possesss a unique blend of data science, data engineering, and
-                software engineering excellence. What distinguishes me is my
-                capacity to align technical skills with business goals.
-              </p>
-              <p>
-                Through the transformative power of data, I enable organizations
-                to utilize their data resources more efficiently, facilitating
-                strategic decision-making and promoting business expansion while
-                driving real-world impact.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="centered animated-right">
-          <img
-            class="circular-image"
-            src="{{ '/assets/images/portrait.png' | relative_url }}"
-            alt="Kane Headshot"
-          />
+      <div class="shell-body">
+        <div class="shell-tab-content active">
+          <p>
+            <span style="color: #90ee90">kane@server:</span>
+            <span style="color: #1e90ff">~</span>
+            <span style="color: #1e90ff">$</span>
+            <span id="typed-message"></span>
+            <span class="shell-cursor"></span>
+          </p>
         </div>
       </div>
     </div>
-    <!--END ABOUT SECTION-->
-    <!--BEGIN PROJECTS SECTION-->
-    <div class="section">
-      <hgroup class="animated-top">
-        <h2 class="section-header">Projects</h2>
-        <h3 class="section-subheader">Personal and Open Source</h3>
-      </hgroup>
-      <div class="container animated-left">
-        <div class="grid">
-          {% for project in site.data.projects %} {% include project.html
-          url=project.url image=project.image title=project.title
-          description=project.description tools=project.tools %} {% endfor %}
-        </div>
-      </div>
+    <div class="social-icons">
+      <a
+        data-tooltip="linkedin"
+        data-placement="bottom"
+        href="https://www.linkedin.com/in/kanenorman/"
+        ><i class="cib-linkedin-in"></i
+      ></a>
+      <a
+        data-tooltip="github"
+        data-placement="bottom"
+        href="https://github.com/kanenorman"
+        ><i class="cib-github"></i
+      ></a>
+      <a
+        data-tooltip="leetcode"
+        data-placement="bottom"
+        href="https://leetcode.com/kane_norman/"
+        ><i class="cib-leetcode"></i
+      ></a>
     </div>
-
-    <!--END PROJECTS SECTION-->
   </div>
+</div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
-  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
-  <script src="{{ '/assets/js/shell-typing.js' | relative_url }}"></script>
-</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
+<script src="{{ '/assets/js/landing-page.js' | relative_url }}"></script>

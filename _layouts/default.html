@@ -7,6 +7,10 @@
   {%include header.html%}
 
   <body>
-    {{content}} {%include footer.html%}
+    <header>
+      <div class="container">{% include navigation.html %}</div>
+    </header>
+    <main class="container">{{content}}</main>
+    {%include footer.html%}
   </body>
 </html>

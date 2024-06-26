@@ -68,7 +68,16 @@ class TypingEffect {
         this.eraseMessage(length - 1, callback);
       }, this.erasingSpeed);
     } else {
-      setTimeout(callback, 1000); // Delay before typing the next message
+      setTimeout(callback, 2000); // Delay before typing the next message
     }
   }
 }
+
+const messages = [
+  "Hello, I'm Kane. Welcome to my website!",
+  "I'm a machine learning enthusiast based in the United States.",
+  "Feel free to look around and contact me if you have any questions!",
+];
+
+const typingEffect = new TypingEffect("typed-message", messages, 50, 30);
+typingEffect.typeAndEraseMessages();
