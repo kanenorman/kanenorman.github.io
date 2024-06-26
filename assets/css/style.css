@@ -1,5 +1,9 @@
+html,
 body {
-  font-family: monospace, sans-serif;
+  font-family: "Roboto", monospace, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 [data-tooltip]:not(a, button, input) {
@@ -8,33 +12,19 @@ body {
   cursor: auto;
 }
 
-/* ==========================================================================
-   Fullpage JS
-   ========================================================================== */
-.animated {
-  position: absolute;
-  left: 0;
-  transform: translate3d(0, -100vh, 0);
-  transition: transform 600ms ease;
-  right: 0;
-}
-.fp-section.active .animated {
-  transform: translate3d(0, 0, 0);
+.footer {
+  font-size: 0.8em;
+  margin-top: auto;
+  text-align: center;
+  padding: 0em 0;
+  border-top: 1px solid #bbb;
+  margin: 1em 0;
 }
 
-#fp-nav ul li .fp-tooltip {
-  position: absolute;
-  top: -2px;
-  color: #000000;
-  font-size: 14px;
-  font-family: monospace, sans-serif;
-  white-space: nowrap;
-  max-width: 220px;
-  overflow: hidden;
-  display: block;
-  opacity: 0;
-  width: 0;
-  cursor: pointer;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
 /* ==========================================================================
@@ -46,49 +36,19 @@ body {
   text-align: center;
 }
 
-#biography p {
-  font-size: smaller;
-  padding-left: 3em;
-}
-
-/* ==========================================================================
-   CLASSES
-   ========================================================================== */
-
-.circular-image {
-  border-radius: 50%;
-  border: 10px solid #000000;
-  width: 350px;
-  height: 350px;
-  object-fit: cover;
-  background-color: #ffffff;
-}
-
-.centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.section-header {
-  text-align: center;
-}
-
-.section-subheader {
-  text-align: center;
-}
-
 /* ==========================================================================
    TERMINAL SHELL
    ========================================================================== */
 .shell {
-  width: calc(40% - 54px);
+  font-size: smaller;
+  width: calc(50% - 54px);
   max-width: 500px;
   display: inline-block;
   background-color: #353839;
   border-radius: 5px 5px 5px 5px;
   text-align: left;
   margin-right: 54px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
 }
 .shell-header {
   background: #414a4c;
@@ -168,7 +128,6 @@ figure {
 }
 
 #typed-message {
-  font-family: monospace;
   color: #ffffff;
   overflow-x: scroll;
   min-height: 200px;
@@ -218,65 +177,12 @@ figure {
   margin-right: 0;
 }
 
-/* ==========================================================================
-   PROJECTS
-   ========================================================================== */
-
-.project-tool {
-  height: auto;
-  width: 35px;
-}
-
-.project-title {
-  text-align: center;
-}
-
-.project-description {
-  font-size: 14px;
-}
-
-.project-thumbnail-wrapper {
-  width: 90%;
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-  padding-top: 56.25%;
-}
-
-.project-thumbnail {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-article {
-  display: flex;
-  flex-direction: column;
-  height: 90%;
-}
-
-.project-thumbnail,
-.project-title,
-.project-description {
-  flex-shrink: 0;
-}
-
-.project-card-footer {
-  margin-top: auto;
-  text-align: center;
-}
-
-/* 
- 
+/*
  ==========================================================================
  ANIMATIONS
  ========================================================================== 
-
  */
+
 .animated-left,
 .animated-right,
 .animated-top,
@@ -314,4 +220,64 @@ article {
 .fp-section.active .animated-top,
 .fp-section.active .animated-bottom {
   transform: translate3d(0, 0, 0);
+}
+
+/* ==========================================================================
+  NAVIGATION
+   ========================================================================== */
+nav {
+  margin-bottom: 2em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.grid article {
+  padding: 20px;
+  border-radius: 8px;
+  height: 100%;
+  font-size: smaller;
+}
+
+.grid article header {
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.grid article header img {
+  max-width: 100%;
+}
+
+.grid article:hover {
+  transform: scale(1.01); /* Zoom effect on hover */
+  box-shadow: 0 8px 16px #dae4f5; /* Stronger shadow on hover */
+}
+.grid article p {
+  margin: 0;
+}
+
+.grid article a {
+  color: #353839;
+  text-emphasis: none;
+}
+
+.article-link {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit text color */
+}
+
+.article-link article {
+  font-family: inherit; /* Inherit font */
+  color: inherit; /* Inherit text color */
+}
+
+.article-link header,
+.article-link p {
+  font-family: inherit; /* Inherit font */
+  color: inherit; /* Inherit text color */
 }
