@@ -2,25 +2,18 @@
 layout: default
 ---
 
-<div class="container grid">
+<div class="container content grid">
+  {% for post in site.data.post %}
   <div>
-    <a
-      href="{{ '/posts/preliminary-math' | relative_url }}"
-      class="article-link"
-    >
+    <a href="{{ post.page | relative_url }}" class="article-link">
       <article>
         <header>
-          <img
-            src="{{ '/assets/images/math-equations.jpg' | relative_url }}"
-            alt="Image Credit: Dan Cristian"
-          />
-          Math Prerequisites
+          <img src="{{ post.image | relative_url }}" alt="{{ post.caption }}" />
+          {{ post.title }}
         </header>
-        <p>
-          Machine learning is a field that requires a strong foundation in
-          mathematics. Specifically, calculus, linear algebra, and probability.
-        </p>
+        <p>{{ post.description }}</p>
       </article>
     </a>
   </div>
+  {% endfor %}
 </div>
