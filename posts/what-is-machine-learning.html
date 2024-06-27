@@ -5,62 +5,38 @@ layout: default
 <div id="fullpage-what-is-ml">
   <!--WHAT IS ML-->
   <div class="section">
-    <h4>What is Machine Learning? 🤔</h4>
+    <h2>What is Machine Learning? 🤷🏽‍♀️</h2>
     <p>
-      Truthfully, it depends on who you ask. To some, it's a mysterious black
-      box that can magically answer any question. For academics, it's advanced
-      math that can mimic human decision-making. For skeptics, it signals the
-      end of the world, with Terminator robots coming to end humanity!
-    </p>
-    <p>
-      Regardless of how you define it, at its core, machine learning revolves
-      around creating algorithms that are designed to
-      <span class="keyword"
-        >identify patterns in data and make predictions based on those
-        patterns</span
-      >. <sup>[1]</sup> <i>(Not too different from how humans learn, right?)</i>
+      Machine learning can mean different things depending on who you ask. To some, it's a mysterious black box capable
+      of solving any problem. For academics, it's a complex interplay of advanced mathematics and statistics. For
+      skeptics, it signals the end of
+      the world, with Terminator robots soon coming to end humanity! Regardless of the perspective, at its core, machine
+      learning is about creating algorithms that <strong>identify patterns in data and make predictions based on those
+        patterns</strong>.<sup>[1]</sup> <i>(Not too different from how humans learn from experience, right?)</i>
     </p>
   </div>
 
   <!--ML TYPES-->
   <div class="section">
-    <h4>Types of Machine Learning</h4>
+    <h2>Types of Machine Learning 🔍</h2>
     <p>
-      Different kinds of datasets and problems lend themselves to different
-      types of learning <sup>[2]</sup>
+      Different datasets and problems require different types of learning.<sup>[2]</sup>
     </p>
     <p>
-      <span class="keyword">Supervised Learning:</span> Algorithms are trained
-      on labeled data where the desired output is known. For example, in a spam
-      email classifier, the algorithm learns from emails labeled as "spam" or
-      "not spam" to predict the label of new, unlabeled emails.
-    </p>
-    <p>
-      <span class="keyword">Unsupervised Learning:</span> Involves algorithms
-      learning patterns from data without explicit labels. The goal is to
-      explore the structure of the data, such as clustering similar data points
-      together or reducing the dimensionality of the data.
-    </p>
-    <p>
-      <span class="keyword">Reinforcement Learning:</span> Is about training
-      agents to make sequences of decisions by interacting with an environment.
-      The agent learns to achieve a certain goal through trial and error,
-      receiving feedback in the form of rewards or penalties.
-    </p>
-    <p>
-      We will primarily focus on supervised learning, where the emphasis is on
-      training models with labeled data to make accurate predictions or
-      classifications.
+      In this introduction, we will focus on <strong>supervised learning</strong>. Supervised learning involves training
+      models using labeled data to predict or classify outcomes. For instance, a spam email classifier learns patterns
+      from a dataset of emails labeled as "spam" or "not spam" to classify new, unseen emails. Essentially,
+      supervised learning builds a model that understands the relationship between input features and known outcomes,
+      which it then uses to make predictions on new data.
     </p>
   </div>
 
   <!--ML EXAMPLE-->
   <div class="section">
-    <h4>Supervised Learning: A Gentle Example</h4>
+    <h2>A Beginner's Example 👽</h2>
     <p>
-      Imagine you have collected 50 measurements for height and weight. You want
-      to build a machine learning model to predict a subject's weight given
-      their height.
+      Imagine you've gathered data on the height and weight of an alien species. Your goal is to develop a machine
+      learning model to predict an alien's weight based on their height.
     </p>
     <table class="striped">
       <thead>
@@ -73,18 +49,18 @@ layout: default
       <tbody>
         <tr>
           <td>1</td>
-          <td>150</td>
-          <td>50</td>
+          <td>4</td>
+          <td>10</td>
         </tr>
         <tr>
           <td>2</td>
-          <td>160</td>
-          <td>55</td>
+          <td>6</td>
+          <td>13</td>
         </tr>
         <tr>
           <td>3</td>
-          <td>170</td>
-          <td>60</td>
+          <td>9</td>
+          <td>22</td>
         </tr>
         <tr>
           <td>...</td>
@@ -93,100 +69,198 @@ layout: default
         </tr>
         <tr>
           <td>48</td>
-          <td>194</td>
-          <td>84</td>
+          <td>11</td>
+          <td>27</td>
         </tr>
         <tr>
           <td>49</td>
-          <td>196</td>
-          <td>86</td>
+          <td>12</td>
+          <td>28</td>
         </tr>
         <tr>
           <td>50</td>
-          <td>198</td>
-          <td>88</td>
+          <td>13</td>
+          <td>33</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!--SCATTER PLOT-->
+
+  <!-- SCATTER PLOT -->
   <div class="section">
     <div class="grid">
       <div id="scatter-plot" style="height: 100%"></div>
       <div>
+        <h2>Visualizing the Dataset 📈</h2>
         <p>
-          When we plot this data, a clear pattern emerges: as height increases,
-          weight increases in a roughly linear manner. This fundamental
-          observation underscores the core principal of machine learning,
-          <span class="keyword">
-            identify patterns in data and make predictions based on those
-            patterns
-          </span>
-          <sup>[1]</sup>
-        </p>
-        <p>
-          Given our labeled data, we can employ a supervised learning algorithm
-          to understand and model this linear pattern effectively.
+          When we visualize this data, a clear pattern emerges: as height increases, weight also increases in a roughly
+          linear manner.
+          <strong>We can train a machine to learn this pattern and make accurate predictions based on the pattern it
+            learned.</strong>
         </p>
       </div>
     </div>
   </div>
 
-  <!--LINEAR REGRESSION PLOT-->
+
+  <!-- WHY ML PLOT -->
+  <div class="section">
+    <div class="grid">
+      <div id="scatter-plot-multiple-fits" style="height: 100%"></div>
+      <div>
+        <h2>Finding the Optimal Parameters 🧭</h2>
+        <p>
+          Our data exhibits a linear relationship where \( \text{weight} \approx w_0 + w_1 \times \text{height} \). But
+          how
+          do we determine the optimal values of \( w_0 \) and \( w_1 \)? With an infinite number of possible lines, it
+          would take forever to guess and check until we found the best fit.
+        </p>
+        <p>
+          Fortunately, we don't need to do this manually. We can use supervised learning
+          to automatically learn the optimal values of \( w_0 \) and \( w_1 \).
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- LINEAR REGRESSION PLOT -->
   <div class="section">
     <div class="grid">
       <div id="linear-regression-plot"></div>
       <div>
+        <h2>Training the Model 🤖</h2>
         <p>
-          The question now is, how does the machine learn this linear pattern?
-          We know the model needs to learn a linear equation in the form \( y =
-          B_0 + B_1x \). But how does the model find the optimal parameters \(
-          B_0 \) and \( B_1 \)?
+          How does the machine learn the parameters \( w_0 \) and \( w_1 \)?
         </p>
         <p>
-          Without diving too far into the details just yet, the algorithm starts
-          with random initial values and iteratively adjusts the parameters to
-          minimize the error between the model's predictions and the actual
-          labeled data.
+          To begin, we define a metric to measure the model's error. Initially, the model assigns random values to \(
+          w_0 \) and \( w_1 \).
+          Through iterative adjustments, the algorithm aims to <span style="color: #ff0000; font-weight: bold">minimize
+            this error</span> between its predictions and the actual data. <sup>[3]</sup>
         </p>
         <p>
-          By learning this linear pattern from our data, we can train a model
-          that predicts weight based on height.. The resulting line is known as
-          a
-          <span class="keyword">linear regression</span> model.
+          As the model minimizes this error, it effectively learns the underlying linear relationship in our data. This
+          process results
+          in a <span class="keyword">linear regression</span> model capable of predicting weight based on height.
         </p>
       </div>
     </div>
   </div>
 
-  <!-- CITATIONS -->
+
+
+
+
+  <!--A MATH PERSEPECTIVE-->
   <div class="section">
+    <h2>A Mathematician's Perspective on Supervised Learning 🧮</h2>
+    <p>
+      From a mathematical standpoint, supervised learning follows a structured process. To illustrate, let's consider a
+      regression problem similar to our example, where the objective is to predict a continuous output \( y \) based on
+      an input \( x \).
+    </p>
+    <h4>The Supervised Learning Process <sup>[4]</sup></h4>
+    <ol>
+      <li>
+        <strong>Data Collection:</strong> Collect a dataset \( D = \{(x_1, y_1), \ldots, (x_N, y_N)\} \) consisting of
+        pairs \( (x_i, y_i) \) where \( x_i \) are inputs and \( y_i \) are known outputs.
+      </li>
+      <li>
+        <strong>Function Definition:</strong> Define a function \( y = f_w(x) \) that represents how \( x \) relates to
+        \( y \), using parameters \( w \).
+      </li>
+      <li>
+        <strong>Loss Function Formulation:</strong> Formulate a loss function \( L(w) \) to measure how well \( f_w \)
+        fits the data.
+      </li>
+      <li>
+        <strong>Parameter Optimization:</strong> Optimize the parameters \( w \) by minimizing the loss function \( L(w)
+        \) to make \( f_w \) fit the data as accurately as possible.
+      </li>
+    </ol>
+    <p>
+      This framework is versatile and widely applicable in supervised learning. It encompasses not only simple linear
+      regression but also extends to advanced models like neural networks. Mastering this workflow equips you to
+      effectively address nearly any supervised learning problem. If it doesn't make sense just yet, don't worry! As you
+      encounter it more, you'll gradually grasp the concept.
+    </p>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="section">
+    <div class="grid">
+      <div>
+        <h2>Summary 🤓</h2>
+        <p>
+          Machine learning, at its core, involves creating algorithms that can identify patterns in data and make
+          predictions based on those patterns. In our exploration, we've focused on supervised learning, where models
+          are trained using labeled data to predict outcomes.
+        </p>
+        <p>
+          We began by visualizing a dataset where height and weight data exhibited a clear linear relationship. Through
+          supervised learning, specifically linear regression, we demonstrated how machines learn to fit a linear
+          equation \(weight \approx w_0 + w_1 \times height\) to predict weight based on height.
+        </p>
+        <p>
+          The training process involves defining a metric to measure model error, initializing parameters \(w_0\) and
+          \(w_1\),
+          and iteratively adjusting them to minimize prediction errors. This iterative refinement allows the model to
+          learn the underlying patterns effectively.
+        </p>
+        <p>
+          By grasping these foundational concepts and processes, you can divep
+          deeper into supervised learning
+          applications, ranging from simple linear regression to more intricate algorithms like neural networks. These
+          concepts form a common thread throughout various machine learning methodologies.
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- CREDITS & CITATIONS -->
+  <div class="section credits">
+    <h4>Credits</h4>
+    <ul>
+      <li>
+        <strong>Authors</strong>: Kane Norman
+      </li>
+      <li>
+        <strong>Visuals</strong>: Kane Norman
+      </li>
+      <li>
+        <strong>Technology</strong> : <a href="https://d3js.org/">D3.js </a> , <a
+          href="https://alvarotrigo.com/fullPage/">fullPage.js</a>
+      </li>
+    </ul>
+
+
     <h4>References</h4>
     <ol>
       <li>
-        <a
-          href="https://ischoolonline.berkeley.edu/blog/what-is-machine-learning/"
-          target="_blank"
-        >
+        <a href="https://ischoolonline.berkeley.edu/blog/what-is-machine-learning/" target="_blank">
           Berkeley School of Information: What is Machine Learning (ML)?
         </a>
       </li>
       <li>
-        <a
-          href="https://blogs.nvidia.com/blog/supervised-unsupervised-learning/"
-          target="_blank"
-        >
-          Nvidia: SuperVize Me: What's the Difference Between Supervised,
-          Unsupervised, Semi-Supervised and Reinforcement Learning?
+        <a href="https://cloud.google.com/discover/what-is-supervised-learning" target="_blank">
+          Google: What is Supervised Learning?
         </a>
       </li>
       <li>
-        <a
-          href="http://www.cs.toronto.edu/~rgrosse/courses/csc321_2017/readings/L02%20Linear%20Regression.pdf"
-          target="_blank"
-        >
-          Roger Grosse, University of Toronto : Linear Regression
+        <a href="http://www.cs.toronto.edu/~rgrosse/courses/csc321_2017/readings/L02%20Linear%20Regression.pdf"
+          target="_blank">
+          Roger Grosse, University of Toronto: Linear Regression
+        </a>
+      </li>
+      <li>
+        <a href="https://onefishy.github.io/ML_notes/what-is-regression.html#what-is-machine-learning" target="_blank">
+          Weiwei Pan, Harvard University: Notes for CS181: Machine Learning
         </a>
       </li>
     </ol>
