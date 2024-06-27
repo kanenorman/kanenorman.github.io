@@ -4,11 +4,20 @@ document.addEventListener("DOMContentLoaded", function () {
     scrollingSpeed: 700,
     navigationPosition: "right",
     licenseKey: "gplv3-license",
-    paddingTop: "50px",
     anchors: ["what-is-machine-learning", "types-of-machine-learning"],
     navigationTooltips: [
       "What is Machine Learning",
       "Types of Machine Learning",
     ],
   });
+});
+
+
+window.addEventListener("scroll", function () {
+  var header = document.getElementById("header");
+  if (window.scrollY > 0) {
+    header.classList.add("shadow");
+  } else {
+    header.classList.remove("shadow");
+  }
 });

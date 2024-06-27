@@ -3,29 +3,31 @@ layout: default
 ---
 
 <div id="fullpage-what-is-ml">
+  <!--WHAT IS ML-->
   <div class="section">
     <h4>What is Machine Learning? 🤔</h4>
     <p>
-      Truthfully, it depends on who you ask. For many, machine learning is
-      perceived as a mystical black box that provides answers, while others view
-      it as sophisticated mathematics capable of predicting the future. Some
-      even fear it indicates the end of the world, with Terminator-like robots
-      poised to end humanity!
+      Truthfully, it depends on who you ask. To some, it's a mysterious black
+      box that can magically answer any question. For academics, it's advanced
+      math that can mimic human decision-making. For skeptics, it signals the
+      end of the world, with Terminator robots poised to end humanity!
     </p>
     <p>
-      Regardless of ones perspective, at its essence, machine learning revolves
+      Regardless of ones perspective, at its core, machine learning revolves
       around creating algorithms that are designed to
-      <span class="keyword">identify patterns in data</span> and
       <span class="keyword"
-        >make decisions based on the patterns they identify</span
-      >. (Not too different from how humans learn, right?)
+        >identify patterns in data and make decisions based on those
+        patterns</span
+      >. <sup>[1]</sup> (Not too different from how humans learn, right?)
     </p>
   </div>
+
+  <!--ML TYPES-->
   <div class="section">
     <h4>Types of Machine Learning</h4>
     <p>
       Machine learning algorithms can be categorized into different paradigms
-      based on how they learn from and process data.
+      based on how they learn from and process data. <sup>[2]</sup>
     </p>
     <p>
       <span class="keyword">Supervised Learning:</span> Algorithms are trained
@@ -50,5 +52,89 @@ layout: default
       training models with labeled data to make accurate predictions or
       classifications.
     </p>
+  </div>
+
+  <!--ML EXAMPLE-->
+  <div class="section">
+    <h4>Supervised Learning</h4>
+    <p>
+      Imagine you have collected 50 measurements for height and weight. You want
+      to build a machine learning model to predict a subject's weight given
+      their height. This is a classic example of a supervised learning problem.
+    </p>
+    <table class="striped">
+      <thead>
+        <tr>
+          <th scope="col">Observation</th>
+          <th scope="col">Height (cm)</th>
+          <th scope="col">Weight (kg)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>150</td>
+          <td>50</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>160</td>
+          <td>55</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>170</td>
+          <td>60</td>
+        </tr>
+        <tr>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+        </tr>
+        <tr>
+          <td>48</td>
+          <td>194</td>
+          <td>84</td>
+        </tr>
+        <tr>
+          <td>49</td>
+          <td>196</td>
+          <td>86</td>
+        </tr>
+        <tr>
+          <td>50</td>
+          <td>198</td>
+          <td>88</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--SCATTER PLOT-->
+  <div class="section">
+    <h4>Scatter Plot</h4>
+    <div id="scatter-plot"></div>
+</div>
+
+  <!-- CITATIONS -->
+  <div class="section">
+    <h4>References</h4>
+    <ol>
+      <li>
+        <a
+          href="https://ischoolonline.berkeley.edu/blog/what-is-machine-learning/"
+        >
+          Berkeley School of Information: What is Machine Learning (ML)?
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://blogs.nvidia.com/blog/supervised-unsupervised-learning/"
+        >
+          Nvidia: SuperVize Me: What's the Difference Between Supervised,
+          Unsupervised, Semi-Supervised and Reinforcement Learning?
+        </a>
+      </li>
+    </ol>
   </div>
 </div>
