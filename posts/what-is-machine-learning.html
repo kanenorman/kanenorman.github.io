@@ -10,15 +10,15 @@ layout: default
       Truthfully, it depends on who you ask. To some, it's a mysterious black
       box that can magically answer any question. For academics, it's advanced
       math that can mimic human decision-making. For skeptics, it signals the
-      end of the world, with Terminator robots poised to end humanity!
+      end of the world, with Terminator robots coming to end humanity!
     </p>
     <p>
-      Regardless of ones perspective, at its core, machine learning revolves
+      Regardless of how you define it, at its core, machine learning revolves
       around creating algorithms that are designed to
       <span class="keyword"
-        >identify patterns in data and make decisions based on those
+        >identify patterns in data and make predictions based on those
         patterns</span
-      >. <sup>[1]</sup> (Not too different from how humans learn, right?)
+      >. <sup>[1]</sup> <i>(Not too different from how humans learn, right?)</i>
     </p>
   </div>
 
@@ -26,8 +26,8 @@ layout: default
   <div class="section">
     <h4>Types of Machine Learning</h4>
     <p>
-      Machine learning algorithms can be categorized into different paradigms
-      based on how they learn from and process data. <sup>[2]</sup>
+      Different kinds of datasets and problems lend themselves to different
+      types of learning <sup>[2]</sup>
     </p>
     <p>
       <span class="keyword">Supervised Learning:</span> Algorithms are trained
@@ -56,11 +56,11 @@ layout: default
 
   <!--ML EXAMPLE-->
   <div class="section">
-    <h4>Supervised Learning</h4>
+    <h4>Supervised Learning: A Gentle Example</h4>
     <p>
       Imagine you have collected 50 measurements for height and weight. You want
       to build a machine learning model to predict a subject's weight given
-      their height. This is a classic example of a supervised learning problem.
+      their height.
     </p>
     <table class="striped">
       <thead>
@@ -112,9 +112,26 @@ layout: default
 
   <!--SCATTER PLOT-->
   <div class="section">
-    <h4>Scatter Plot</h4>
-    <div id="scatter-plot"></div>
-</div>
+    <div class="grid">
+      <div id="scatter-plot" style="height: 100%"></div>
+      <div>
+        <p>
+          When we plot this data, a clear pattern emerges: as height increases,
+          weight increases in a roughly linear manner. This fundamental
+          observation underscores the core principal of machine learning,
+          <span class="keyword">
+            identify patterns in data and make predictions based on those
+            patterns
+          </span>
+          <sup>[1]</sup>
+        </p>
+        <p>
+          Given our labeled data, we can employ a supervised learning algorithm
+          to understand and model this linear pattern effectively.
+        </p>
+      </div>
+    </div>
+  </div>
 
   <!-- CITATIONS -->
   <div class="section">
@@ -123,6 +140,7 @@ layout: default
       <li>
         <a
           href="https://ischoolonline.berkeley.edu/blog/what-is-machine-learning/"
+          target="_blank"
         >
           Berkeley School of Information: What is Machine Learning (ML)?
         </a>
@@ -130,6 +148,7 @@ layout: default
       <li>
         <a
           href="https://blogs.nvidia.com/blog/supervised-unsupervised-learning/"
+          target="_blank"
         >
           Nvidia: SuperVize Me: What's the Difference Between Supervised,
           Unsupervised, Semi-Supervised and Reinforcement Learning?
