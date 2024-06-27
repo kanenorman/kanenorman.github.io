@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (destination.index === 3) {
         HeightWeightScatter.plot();
       }
-      if (destination.index === 3) {
+      if (destination.index === 4) {
         LinearRegressionPlot.plot();
       }
     },
