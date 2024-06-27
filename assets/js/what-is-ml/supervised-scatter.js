@@ -34,35 +34,30 @@ const PlotSetup = {
       .range([height, 0]);
 
     // Add X axis
-    svg.append("g")
+    svg
+      .append("g")
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(x).ticks(10));
 
     // Add Y axis
-    svg.append("g")
-      .call(d3.axisLeft(y).ticks(10));
+    svg.append("g").call(d3.axisLeft(y).ticks(10));
 
     // Add X gridlines
-    svg.append("g")
+    svg
+      .append("g")
       .attr("class", "grid")
       .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x)
-        .ticks(10)
-        .tickSize(-height)
-        .tickFormat("")
-      );
+      .call(d3.axisBottom(x).ticks(10).tickSize(-height).tickFormat(""));
 
     // Add Y gridlines
-    svg.append("g")
+    svg
+      .append("g")
       .attr("class", "grid")
-      .call(d3.axisLeft(y)
-        .ticks(10)
-        .tickSize(-width)
-        .tickFormat("")
-      );
+      .call(d3.axisLeft(y).ticks(10).tickSize(-width).tickFormat(""));
 
     // X axis label
-    svg.append("text")
+    svg
+      .append("text")
       .attr("class", "axis-label")
       .attr("text-anchor", "middle")
       .attr("x", width / 2)
@@ -71,7 +66,8 @@ const PlotSetup = {
       .attr("font-weight", "bold");
 
     // Y axis label
-    svg.append("text")
+    svg
+      .append("text")
       .attr("class", "axis-label")
       .attr("text-anchor", "middle")
       .attr("transform", "rotate(-90)")
@@ -80,15 +76,14 @@ const PlotSetup = {
       .text("Weight (kg)")
       .attr("font-weight", "bold");
 
-
-    svg.append("text")
+    svg
+      .append("text")
       .attr("class", "plot-title")
       .attr("text-anchor", "middle")
       .attr("x", width / 2)
       .attr("y", -5)
       .text("Height vs Weight")
       .attr("font-weight", "bold");
-
 
     return { x, y };
   },
@@ -101,7 +96,7 @@ const PlotSetup = {
       .enter()
       .append("circle")
       .attr("cx", width / 2)
-      .attr("cy", -10)
+      .attr("cy", 10)
       .attr("r", 5)
       .attr("class", "dot")
       .attr("fill", "#f4b334")
@@ -130,6 +125,56 @@ const PlotSetup = {
       .attr("opacity", 0.7);
   },
 
+  multipleRegressionFits(svg, dataset, xScale, yScale) {
+    // Define different slopes and intercepts similar to 2x + 5
+    const linesParams = [
+      { m: 2, b: 5},
+      { m: 1, b: 12},
+      { m: 3, b: -1 },
+    ];
+
+    // Colors for different lines
+    const colors = d3.schemeCategory10;
+
+    // Loop through each set of parameters
+    linesParams.forEach((params, index) => {
+      const { m, b } = params;
+
+      // Create Regression Line
+      const line = d3.line()
+        .x((d) => xScale(d.x))
+        .y((d) => yScale(m * d.x + b));
+
+      // Append regression line to SVG with a delay
+      setTimeout(() => {
+        svg.append("path")
+          .datum(dataset)
+          .attr("d", line)
+          .attr("stroke", colors[index % colors.length])
+          .attr("stroke-width", 2)
+          .attr("fill", "none")
+          .style("opacity", 0) // Initially hide the line
+          .transition()
+          .duration(1000) // Adjust the duration as needed
+          .style("opacity", 1); // Fade in the line
+
+        // Add equation annotation for each line
+        svg.append("text")
+          .attr("class", "equation-text")
+          .attr("x", 10)
+          .attr("y", 30 + index * 20) // Adjust vertical spacing
+          .text(`y = ${b.toFixed(0)} + ${m.toFixed(0)}x`)
+          .attr("fill", colors[index % colors.length])
+          .attr("font-weight", "bold")
+          .style("opacity", 0) // Initially hide the text
+          .transition()
+          .duration(1000) // Same duration as line animation
+          .style("opacity", 1); // Fade in the text
+      }, index * 1500); // Adjust the delay between lines (in milliseconds)
+    });
+  },
+
+
   updateRegressionLine(svg, dataset, xScale, yScale, m, b) {
     // Clear previous regression line
     svg.select(".line-regression").remove();
@@ -145,7 +190,10 @@ const PlotSetup = {
       .append("path")
       .datum(dataset)
       .attr("class", "line-regression")
-      .attr("d", line);
+      .attr("d", line)
+      .attr("stroke", "#1f77b4")
+      .attr("stroke-width", 2)
+      .attr("fill", "none");
   },
 };
 const HeightWeightScatter = {
@@ -170,24 +218,42 @@ const HeightWeightScatter = {
   },
 };
 
+const HeightWeightScatterMultipleFits = {
+  data: HeightWeightScatter.data,
+  initialized: false,
+
+  plot: function () {
+    if (!this.initialized) {
+      const { svg, width, height } = PlotSetup.getCommonSetup("scatter-plot-multiple-fits");
+      const { x, y } = PlotSetup.createAxes(svg, this.data, width, height);
+      PlotSetup.scatterPoints(svg, this.data, x, y, width);
+      PlotSetup.multipleRegressionFits(svg, this.data, x, y)
+
+
+
+      this.initialized = true;
+    }
+  },
+};
+
 const LinearRegressionPlot = {
   initialized: false,
-  m: 0.0, // Slope of the regression line
+  m: 1.0, // Slope of the regression line
   b: 0.0, // Intercept of the regression line
   epoch: 0,
-  learningRate: 0.00001,
-  maxEpochs: 10000,
+  learningRate: 0.00001, // Low learning rate so visualization isn't too fast
+  maxEpochs: 3000, // High iterations to account for low learning rate
   data: HeightWeightScatter.data,
   n: HeightWeightScatter.data.length,
 
   // MSE Loss
   computeError() {
     let totalError = 0;
-    this.data.forEach(d => {
+    this.data.forEach((d) => {
       const yPred = this.predict(d.x);
       totalError += (d.y - yPred) ** 2;
     });
-    return totalError / this.n
+    return totalError / this.n;
   },
 
   predict: function (x) {
@@ -203,7 +269,6 @@ const LinearRegressionPlot = {
       mGradient += -(2 / this.n) * d.x * error;
       bGradient += -(2 / this.n) * error;
     });
-    console.log("mGradient: ", mGradient, "bGradient: ", bGradient);
     // Update m and b after calculating gradients for all data points
     this.m -= this.learningRate * mGradient;
     this.b -= this.learningRate * bGradient;
@@ -211,18 +276,32 @@ const LinearRegressionPlot = {
 
   updateRegressionPlot: function (svg, x, y, width, height) {
     // Clear previous content
-    svg.selectAll(".equation-text").remove();
+    svg.selectAll("#equation-text").remove();
+    svg.selectAll("#mse-text").remove();
 
     // Update regression line
     PlotSetup.updateRegressionLine(svg, this.data, x, y, this.m, this.b);
 
-    // Add equation annotation
+    // Add equation annotation on the left
     svg
       .append("text")
-      .attr("class", "equation-text")
+      .attr("id", "equation-text")
       .attr("x", 10)
       .attr("y", 30)
-      .text(`y = ${this.m.toFixed(2)}x + ${this.b.toFixed(2)}`);
+      .text(`y = ${this.b.toFixed(2)} + ${this.m.toFixed(2)}x`)
+      .attr("fill", "#1f77b4")
+      .attr("font-weight", "bold");
+
+    // Add MSE annotation on the right
+    svg
+      .append("text")
+      .attr("id", "mse-text")
+      .attr("x", width - 10)
+      .attr("y", 30)
+      .attr("text-anchor", "end")
+      .text(`Error: ${this.computeError().toFixed(2)}`)
+      .attr("fill", "#FF0000")
+      .attr("font-weight", "bold");
   },
 
   plot: function () {
@@ -232,41 +311,30 @@ const LinearRegressionPlot = {
         "linear-regression-plot",
       );
       const { x, y } = PlotSetup.createAxes(svg, this.data, width, height);
-      PlotSetup.scatterPoints(svg, HeightWeightScatter.data, x, y)
+      PlotSetup.scatterPoints(svg, HeightWeightScatter.data, x, y);
 
       const runGradientDescent = () => {
-
         for (let i = 0; i < this.maxEpochs; i++) {
-
           setTimeout(() => {
+            this.gradientDescent();
 
-            this.gradientDescent()
-            console.log("m", this.m, "b", this.b, "mse", this.computeError())
+            console.log(
+              "Epoch: ",
+              i,
+              "Max: ",
+              this.maxEpochs,
+              "m: ",
+              this.m,
+              "b: ",
+              this.b,
+            );
 
-            this.updateRegressionPlot(svg, x, y, width, height)
-
-
-          }, i * 10
-
-
-          );
+            this.updateRegressionPlot(svg, x, y, width, height);
+          }, i * 10);
         }
-
       };
 
       runGradientDescent();
     }
   },
 };
-
-
-console.log(
-  "Epoch: ",
-  this.epoch,
-  "Max: ",
-  this.maxEpochs,
-  "m: ",
-  this.m,
-  "b: ",
-  this.b,
-);

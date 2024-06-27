@@ -4,12 +4,19 @@ document.addEventListener("DOMContentLoaded", function () {
     scrollingSpeed: 700,
     navigationPosition: "right",
     licenseKey: "gplv3-license",
+    credits: {
+      enabled: false,
+
+    },
 
     onLeave: (origin, destination, direction) => {
       if (destination.index === 3) {
         HeightWeightScatter.plot();
       }
       if (destination.index === 4) {
+        HeightWeightScatterMultipleFits.plot();
+      }
+      if (destination.index === 5) {
         LinearRegressionPlot.plot();
       }
     },

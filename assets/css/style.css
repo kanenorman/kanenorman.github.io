@@ -57,8 +57,8 @@ main {
   padding-top: 100px;
 }
 
-.keyword {
-  color: dodgerblue;
+strong {
+  color: #36476f;
   font-weight: bold;
 }
 
@@ -397,4 +397,8 @@ nav {
   stroke: #e0e0e0;
   stroke-opacity: 0.7;
   shape-rendering: crispEdges;
+}
+
+.credits a{
+  text-decoration: none;
 }
