@@ -24,16 +24,27 @@ main {
   text-align: center;
   width: 100%;
   border-top: 1px solid #bbb;
-  font-size: x-small;
-
+  font-size: smaller;
   position: relative;
+}
+
+.footer-fullpage{
+  background: inherit;
+  padding: 1rem 0;
+  text-align: center;
+  width: 100%;
+  border-top: 1px solid #bbb;
+  font-size: smaller;
+  position: fixed;
+  bottom: 0;
 }
 
 #header {
   width: 100%;
   background: inherit;
   position: fixed;
-  height: 50px;
+  height: auto;
+  padding: 0;
   top: 0;
   background-color: transparent;
   z-index: 1000;
@@ -77,7 +88,7 @@ strong {
 .shell {
   font-size: smaller;
   width: calc(50% - 54px);
-  max-width: 500px;
+  max-width: 50%;
   display: inline-block;
   background-color: #353839;
   border-radius: 5px 5px 5px 5px;

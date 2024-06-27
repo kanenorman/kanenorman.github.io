@@ -128,8 +128,8 @@ const PlotSetup = {
   multipleRegressionFits(svg, dataset, xScale, yScale) {
     // Define different slopes and intercepts similar to 2x + 5
     const linesParams = [
-      { m: 2, b: 5},
-      { m: 1, b: 12},
+      { m: 2, b: 5 },
+      { m: 1, b: 12 },
       { m: 3, b: -1 },
     ];
 
@@ -191,7 +191,7 @@ const PlotSetup = {
       .datum(dataset)
       .attr("class", "line-regression")
       .attr("d", line)
-      .attr("stroke", "#1f77b4")
+      .attr("stroke", "#663399")
       .attr("stroke-width", 2)
       .attr("fill", "none");
   },
@@ -289,7 +289,7 @@ const LinearRegressionPlot = {
       .attr("x", 10)
       .attr("y", 30)
       .text(`y = ${this.b.toFixed(2)} + ${this.m.toFixed(2)}x`)
-      .attr("fill", "#1f77b4")
+      .attr("fill", "#663399")
       .attr("font-weight", "bold");
 
     // Add MSE annotation on the right
@@ -317,18 +317,6 @@ const LinearRegressionPlot = {
         for (let i = 0; i < this.maxEpochs; i++) {
           setTimeout(() => {
             this.gradientDescent();
-
-            console.log(
-              "Epoch: ",
-              i,
-              "Max: ",
-              this.maxEpochs,
-              "m: ",
-              this.m,
-              "b: ",
-              this.b,
-            );
-
             this.updateRegressionPlot(svg, x, y, width, height);
           }, i * 10);
         }
