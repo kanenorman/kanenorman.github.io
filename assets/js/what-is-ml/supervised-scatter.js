@@ -1,3 +1,100 @@
+const PlotSetup = {
+  getCommonSetup(containerId) {
+    const container = document.getElementById(containerId);
+    const container_width = container.clientWidth;
+    const container_height = container.clientHeight;
+
+    const margin = { top: 20, right: 30, bottom: 50, left: 60 };
+    const width = container_width - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
+
+    const svg = d3
+      .select(`#${containerId}`)
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    return { svg, margin, width, height };
+  },
+
+  createAxes(svg, data, width, height) {
+    const heightExtent = d3.extent(data, (d) => d.height);
+    const weightExtent = d3.extent(data, (d) => d.weight);
+
+    const x = d3
+      .scaleLinear()
+      .domain([heightExtent[0] - 10, heightExtent[1] + 10])
+      .range([0, width]);
+
+    svg
+      .append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x));
+
+    const y = d3
+      .scaleLinear()
+      .domain([weightExtent[0] - 10, weightExtent[1] + 10])
+      .range([height, 0]);
+
+    svg.append("g").call(d3.axisLeft(y));
+
+    svg
+      .append("text")
+      .attr("class", "axis-label")
+      .attr("text-anchor", "middle")
+      .attr("x", width / 2)
+      .attr("y", height + 40)
+      .text("Height (cm)");
+
+    svg
+      .append("text")
+      .attr("class", "axis-label")
+      .attr("text-anchor", "middle")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -50)
+      .attr("x", -height / 2)
+      .text("Weight (kg)");
+
+    return { x, y };
+  },
+
+  scatterPointsWithTransition(svg, data, x, y, width) {
+    svg
+      .append("g")
+      .selectAll("dot")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("cx", width / 2)
+      .attr("cy", -10)
+      .attr("r", 5)
+      .attr("class", "dot")
+      .attr("fill", "#4B9CD3")
+      .attr("opacity", 0.7)
+      .transition()
+      .delay((d, i) => Math.floor(i / 10) * 100) // Delay each batch of 10 dots based on index
+      .duration(1000)
+      .attr("cx", (d) => x(d.height))
+      .attr("cy", (d) => y(d.weight));
+  },
+  scatterPoints(svg, data, x, y) {
+    svg
+      .append("g")
+      .selectAll("dot")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("cx", (d) => x(d.height))
+      .attr("cy", (d) => y(d.weight))
+      .attr("r", 5)
+      .attr("class", "dot")
+      .attr("fill", "#4B9CD3")
+      .attr("opacity", 0.7);
+  },
+};
+
 const HeightWeightScatter = {
   data: [
     { height: 168.73, weight: 88.06 },
@@ -55,93 +152,46 @@ const HeightWeightScatter = {
 
   plot: function () {
     if (!this.initialized) {
-      // Set up the dimensions and margins of the graph
-      const container = document.getElementById("scatter-plot");
-      const container_width = container.clientWidth;
-      const container_height = container.clientHeight;
+      const { svg, width, height } = PlotSetup.getCommonSetup("scatter-plot");
+      const { x, y } = PlotSetup.createAxes(svg, this.data, width, height);
+      PlotSetup.scatterPointsWithTransition(svg, this.data, x, y, width);
+      this.initialized = true;
+    }
+  },
+};
 
-      const margin = { top: 20, right: 30, bottom: 50, left: 60 };
-      const width = container_width - margin.left - margin.right;
-      const height = 400 - margin.top - margin.bottom;
+const LinearRegressionPlot = {
+  initialized: false,
+  plot: function () {
+    if (!this.initialized) {
+      const { svg, width, height } = PlotSetup.getCommonSetup(
+        "linear-regression-plot"
+      );
+      const { x, y } = PlotSetup.createAxes(
+        svg,
+        HeightWeightScatter.data,
+        width,
+        height
+      );
 
-      // Append the SVG object to the div with id "scatter-plot"
-      const svg = d3
-        .select("#scatter-plot")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
+      PlotSetup.scatterPoints(svg, HeightWeightScatter.data, x, y);
 
-      // Find min and max for height and weight
-      const heightExtent = d3.extent(this.data, (d) => d.height);
-      const weightExtent = d3.extent(this.data, (d) => d.weight);
-
-      // Add X axis
-      const x = d3
-        .scaleLinear()
-        .domain([heightExtent[0] - 10, heightExtent[1] + 10]) // Adding some padding
-        .range([0, width]);
+      // Add linear regression line (example, you can customize as needed)
+      const regression = ss.linearRegression(
+        HeightWeightScatter.data.map((d) => [d.height, d.weight])
+      );
+      const regressionLine = ss.linearRegressionLine(regression);
+      const xVals = d3.extent(HeightWeightScatter.data, (d) => d.height);
+      const yVals = xVals.map((x) => regressionLine(x));
 
       svg
-        .append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x));
-
-      // Add Y axis
-      const y = d3
-        .scaleLinear()
-        .domain([weightExtent[0] - 10, weightExtent[1] + 10]) // Adding some padding
-        .range([height, 0]);
-
-      svg.append("g").call(d3.axisLeft(y));
-
-      // Add dots
-      svg
-        .append("g")
-        .selectAll("dot")
-        .data(this.data)
-        .enter()
-        .append("circle")
-        .attr("cx", width / 2) // Start x position at the center (offscreen)
-        .attr("cy", -10) // Start y position above the plot (offscreen)
-        .attr("r", 5)
-        .attr("class", "dot")
-        .attr("fill", "#4B9CD3")
-        .attr("opacity", 0.7)
-        .transition() // Apply transition
-        .delay((d, i) => Math.floor(i / 10) * 100) // Delay each batch of 10 dots based on index
-        .duration(1000) // Duration of the transition
-        .attr("cx", (d) => x(d.height))
-        .attr("cy", (d) => y(d.weight));
-
-      // Add X axis label
-      svg
-        .append("text")
-        .attr("class", "axis-label")
-        .attr("text-anchor", "middle")
-        .attr("x", width / 2)
-        .attr("y", height + margin.bottom - 10)
-        .text("Height (cm)")
-        .attr("font-family", "inherit");
-
-      // Add Y axis label
-      svg
-        .append("text")
-        .attr("class", "axis-label")
-        .attr("text-anchor", "middle")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -margin.left + 15)
-        .attr("x", -height / 2)
-        .text("Weight (kg)")
-        .attr("font-family", "inherit");
-
-      // Strokes on dots
-      svg
-        .selectAll(".dot")
-        .style("stroke", "#007FAE")
-        .style("stroke-width", "1.5px");
-
+        .append("line")
+        .attr("x1", x(xVals[0]))
+        .attr("y1", y(yVals[0]))
+        .attr("x2", x(xVals[1]))
+        .attr("y2", y(yVals[1]))
+        .attr("stroke", "red")
+        .attr("stroke-width", 2);
       this.initialized = true;
     }
   },

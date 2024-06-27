@@ -133,6 +133,33 @@ layout: default
     </div>
   </div>
 
+  <!--LINEAR REGRESSION PLOT-->
+  <div class="section">
+    <div class="grid">
+      <div id="linear-regression-plot"></div>
+      <div>
+        <p>
+          The question now is, how does the machine learn this linear pattern?
+          We know the model needs to learn a linear equation in the form \( y =
+          B_0 + B_1x \). But how does the model find the optimal parameters \(
+          B_0 \) and \( B_1 \)?
+        </p>
+        <p>
+          Without diving too far into the details just yet, the algorithm starts
+          with random initial values and iteratively adjusts the parameters to
+          minimize the error between the model's predictions and the actual
+          labeled data.
+        </p>
+        <p>
+          By learning this linear pattern from our data, we can train a model
+          that predicts weight based on height.. The resulting line is known as
+          a
+          <span class="keyword">linear regression</span> model.
+        </p>
+      </div>
+    </div>
+  </div>
+
   <!-- CITATIONS -->
   <div class="section">
     <h4>References</h4>
@@ -154,6 +181,16 @@ layout: default
           Unsupervised, Semi-Supervised and Reinforcement Learning?
         </a>
       </li>
+      <li>
+        <a
+          href="http://www.cs.toronto.edu/~rgrosse/courses/csc321_2017/readings/L02%20Linear%20Regression.pdf"
+          target="_blank"
+        >
+          Roger Grosse, University of Toronto : Linear Regression
+        </a>
+      </li>
     </ol>
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/7.7.3/simple-statistics.min.js"></script>
+
