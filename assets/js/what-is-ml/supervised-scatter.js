@@ -25,37 +25,70 @@ const PlotSetup = {
 
     const x = d3
       .scaleLinear()
-      .domain([xExtent[0] - 3 , xExtent[1] + 3])
+      .domain([xExtent[0] - 3, xExtent[1] + 3])
       .range([0, width]);
-
-    svg
-      .append("g")
-      .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x));
 
     const y = d3
       .scaleLinear()
       .domain([yExtent[0] - 10, yExtent[1] + 10])
       .range([height, 0]);
 
-    svg.append("g").call(d3.axisLeft(y));
+    // Add X axis
+    svg.append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x).ticks(10));
 
-    svg
-      .append("text")
+    // Add Y axis
+    svg.append("g")
+      .call(d3.axisLeft(y).ticks(10));
+
+    // Add X gridlines
+    svg.append("g")
+      .attr("class", "grid")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x)
+        .ticks(10)
+        .tickSize(-height)
+        .tickFormat("")
+      );
+
+    // Add Y gridlines
+    svg.append("g")
+      .attr("class", "grid")
+      .call(d3.axisLeft(y)
+        .ticks(10)
+        .tickSize(-width)
+        .tickFormat("")
+      );
+
+    // X axis label
+    svg.append("text")
       .attr("class", "axis-label")
       .attr("text-anchor", "middle")
       .attr("x", width / 2)
       .attr("y", height + 40)
-      .text("Height (cm)");
+      .text("Height (cm)")
+      .attr("font-weight", "bold");
 
-    svg
-      .append("text")
+    // Y axis label
+    svg.append("text")
       .attr("class", "axis-label")
       .attr("text-anchor", "middle")
       .attr("transform", "rotate(-90)")
-      .attr("y", -50)
+      .attr("y", -35)
       .attr("x", -height / 2)
-      .text("Weight (kg)");
+      .text("Weight (kg)")
+      .attr("font-weight", "bold");
+
+
+    svg.append("text")
+      .attr("class", "plot-title")
+      .attr("text-anchor", "middle")
+      .attr("x", width / 2)
+      .attr("y", -5)
+      .text("Height vs Weight")
+      .attr("font-weight", "bold");
+
 
     return { x, y };
   },
@@ -76,7 +109,7 @@ const PlotSetup = {
       .attr("opacity", 0.7)
       .transition()
       .delay((d, i) => Math.floor(i / 10) * 100) // Delay each batch of 10 dots based on index
-      .duration(1000)
+      .duration(1500)
       .attr("cx", (d) => x(d.x))
       .attr("cy", (d) => y(d.y));
   },
@@ -115,13 +148,12 @@ const PlotSetup = {
       .attr("d", line);
   },
 };
-
 const HeightWeightScatter = {
   data: Array.from({ length: 50 }, () => {
     const slope = 2; // True slope of the relationship
     const intercept = 5; // True intercept of the relationship
     const noise = 9; // Amount of noise to add
-    const x =  3 + Math.random() * 10;
+    const x = 3 + Math.random() * 10;
     const y = slope * x + intercept + (Math.random() - 0.5) * noise;
     return { x, y };
   }),
@@ -143,8 +175,8 @@ const LinearRegressionPlot = {
   m: 0.0, // Slope of the regression line
   b: 0.0, // Intercept of the regression line
   epoch: 0,
-  learningRate: 0.0001,
-  maxEpochs: 100,
+  learningRate: 0.00001,
+  maxEpochs: 10000,
   data: HeightWeightScatter.data,
   n: HeightWeightScatter.data.length,
 
@@ -179,10 +211,7 @@ const LinearRegressionPlot = {
 
   updateRegressionPlot: function (svg, x, y, width, height) {
     // Clear previous content
-    svg.selectAll("*").remove();
-
-    // Plot scatter points
-    PlotSetup.scatterPoints(svg, this.data, x, y, width);
+    svg.selectAll(".equation-text").remove();
 
     // Update regression line
     PlotSetup.updateRegressionLine(svg, this.data, x, y, this.m, this.b);
@@ -194,35 +223,6 @@ const LinearRegressionPlot = {
       .attr("x", 10)
       .attr("y", 30)
       .text(`y = ${this.m.toFixed(2)}x + ${this.b.toFixed(2)}`);
-
-    // Add x-axis
-    svg
-      .append("g")
-      .attr("class", "x-axis")
-      .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(x));
-
-    // Add y-axis
-    svg.append("g").attr("class", "y-axis").call(d3.axisLeft(y));
-
-    // Add x-axis label
-    svg
-      .append("text")
-      .attr("class", "x-axis-label")
-      .attr("x", width / 2)
-      .attr("y", height + 40)
-      .attr("text-anchor", "middle")
-      .text("Height (cm)");
-
-    // Add y-axis label
-    svg
-      .append("text")
-      .attr("class", "y-axis-label")
-      .attr("transform", "rotate(-90)")
-      .attr("x", -height / 2)
-      .attr("y", -60 + 15)
-      .attr("text-anchor", "middle")
-      .text("Weight (kg)");
   },
 
   plot: function () {
@@ -232,6 +232,7 @@ const LinearRegressionPlot = {
         "linear-regression-plot",
       );
       const { x, y } = PlotSetup.createAxes(svg, this.data, width, height);
+      PlotSetup.scatterPoints(svg, HeightWeightScatter.data, x, y)
 
       const runGradientDescent = () => {
 

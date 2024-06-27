@@ -83,8 +83,10 @@ main {
   border-radius: 5px 5px 5px 5px;
   text-align: left;
   margin-right: 54px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  /* Optional: Add shadow for better visibility */
 }
+
 .shell-header {
   background: #414a4c;
   padding: 0 7px;
@@ -101,49 +103,62 @@ main {
   box-shadow: 0 0 10px 1px;
   display: inline-block;
 }
+
 .shell-demo {
   position: absolute;
   right: 15px;
   top: 13px;
   color: #0e1111;
 }
+
 .shell-demo:hover {
   text-decoration: underline;
   float: right;
 }
+
 .shell-header-close {
   background: #fe5e56;
 }
+
 .shell-header-minimize {
   background: #fdbe38;
 }
+
 .shell-header-maximize {
   background: #02cb49;
 }
+
 .shell-tab {
   padding: 5px 10px;
   display: inline-block;
   padding: 14px 10px;
 }
+
 .shell-tab {
   color: #173549;
 }
+
 .shell-tab.active {
   background: #fff;
   margin: 0;
 }
+
 .shell-tab:hover {
   color: #000;
 }
+
 .shell-tab-content {
   display: none;
 }
+
 .shell-tab-content.active {
   display: block;
 }
+
 figure {
   margin: 0;
 }
+
 .shell-body {
   margin: 0.5em;
   font-size: 1.4em;
@@ -155,11 +170,15 @@ figure {
 
 .shell-cursor {
   display: inline-block;
-  width: 6px; /* Adjust the width as needed */
-  height: 18px; /* Adjust the height as needed */
+  width: 6px;
+  /* Adjust the width as needed */
+  height: 18px;
+  /* Adjust the height as needed */
   background-color: white;
-  animation: blinkCursor 1s infinite; /* Define the animation */
-  vertical-align: middle; /* Align the cursor with the bottom of text */
+  animation: blinkCursor 1s infinite;
+  /* Define the animation */
+  vertical-align: middle;
+  /* Align the cursor with the bottom of text */
 }
 
 #typed-message {
@@ -167,13 +186,18 @@ figure {
   overflow-x: scroll;
   min-height: 200px;
 }
+
 @keyframes blinkCursor {
+
   0%,
   100% {
-    opacity: 1; /* Cursor visible at the start and end */
+    opacity: 1;
+    /* Cursor visible at the start and end */
   }
+
   50% {
-    opacity: 0; /* Cursor invisible in the middle */
+    opacity: 0;
+    /* Cursor invisible in the middle */
   }
 }
 
@@ -184,6 +208,7 @@ figure {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -198,6 +223,7 @@ figure {
   padding: 2em;
   font-size: xx-large;
 }
+
 .social-icons a {
   margin-right: 15px;
   color: #353839;
@@ -285,14 +311,18 @@ nav {
     transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
 .tiles article header img {
   max-width: 100%;
 }
 
 .tiles article:hover {
-  transform: scale(1.01); /* Zoom effect on hover */
-  box-shadow: 0 8px 16px #dae4f5; /* Stronger shadow on hover */
+  transform: scale(1.01);
+  /* Zoom effect on hover */
+  box-shadow: 0 8px 16px #dae4f5;
+  /* Stronger shadow on hover */
 }
+
 .tiles article p {
   margin: 0;
 }
@@ -303,19 +333,25 @@ nav {
 }
 
 .article-link {
-  text-decoration: none; /* Remove underline */
-  color: inherit; /* Inherit text color */
+  text-decoration: none;
+  /* Remove underline */
+  color: inherit;
+  /* Inherit text color */
 }
 
 .article-link article {
-  font-family: inherit; /* Inherit font */
-  color: inherit; /* Inherit text color */
+  font-family: inherit;
+  /* Inherit font */
+  color: inherit;
+  /* Inherit text color */
 }
 
 .article-link header,
 .article-link p {
-  font-family: inherit; /* Inherit font */
-  color: inherit; /* Inherit text color */
+  font-family: inherit;
+  /* Inherit font */
+  color: inherit;
+  /* Inherit text color */
 }
 
 /* ==========================================================================
@@ -328,6 +364,7 @@ nav {
   transition: transform 600ms ease;
   right: 0;
 }
+
 .fp-section.active .animated {
   transform: translate3d(0, 0, 0);
 }
@@ -351,5 +388,13 @@ nav {
 .axis line {
   fill: none;
   stroke: #e0e0e0;
+  shape-rendering: crispEdges;
+}
+
+/* D3 */
+
+.grid line {
+  stroke: #e0e0e0;
+  stroke-opacity: 0.7;
   shape-rendering: crispEdges;
 }
