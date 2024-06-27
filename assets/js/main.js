@@ -8,6 +8,17 @@ document.addEventListener("DOMContentLoaded", function () {
       enabled: false,
 
     },
+    navigationTooltips: [
+      "What is ML? 🤷🏽‍♀️",
+      "Types of ML 🔍",
+      "An Example 👽",
+      "Visualizing Data 📈",
+      "Optimizing 🧭",
+      "Training 🤖",
+      "The Math 🧮",
+      "Summary 🤓",
+      "Credits 🏅 & References 📚"
+    ],
 
     onLeave: (origin, destination, direction) => {
       if (destination.index === 3) {
