@@ -35,7 +35,9 @@ main {
   top: 0;
   background-color: transparent;
   z-index: 1000;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 #header.shadow {
@@ -277,7 +279,8 @@ nav {
   font-weight: bold;
   margin-bottom: 10px;
   text-align: center;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+  transition:
+    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .tiles article header img {
