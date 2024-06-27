@@ -25,6 +25,8 @@ main {
   width: 100%;
   border-top: 1px solid #bbb;
   font-size: x-small;
+
+  position: relative;
 }
 
 #header {
