@@ -4,14 +4,14 @@ document.addEventListener("DOMContentLoaded", function () {
     scrollingSpeed: 700,
     navigationPosition: "right",
     licenseKey: "gplv3-license",
-    anchors: ["what-is-machine-learning", "types-of-machine-learning"],
-    navigationTooltips: [
-      "What is Machine Learning",
-      "Types of Machine Learning",
-    ],
+
+    onLeave: (origin, destination, direction) => {
+      if (destination.index === 3) {
+        HeightWeightScatter.plot();
+      }
+    },
   });
 });
-
 
 window.addEventListener("scroll", function () {
   var header = document.getElementById("header");

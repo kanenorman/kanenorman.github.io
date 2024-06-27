@@ -33,14 +33,14 @@ main {
   position: fixed;
   height: 50px;
   top: 0;
-  background-color: transparent; 
+  background-color: transparent;
   z-index: 1000;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #header.shadow {
   background-color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .container {
@@ -260,40 +260,39 @@ nav {
   margin-bottom: 2em;
 }
 
-.grid {
+.tiles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
 
-.grid article {
+.tiles article {
   padding: 20px;
   border-radius: 8px;
   height: 100%;
   font-size: smaller;
 }
 
-.grid article header {
+.tiles article header {
   font-weight: bold;
   margin-bottom: 10px;
   text-align: center;
-  transition:
-    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.grid article header img {
+.tiles article header img {
   max-width: 100%;
 }
 
-.grid article:hover {
+.tiles article:hover {
   transform: scale(1.01); /* Zoom effect on hover */
   box-shadow: 0 8px 16px #dae4f5; /* Stronger shadow on hover */
 }
-.grid article p {
+.tiles article p {
   margin: 0;
 }
 
-.grid article a {
+.tiles article a {
   color: #353839;
   text-emphasis: none;
 }
@@ -341,4 +340,11 @@ nav {
   opacity: 0;
   width: 0;
   cursor: pointer;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #e0e0e0;
+  shape-rendering: crispEdges;
 }
