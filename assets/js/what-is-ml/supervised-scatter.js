@@ -141,13 +141,15 @@ const PlotSetup = {
       const { m, b } = params;
 
       // Create Regression Line
-      const line = d3.line()
+      const line = d3
+        .line()
         .x((d) => xScale(d.x))
         .y((d) => yScale(m * d.x + b));
 
       // Append regression line to SVG with a delay
       setTimeout(() => {
-        svg.append("path")
+        svg
+          .append("path")
           .datum(dataset)
           .attr("d", line)
           .attr("stroke", colors[index % colors.length])
@@ -159,7 +161,8 @@ const PlotSetup = {
           .style("opacity", 1); // Fade in the line
 
         // Add equation annotation for each line
-        svg.append("text")
+        svg
+          .append("text")
           .attr("class", "equation-text")
           .attr("x", 10)
           .attr("y", 30 + index * 20) // Adjust vertical spacing
@@ -173,7 +176,6 @@ const PlotSetup = {
       }, index * 1500); // Adjust the delay between lines (in milliseconds)
     });
   },
-
 
   updateRegressionLine(svg, dataset, xScale, yScale, m, b) {
     // Clear previous regression line
@@ -224,12 +226,12 @@ const HeightWeightScatterMultipleFits = {
 
   plot: function () {
     if (!this.initialized) {
-      const { svg, width, height } = PlotSetup.getCommonSetup("scatter-plot-multiple-fits");
+      const { svg, width, height } = PlotSetup.getCommonSetup(
+        "scatter-plot-multiple-fits",
+      );
       const { x, y } = PlotSetup.createAxes(svg, this.data, width, height);
       PlotSetup.scatterPoints(svg, this.data, x, y, width);
-      PlotSetup.multipleRegressionFits(svg, this.data, x, y)
-
-
+      PlotSetup.multipleRegressionFits(svg, this.data, x, y);
 
       this.initialized = true;
     }
