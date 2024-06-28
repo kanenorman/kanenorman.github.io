@@ -126,55 +126,74 @@ const PlotSetup = {
   },
 
   multipleRegressionFits(svg, dataset, xScale, yScale) {
-    // Define different slopes and intercepts similar to 2x + 5
-    const linesParams = [
-      { m: 2, b: 5 },
-      { m: 1, b: 12 },
-      { m: 3, b: -1 },
-    ];
-
-    // Colors for different lines
     const colors = d3.schemeCategory10;
 
-    // Loop through each set of parameters
-    linesParams.forEach((params, index) => {
-      const { m, b } = params;
+    function generateRandomLineParams() {
+      const m = Math.random() * 1.5 + 1.5; // Random slope between 1.5 and 3
+      const b = Math.random() * 6 + 3; // Random intercept between 3 and 6
+      return { m, b };
+    }
 
-      // Create Regression Line
+    function addRandomLine() {
+      const params = generateRandomLineParams();
+      const { m, b } = params;
       const line = d3
         .line()
         .x((d) => xScale(d.x))
         .y((d) => yScale(m * d.x + b));
 
-      // Append regression line to SVG with a delay
-      setTimeout(() => {
-        svg
-          .append("path")
-          .datum(dataset)
-          .attr("d", line)
-          .attr("stroke", colors[index % colors.length])
-          .attr("stroke-width", 2)
-          .attr("fill", "none")
-          .style("opacity", 0) // Initially hide the line
-          .transition()
-          .duration(1000) // Adjust the duration as needed
-          .style("opacity", 1); // Fade in the line
+      const color = colors[Math.floor(Math.random() * colors.length)];
 
-        // Add equation annotation for each line
-        svg
-          .append("text")
-          .attr("class", "equation-text")
-          .attr("x", 10)
-          .attr("y", 30 + index * 20) // Adjust vertical spacing
-          .text(`y = ${b.toFixed(0)} + ${m.toFixed(0)}x`)
-          .attr("fill", colors[index % colors.length])
-          .attr("font-weight", "bold")
-          .style("opacity", 0) // Initially hide the text
+      const linePath = svg
+        .append("path")
+        .datum(dataset)
+        .attr("d", line)
+        .attr("stroke", color)
+        .attr("stroke-width", 2)
+        .attr("fill", "none")
+        .style("opacity", 0);
+
+      const textLabel = svg
+        .append("text")
+        .attr("class", "equation-text")
+        .attr("x", 10)
+        .attr("y", 40)
+        .attr("fill", color)
+        .attr("font-weight", "bold")
+        .attr("font-style", "italic")
+        .text(`height ≈ ${b.toFixed(2)} + ${m.toFixed(2)} x weight`)
+        .style("opacity", 0);
+
+      // Fade in
+      linePath.transition().duration(1000).style("opacity", 1);
+      textLabel.transition().duration(1000).style("opacity", 1);
+
+      // Fade out and remove after 3 seconds
+      setTimeout(() => {
+        linePath
           .transition()
-          .duration(1000) // Same duration as line animation
-          .style("opacity", 1); // Fade in the text
-      }, index * 1500); // Adjust the delay between lines (in milliseconds)
-    });
+          .duration(1000)
+          .style("opacity", 0)
+          .on("end", function () {
+            d3.select(this).remove();
+          });
+
+        textLabel
+          .transition()
+          .duration(1000)
+          .style("opacity", 0)
+          .on("end", function () {
+            d3.select(this).remove();
+          });
+      }, 3000);
+    }
+
+    function continuouslyAddLines() {
+      addRandomLine();
+      setInterval(addRandomLine, 4000); // Add a new line every 4 seconds
+    }
+
+    continuouslyAddLines();
   },
 
   updateRegressionLine(svg, dataset, xScale, yScale, m, b) {
