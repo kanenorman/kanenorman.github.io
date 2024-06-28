@@ -161,7 +161,7 @@ const PlotSetup = {
         .attr("fill", color)
         .attr("font-weight", "bold")
         .attr("font-style", "italic")
-        .text(`height ≈ ${b.toFixed(2)} + ${m.toFixed(2)} x weight`)
+        .text(`weight ≈ ${b.toFixed(2)} + ${m.toFixed(2)} x height`)
         .style("opacity", 0);
 
       // Fade in
