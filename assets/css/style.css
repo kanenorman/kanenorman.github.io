@@ -28,7 +28,7 @@ main {
   position: relative;
 }
 
-.footer-fullpage{
+.footer-fullpage {
   background: inherit;
   padding: 1rem 0;
   text-align: center;
@@ -199,7 +199,6 @@ figure {
 }
 
 @keyframes blinkCursor {
-
   0%,
   100% {
     opacity: 1;
@@ -410,6 +409,6 @@ nav {
   shape-rendering: crispEdges;
 }
 
-.credits a{
+.credits a {
   text-decoration: none;
 }

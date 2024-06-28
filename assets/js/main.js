@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
     licenseKey: "gplv3-license",
     credits: {
       enabled: false,
-
     },
     navigationTooltips: [
       "What is ML? 🤷🏽‍♀️",
@@ -17,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "Training 🤖",
       "The Math 🧮",
       "Summary 🤓",
-      "Credits 🏅 & References 📚"
+      "Credits 🏅 & References 📚",
     ],
 
     onLeave: (origin, destination, direction) => {
