@@ -309,7 +309,7 @@ const LinearRegressionPlot = {
       .attr("id", "equation-text")
       .attr("x", 10)
       .attr("y", 30)
-      .text(`y = ${this.b.toFixed(2)} + ${this.m.toFixed(2)}x`)
+      .text(`weight ≈  ${this.b.toFixed(2)} + ${this.m.toFixed(2)} x height`)
       .attr("fill", "#663399")
       .attr("font-weight", "bold");
 
