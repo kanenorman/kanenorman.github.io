@@ -347,3 +347,39 @@ const LinearRegressionPlot = {
     }
   },
 };
+
+const PredictionPlot = {
+  data: HeightWeightScatter.data,
+  initialized: false,
+
+  plot: function () {
+    if (!this.initialized) {
+      this.initialized = true;
+      const { svg, width, height } =
+        PlotSetup.getCommonSetup("prediction-plot");
+      const { x, y } = PlotSetup.createAxes(svg, this.data, width, height);
+      PlotSetup.scatterPoints(svg, this.data, x, y, width);
+
+      const regression = d3
+        .regressionLinear()
+        .x((d) => d.x)
+        .y((d) => d.y)
+        .domain(d3.extent(this.data, (d) => d.x));
+
+      const regressionLine = regression(this.data);
+
+      const line = d3
+        .line()
+        .x((d) => x(d[0]))
+        .y((d) => y(d[1]));
+
+      svg
+        .append("path")
+        .datum(regressionLine)
+        .attr("class", "regression-line")
+        .attr("d", line)
+        .style("stroke", "red")
+        .style("stroke-width", 2);
+    }
+  },
+};

@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "Visualizing Data 📈",
       "Optimizing 🧭",
       "Training 🤖",
+      "Predicting 🔮",
       "The Math 🧮",
       "Summary 🤓",
       "Credits 🏅 & References 📚",
@@ -28,6 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       if (destination.index === 5) {
         LinearRegressionPlot.plot();
+      }
+      if (destination.index === 6) {
+        PredictionPlot.plot();
       }
     },
   });
