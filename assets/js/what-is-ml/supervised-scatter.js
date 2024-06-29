@@ -375,19 +375,19 @@ const PredictionPlot = {
         .style("stroke", "red")
         .style("stroke-width", 2);
 
+      // Calculate the min and max x values
+      const minX = d3.min(this.data, (d) => d.x);
+      const maxX = d3.max(this.data, (d) => d.x);
+      const midX = (minX + maxX) / 2;
+
       // Add slider
       const slider = d3
         .select("#prediction-slider")
         .append("input")
         .attr("type", "range")
-        .attr(
-          "min",
-          d3.min(this.data, (d) => d.x),
-        )
-        .attr(
-          "max",
-          d3.max(this.data, (d) => d.x),
-        )
+        .attr("min", minX)
+        .attr("max", maxX)
+        .attr("value", midX) // Set initial value to the midpoint
         .attr("step", 0.1)
         .style("width", "80%");
 
@@ -403,15 +403,15 @@ const PredictionPlot = {
         .attr("dy", -10);
 
       // Select span elements for predicted height and weight
-      const predictedHeightSpan = d3.select("#predicted-height");
+      const inputHeightSpan = d3.select("#input-height");
       const predictedWeightSpan = d3.select("#predicted-weight");
 
       // Prediction function
       const predict = (x) => regression.b + regression.a * x;
 
       // Update prediction on slider change
-      slider.on("input", function () {
-        const selectedX = +this.value;
+      const updatePrediction = function () {
+        const selectedX = +slider.property("value");
         const predictedY = predict(selectedX);
 
         predictionPoint.attr("cx", x(selectedX)).attr("cy", y(predictedY));
@@ -422,9 +422,15 @@ const PredictionPlot = {
           .text(`(${selectedX.toFixed(1)}, ${predictedY.toFixed(1)})`);
 
         // Update predicted height and weight spans
-        predictedHeightSpan.text(selectedX.toFixed(1));
-        predictedWeightSpan.text(predictedY.toFixed(1));
-      });
+        inputHeightSpan.text(`${selectedX.toFixed(1)} cm`);
+        predictedWeightSpan.text(`${predictedY.toFixed(1)} kg`);
+      };
+
+      // Set initial prediction based on the midpoint value
+      updatePrediction();
+
+      // Attach update function to slider input event
+      slider.on("input", updatePrediction);
     }
   },
 };
