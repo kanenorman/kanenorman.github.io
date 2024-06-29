@@ -377,7 +377,7 @@ const PredictionPlot = {
 
       // Add slider
       const slider = d3
-        .select("#prediction-plot")
+        .select("#prediction-slider")
         .append("input")
         .attr("type", "range")
         .attr(
@@ -389,7 +389,7 @@ const PredictionPlot = {
           d3.max(this.data, (d) => d.x),
         )
         .attr("step", 0.1)
-        .style("width", "100%");
+        .style("width", "80%");
 
       // Add prediction point and label
       const predictionPoint = svg
@@ -401,6 +401,10 @@ const PredictionPlot = {
         .append("text")
         .attr("text-anchor", "middle")
         .attr("dy", -10);
+
+      // Select span elements for predicted height and weight
+      const predictedHeightSpan = d3.select("#predicted-height");
+      const predictedWeightSpan = d3.select("#predicted-weight");
 
       // Prediction function
       const predict = (x) => regression.b + regression.a * x;
@@ -416,6 +420,10 @@ const PredictionPlot = {
           .attr("x", x(selectedX))
           .attr("y", y(predictedY))
           .text(`(${selectedX.toFixed(1)}, ${predictedY.toFixed(1)})`);
+
+        // Update predicted height and weight spans
+        predictedHeightSpan.text(selectedX.toFixed(1));
+        predictedWeightSpan.text(predictedY.toFixed(1));
       });
     }
   },
