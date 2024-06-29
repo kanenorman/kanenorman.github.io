@@ -351,7 +351,6 @@ const LinearRegressionPlot = {
 const PredictionPlot = {
   data: HeightWeightScatter.data,
   initialized: false,
-
   plot: function () {
     if (!this.initialized) {
       this.initialized = true;
@@ -360,26 +359,64 @@ const PredictionPlot = {
       const { x, y } = PlotSetup.createAxes(svg, this.data, width, height);
       PlotSetup.scatterPoints(svg, this.data, x, y, width);
 
+      // Calculate regression
       const regression = d3
         .regressionLinear()
         .x((d) => d.x)
-        .y((d) => d.y)
-        .domain(d3.extent(this.data, (d) => d.x));
+        .y((d) => d.y)(this.data);
 
-      const regressionLine = regression(this.data);
-
-      const line = d3
-        .line()
-        .x((d) => x(d[0]))
-        .y((d) => y(d[1]));
-
+      // Draw regression line
       svg
-        .append("path")
-        .datum(regressionLine)
-        .attr("class", "regression-line")
-        .attr("d", line)
+        .append("line")
+        .attr("x1", x(regression[0][0]))
+        .attr("y1", y(regression[0][1]))
+        .attr("x2", x(regression[1][0]))
+        .attr("y2", y(regression[1][1]))
         .style("stroke", "red")
         .style("stroke-width", 2);
+
+      // Add slider
+      const slider = d3
+        .select("#prediction-plot")
+        .append("input")
+        .attr("type", "range")
+        .attr(
+          "min",
+          d3.min(this.data, (d) => d.x),
+        )
+        .attr(
+          "max",
+          d3.max(this.data, (d) => d.x),
+        )
+        .attr("step", 0.1)
+        .style("width", "100%");
+
+      // Add prediction point and label
+      const predictionPoint = svg
+        .append("circle")
+        .attr("r", 5)
+        .style("fill", "green");
+
+      const predictionLabel = svg
+        .append("text")
+        .attr("text-anchor", "middle")
+        .attr("dy", -10);
+
+      // Prediction function
+      const predict = (x) => regression.b + regression.a * x;
+
+      // Update prediction on slider change
+      slider.on("input", function () {
+        const selectedX = +this.value;
+        const predictedY = predict(selectedX);
+
+        predictionPoint.attr("cx", x(selectedX)).attr("cy", y(predictedY));
+
+        predictionLabel
+          .attr("x", x(selectedX))
+          .attr("y", y(predictedY))
+          .text(`(${selectedX.toFixed(1)}, ${predictedY.toFixed(1)})`);
+      });
     }
   },
 };
