@@ -151,7 +151,7 @@ layout: fullpage
           First, we need a way to measure how wrong the model is. The model
           starts with random values for \( w_0 \) and \( w_1 \). Then, it makes
           small changes to these values to gradually
-          <span style="color: #ff0000; font-weight: bold"
+          <span style="color: #d62728; font-weight: bold"
             >minimize the error</span
           >
           between its predictions and the actual data. <sup>[3]</sup>
@@ -172,20 +172,35 @@ layout: fullpage
       <div id="prediction-plot"></div>
       <div>
         <h2>Making Predictions 🔮</h2>
-        <p></p>
         <p>
-          Once we've trained our model—meaning we've found the optimal
-          parameters \( w_0 \) and \( w_1 \)—predicting future values is
-          straightforward. We input any \( height \) value into our equation,
-          and receive a predicted weight!
+          After training our model, we find the optimal parameters:
+          <br />
+          <strong>
+            \( w_0 = \)
+            <span id="optimal-w0"></span>
+          </strong>
+          and
+          <strong>
+            \( w_1 = \)
+            <span id="optimal-w1"></span>
+          </strong>
+        </p>
+        <p>
+          Using these, we can easily predict an alien's weight. Just input any
+          \( height \) value into our equation:
+          <span style="color: #1f77b4; font-weight: bold">
+            \( weight \approx \) <span id="bias"></span> \( + \)
+            <span id="weight"></span> \( \times \) \( height \)
+          </span>
         </p>
 
         <div id="prediction-slider"></div>
 
         <p>
-          Thus, our model predicts a alien that is
-          <span id="input-height" style="font-weight: bold"></span> will weigh
-          <span id="predicted-weight" style="font-weight: bold"></span>
+          So, if an alien is
+          <span id="input-value" style="font-weight: bold"></span> tall, our
+          model predicts it will weigh
+          <span id="predicted-weight" style="font-weight: bold"></span>.
         </p>
       </div>
     </div>

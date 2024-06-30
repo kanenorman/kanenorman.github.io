@@ -1,3 +1,16 @@
+const colorMap = {
+  blue: "#1f77b4",
+  orange: "#ff7f0e",
+  green: "#2ca02c",
+  red: "#d62728",
+  purple: "#9467bd",
+  brown: "#8c564b",
+  pink: "#e377c2",
+  gray: "#7f7f7f",
+  olive: "#bcbd22",
+  cyan: "#17becf",
+};
+
 const PlotSetup = {
   getCommonSetup(containerId) {
     const container = document.getElementById(containerId);
@@ -99,7 +112,7 @@ const PlotSetup = {
       .attr("cy", 10)
       .attr("r", 5)
       .attr("class", "dot")
-      .attr("fill", "#f4b334")
+      .attr("fill", colorMap["orange"])
       .attr("stroke", "#f47534")
       .attr("opacity", 0.7)
       .transition()
@@ -120,13 +133,13 @@ const PlotSetup = {
       .attr("cy", (d) => y(d.y))
       .attr("r", 5)
       .attr("class", "dot")
-      .attr("fill", "#f4b334")
+      .attr("fill", colorMap["orange"])
       .attr("stroke", "#f47534")
       .attr("opacity", 0.7);
   },
 
   multipleRegressionFits(svg, dataset, xScale, yScale) {
-    const colors = d3.schemeCategory10;
+    const colors = d3.schemeTableau10;
 
     function generateRandomLineParams() {
       const m = Math.random() * 1.5 + 1.5; // Random slope between 1.5 and 3
@@ -212,7 +225,7 @@ const PlotSetup = {
       .datum(dataset)
       .attr("class", "line-regression")
       .attr("d", line)
-      .attr("stroke", "#663399")
+      .attr("stroke", colorMap["blue"])
       .attr("stroke-width", 2)
       .attr("fill", "none");
   },
@@ -310,7 +323,7 @@ const LinearRegressionPlot = {
       .attr("x", 10)
       .attr("y", 30)
       .text(`weight ≈  ${this.b.toFixed(2)} + ${this.m.toFixed(2)} x height`)
-      .attr("fill", "#663399")
+      .attr("fill", colorMap["blue"])
       .attr("font-weight", "bold");
 
     // Add MSE annotation on the right
@@ -321,7 +334,7 @@ const LinearRegressionPlot = {
       .attr("y", 30)
       .attr("text-anchor", "end")
       .text(`Error: ${this.computeError().toFixed(2)}`)
-      .attr("fill", "#FF0000")
+      .attr("fill", colorMap["red"])
       .attr("font-weight", "bold");
   },
 
@@ -372,7 +385,7 @@ const PredictionPlot = {
         .attr("y1", y(regression[0][1]))
         .attr("x2", x(regression[1][0]))
         .attr("y2", y(regression[1][1]))
-        .style("stroke", "red")
+        .style("stroke", colorMap["blue"])
         .style("stroke-width", 2);
 
       // Calculate the min and max x values
@@ -403,8 +416,12 @@ const PredictionPlot = {
         .attr("dy", -10);
 
       // Select span elements for predicted height and weight
-      const inputHeightSpan = d3.select("#input-height");
+      const optimalW0 = d3.select("#optimal-w0");
+      const optimalW1 = d3.select("#optimal-w1");
+      const bias = d3.select("#bias");
+      const weight = d3.select("#weight");
       const predictedWeightSpan = d3.select("#predicted-weight");
+      const inputValueSpan = d3.select("#input-value");
 
       // Prediction function
       const predict = (x) => regression.b + regression.a * x;
@@ -422,8 +439,12 @@ const PredictionPlot = {
           .text(`(${selectedX.toFixed(1)}, ${predictedY.toFixed(1)})`);
 
         // Update predicted height and weight spans
-        inputHeightSpan.text(`${selectedX.toFixed(1)} cm`);
+        inputValueSpan.text(`${selectedX.toFixed(1)} cm`);
         predictedWeightSpan.text(`${predictedY.toFixed(1)} kg`);
+        optimalW0.text(regression.b.toFixed(2));
+        optimalW1.text(regression.a.toFixed(2));
+        bias.text(regression.b.toFixed(2));
+        weight.text(regression.a.toFixed(2));
       };
 
       // Set initial prediction based on the midpoint value
