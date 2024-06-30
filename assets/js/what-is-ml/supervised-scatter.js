@@ -142,8 +142,8 @@ const PlotSetup = {
     const colors = d3.schemeTableau10;
 
     function generateRandomLineParams() {
-      const m = Math.random() * 1.5 + 1.5; // Random slope between 1.5 and 3
-      const b = Math.random() * 6 + 3; // Random intercept between 3 and 6
+      const m = Math.random() * 1 + 1.5; // Random slope between 1.5 and 2.5
+      const b = Math.random() * 2 + 4; // Random intercept between 4 and 6
       return { m, b };
     }
 
@@ -272,11 +272,11 @@ const HeightWeightScatterMultipleFits = {
 
 const LinearRegressionPlot = {
   initialized: false,
-  m: 1.0, // Slope of the regression line
+  m: 0.0, // Slope of the regression line
   b: 0.0, // Intercept of the regression line
   epoch: 0,
-  learningRate: 0.00001, // Low learning rate so visualization isn't too fast
-  maxEpochs: 3000, // High iterations to account for low learning rate
+  learningRate: 0.01, // Low learning rate so visualization isn't too fast
+  maxEpochs: 10000, // High iterations to account for low learning rate
   data: HeightWeightScatter.data,
   n: HeightWeightScatter.data.length,
 
@@ -308,10 +308,11 @@ const LinearRegressionPlot = {
     this.b -= this.learningRate * bGradient;
   },
 
-  updateRegressionPlot: function (svg, x, y, width, height) {
+  updateRegressionPlot: function (svg, x, y, width, height, epoch) {
     // Clear previous content
     svg.selectAll("#equation-text").remove();
     svg.selectAll("#mse-text").remove();
+    svg.selectAll("#iteration-text").remove();
 
     // Update regression line
     PlotSetup.updateRegressionLine(svg, this.data, x, y, this.m, this.b);
@@ -333,8 +334,18 @@ const LinearRegressionPlot = {
       .attr("x", width - 10)
       .attr("y", 30)
       .attr("text-anchor", "end")
-      .text(`Error: ${this.computeError().toFixed(2)}`)
+      .text(`Error: ${this.computeError().toFixed(4)}`)
       .attr("fill", colorMap["red"])
+      .attr("font-weight", "bold");
+
+    svg
+      .append("text")
+      .attr("id", "iteration-text")
+      .attr("x", width - 10)
+      .attr("y", height - 10)
+      .attr("text-anchor", "end")
+      .text(`Iteration: ${epoch.toLocaleString()}`)
+      .attr("fill", colorMap["green"])
       .attr("font-weight", "bold");
   },
 
@@ -347,12 +358,28 @@ const LinearRegressionPlot = {
       const { x, y } = PlotSetup.createAxes(svg, this.data, width, height);
       PlotSetup.scatterPoints(svg, HeightWeightScatter.data, x, y);
 
+      let previousError = 0;
+      let timeouts = []; // Array to store timeout IDs
+
       const runGradientDescent = () => {
         for (let i = 0; i < this.maxEpochs; i++) {
-          setTimeout(() => {
+          const timeoutId = setTimeout(() => {
             this.gradientDescent();
-            this.updateRegressionPlot(svg, x, y, width, height);
+            this.updateRegressionPlot(svg, x, y, width, height, i);
+
+            const currentError = this.computeError();
+            if (Math.abs(previousError - currentError) < 0.0000001) {
+              // Clear remaining timeouts
+              for (let j = i + 1; j < this.maxEpochs; j++) {
+                clearTimeout(timeouts[j]);
+              }
+              return;
+            }
+
+            previousError = currentError; // Update the previous error for the next iteration
           }, i * 10);
+
+          timeouts.push(timeoutId); // Store the timeout ID
         }
       };
 
