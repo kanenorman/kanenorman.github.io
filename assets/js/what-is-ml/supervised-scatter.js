@@ -317,8 +317,8 @@ const HeightWeightScatterMultipleFits = {
 
 const LinearRegressionPlot = {
   initialized: false,
-  m: 0.0, // Slope of the regression line
-  b: 0.0, // Intercept of the regression line
+  m: -10.0, // Slope of the regression line
+  b: -10.0, // Intercept of the regression line
   epoch: 0,
   learningRate: 0.01, // Low learning rate so visualization isn't too fast
   maxEpochs: 10000, // High iterations to account for low learning rate
@@ -413,7 +413,7 @@ const LinearRegressionPlot = {
             this.updateRegressionPlot(svg, x, y, width, height, i);
 
             const currentError = this.computeError();
-            if (Math.abs(previousError - currentError) < 0.0000001) {
+            if (Math.abs(previousError - currentError) < 0.000000001) {
               // Clear remaining timeouts
               for (let j = i + 1; j < this.maxEpochs; j++) {
                 clearTimeout(timeouts[j]);
