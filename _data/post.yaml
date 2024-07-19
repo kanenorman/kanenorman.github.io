@@ -9,3 +9,9 @@
   image: "/assets/images/machine-learning-steve-johnson.jpg"
   caption: "Image Credit: Steve Johnson"
   description: "A high level overview and introduction to machine learning. What is it? How does it work? What are the different types of machine learning?"
+
+- title: "Loss Functions and Gradient Descent."
+  page: "/posts/loss-functions-and-gradient-descent"
+  image: "/assets/images/gradient-descent.gif"
+  caption: "Image Credit: Steve Johnson"
+  description: "A deep dive into loss functions and gradient descent. How do we measure the performance of a machine learning model? How do we optimize it?"
