@@ -75,7 +75,7 @@ class TypingEffect {
 
 const messages = [
   "Hello, I'm Kane. Welcome to my website!",
-  "I'm a machine learning enthusiast based in the United States.",
+  "I'm a machine learning specialist based in the United States.",
   "Feel free to look around and contact me if you have any questions!",
 ];
 
